@@ -19,7 +19,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import java.util.jar.Manifest
+import com.google.maps.android.PolyUtil
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -42,20 +43,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     mCurrLocationMarker?.remove()
                 }
 
-                /*//Place current location marker
-                val latLng = LatLng(location.latitude, location.longitude)
-                val markerOptions = MarkerOptions()
-                markerOptions.position(latLng)
-                markerOptions.title("Current Position")
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
-                mCurrLocationMarker = mMap.addMarker(markerOptions)*/
-
                 //move map camera
-                val latLng = LatLng(location.latitude, location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11.0F))
+                val userLocation = LatLng(location.latitude, location.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 11.0F))
+
+                // Adding a zone
+                var coord1 = LatLng(-37.792749, 145.226018) // top left
+                var coord2 = LatLng(-37.793805, 145.235371) // top right
+                var coord3 = LatLng(-37.796675, 145.235060) // bottom right
+                var coord4 = LatLng(-37.795770, 145.225506) // bottom left
+                val points = listOf(coord1, coord2, coord3, coord4) // putting coords into a list. list is for the containsLocation() call
+                // saving coords and lines to variable. can't be done with list because the add() needs in format LatLng not List<LatLng>
+                val ringwoodBlock = PolygonOptions().add(coord1, coord2, coord3, coord4).strokeColor(Color.RED)
+                mMap.addPolygon(ringwoodBlock) // drawing onto map
+
+
+
+                if (PolyUtil.containsLocation(userLocation, points, true)) // if user in polygon
+                {
+                    // TRUE: Tell user they are in zone
+                    val t = Toast.makeText(this@MapsActivity, "You are in the polygon", Toast.LENGTH_LONG)
+                    t.show()
+                }
             }
         }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,18 +116,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
             mMap.isMyLocationEnabled = true
         }
-
-        // Adding a zone
-        var coord1 = LatLng(-37.792749, 145.226018)
-        var coord2 = LatLng(-37.793805, 145.235371)
-        var coord3 = LatLng(-37.796675, 145.235060)
-        var coord4 = LatLng(-37.795770, 145.225506)
-
-        val ringwoodBlock = PolygonOptions().add(coord1, coord2, coord3, coord4).strokeColor(Color.RED)
-
-        mMap.addPolygon(ringwoodBlock)
-
-
     }
 
     private fun checkLocationPermission() {
