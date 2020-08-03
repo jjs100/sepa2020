@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "344250883168",
+    "firebase_url": "https://backendproto-242d4.firebaseio.com",
+    "project_id": "backendproto-242d4",
+    "storage_bucket": "backendproto-242d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344250883168:android:733049cb45045a7e577705",
+        "android_client_info": {
+          "package_name": "com.example.backendproto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344250883168-kcja8bdckqm3tv9tr5haakk83vjcct8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBowePMUt3PqB94viRU2y4aRWmd1wiSqcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344250883168-kcja8bdckqm3tv9tr5haakk83vjcct8m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
