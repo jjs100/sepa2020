@@ -52,17 +52,31 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 var coord2 = LatLng(-37.793805, 145.235371) // top right
                 var coord3 = LatLng(-37.796675, 145.235060) // bottom right
                 var coord4 = LatLng(-37.795770, 145.225506) // bottom left
-                val points = listOf(coord1, coord2, coord3, coord4) // putting coords into a list. list is for the containsLocation() call
+                val NRingwoodPoints = listOf(coord1, coord2, coord3, coord4) // putting coords into a list. list is for the containsLocation() call
                 // saving coords and lines to variable. can't be done with list because the add() needs in format LatLng not List<LatLng>
-                val ringwoodBlock = PolygonOptions().add(coord1, coord2, coord3, coord4).strokeColor(Color.RED)
+                val ringwoodBlock = PolygonOptions().add(coord1, coord2, coord3, coord4).strokeColor(Color.GREEN)
                 mMap.addPolygon(ringwoodBlock) // drawing onto map
 
+                var coord5 = LatLng(-37.789027, 145.226554) // top left
+                var coord6 = LatLng(-37.790083, 145.235969) // top right
+                var coord7 = LatLng(-37.793805, 145.235371) // bottom right
+                var coord8 = LatLng(-37.792749, 145.226018) // bottom left
+                var coord9 = LatLng(-37.788688, 145.228673) // top middle
+                val NRingwoodPoints2 = listOf(coord5, coord6, coord7, coord8, coord9)
+                val ringwoodBlock2 = PolygonOptions().add(coord5, coord9, coord6, coord7, coord8).strokeColor(Color.RED)
+                mMap.addPolygon((ringwoodBlock2))
 
 
-                if (PolyUtil.containsLocation(userLocation, points, true)) // if user in polygon
+
+                if (PolyUtil.containsLocation(userLocation, NRingwoodPoints, true)) // if user in polygon
                 {
                     // TRUE: Tell user they are in zone
-                    val t = Toast.makeText(this@MapsActivity, "You are in the polygon", Toast.LENGTH_LONG)
+                    val t = Toast.makeText(this@MapsActivity, "You are in GREEN ZONE", Toast.LENGTH_LONG)
+                    t.show()
+                }
+                else if (PolyUtil.containsLocation(userLocation, NRingwoodPoints2, true))
+                {
+                    val t = Toast.makeText(this@MapsActivity, "You are in RED ZONE", Toast.LENGTH_LONG)
                     t.show()
                 }
             }
