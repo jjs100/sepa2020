@@ -1,0 +1,26 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=E3:05:18:EE:E8:04:15:1C:11:A1:99:2E:1E:75:DD:49:41:8A:F3:AE%3Bcom.example.doaha2020
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.doaha2020
+
+    SHA-1 certificate fingerprint:
+    E3:05:18:EE:E8:04:15:1C:11:A1:99:2E:1E:75:DD:49:41:8A:F3:AE
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+
+    //TBD encrptry this value
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDwqxoyNvMtjmAtjdbwMyMiVse9w82htZ8</string>
+</resources>
