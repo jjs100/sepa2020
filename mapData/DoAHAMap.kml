@@ -45,6 +45,44 @@
         <styleUrl>#icon-1899-0288D1-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
+    <Style id="poly-000000-1200-77-nodesc-normal">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d000000</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="poly-000000-1200-77-nodesc-highlight">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d000000</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="poly-000000-1200-77-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-000000-1200-77-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-000000-1200-77-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
     <Style id="poly-000000-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff000000</color>
@@ -159,44 +197,6 @@
         <styleUrl>#poly-0097A7-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-01579B-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff9b5701</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d9b5701</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-01579B-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff9b5701</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d9b5701</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-01579B-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-01579B-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-01579B-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-01579B-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff9b5701</color>
@@ -233,44 +233,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-01579B-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-0288D1-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ffd18802</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4dd18802</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-0288D1-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ffd18802</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4dd18802</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-0288D1-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-0288D1-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-0288D1-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-0288D1-2000-77-nodesc-normal">
@@ -387,10 +349,10 @@
         <styleUrl>#poly-0F9D58-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-1A237E-1200-77-nodesc-normal">
+    <Style id="poly-1A237E-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff7e231a</color>
-        <width>1.2</width>
+        <width>2</width>
       </LineStyle>
       <PolyStyle>
         <color>4d7e231a</color>
@@ -401,10 +363,10 @@
         <text><![CDATA[<h3>$[name]</h3>]]></text>
       </BalloonStyle>
     </Style>
-    <Style id="poly-1A237E-1200-77-nodesc-highlight">
+    <Style id="poly-1A237E-2000-77-nodesc-highlight">
       <LineStyle>
         <color>ff7e231a</color>
-        <width>1.8</width>
+        <width>3</width>
       </LineStyle>
       <PolyStyle>
         <color>4d7e231a</color>
@@ -415,52 +377,14 @@
         <text><![CDATA[<h3>$[name]</h3>]]></text>
       </BalloonStyle>
     </Style>
-    <StyleMap id="poly-1A237E-1200-77-nodesc">
+    <StyleMap id="poly-1A237E-2000-77-nodesc">
       <Pair>
         <key>normal</key>
-        <styleUrl>#poly-1A237E-1200-77-nodesc-normal</styleUrl>
+        <styleUrl>#poly-1A237E-2000-77-nodesc-normal</styleUrl>
       </Pair>
       <Pair>
         <key>highlight</key>
-        <styleUrl>#poly-1A237E-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-3949AB-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ffab4939</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4dab4939</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-3949AB-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ffab4939</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4dab4939</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-3949AB-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-3949AB-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-3949AB-1200-77-nodesc-highlight</styleUrl>
+        <styleUrl>#poly-1A237E-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-3949AB-2000-77-nodesc-normal">
@@ -577,44 +501,6 @@
         <styleUrl>#poly-558B2F-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-673AB7-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ffb73a67</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4db73a67</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-673AB7-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ffb73a67</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4db73a67</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-673AB7-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-673AB7-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-673AB7-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-673AB7-2000-77-nodesc-normal">
       <LineStyle>
         <color>ffb73a67</color>
@@ -691,44 +577,6 @@
         <styleUrl>#poly-757575-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-795548-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff485579</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d485579</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-795548-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff485579</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d485579</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-795548-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-795548-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-795548-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-795548-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff485579</color>
@@ -765,44 +613,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-795548-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-7CB342-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff42b37c</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d42b37c</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-7CB342-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff42b37c</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d42b37c</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-7CB342-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-7CB342-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-7CB342-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-7CB342-2000-77-nodesc-normal">
@@ -957,44 +767,6 @@
         <styleUrl>#poly-880E4F-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-9C27B0-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ffb0279c</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4db0279c</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-9C27B0-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ffb0279c</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4db0279c</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-9C27B0-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-9C27B0-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-9C27B0-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-9C27B0-2000-77-nodesc-normal">
       <LineStyle>
         <color>ffb0279c</color>
@@ -1033,44 +805,6 @@
         <styleUrl>#poly-9C27B0-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-9FA8DA-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ffdaa89f</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4ddaa89f</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-9FA8DA-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ffdaa89f</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4ddaa89f</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-9FA8DA-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-9FA8DA-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-9FA8DA-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-9FA8DA-2000-77-nodesc-normal">
       <LineStyle>
         <color>ffdaa89f</color>
@@ -1107,44 +841,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-9FA8DA-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-A1C2FA-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>fffac2a1</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4dfac2a1</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-A1C2FA-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>fffac2a1</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4dfac2a1</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-A1C2FA-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-A1C2FA-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-A1C2FA-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-A1C2FA-2000-77-nodesc-normal">
@@ -1223,44 +919,6 @@
         <styleUrl>#poly-A52714-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-AFB42B-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff2bb4af</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d2bb4af</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-AFB42B-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff2bb4af</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d2bb4af</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-AFB42B-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-AFB42B-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-AFB42B-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-AFB42B-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff2bb4af</color>
@@ -1297,44 +955,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-AFB42B-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-B2EBF2-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>fff2ebb2</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4df2ebb2</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-B2EBF2-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>fff2ebb2</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4df2ebb2</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-B2EBF2-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-B2EBF2-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-B2EBF2-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-B2EBF2-2000-77-nodesc-normal">
@@ -1375,10 +995,10 @@
         <styleUrl>#poly-B2EBF2-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-BCAAA4-1200-77-nodesc-normal">
+    <Style id="poly-BCAAA4-2000-77-nodesc-normal">
       <LineStyle>
         <color>ffa4aabc</color>
-        <width>1.2</width>
+        <width>2</width>
       </LineStyle>
       <PolyStyle>
         <color>4da4aabc</color>
@@ -1389,10 +1009,10 @@
         <text><![CDATA[<h3>$[name]</h3>]]></text>
       </BalloonStyle>
     </Style>
-    <Style id="poly-BCAAA4-1200-77-nodesc-highlight">
+    <Style id="poly-BCAAA4-2000-77-nodesc-highlight">
       <LineStyle>
         <color>ffa4aabc</color>
-        <width>1.8</width>
+        <width>3</width>
       </LineStyle>
       <PolyStyle>
         <color>4da4aabc</color>
@@ -1403,14 +1023,14 @@
         <text><![CDATA[<h3>$[name]</h3>]]></text>
       </BalloonStyle>
     </Style>
-    <StyleMap id="poly-BCAAA4-1200-77-nodesc">
+    <StyleMap id="poly-BCAAA4-2000-77-nodesc">
       <Pair>
         <key>normal</key>
-        <styleUrl>#poly-BCAAA4-1200-77-nodesc-normal</styleUrl>
+        <styleUrl>#poly-BCAAA4-2000-77-nodesc-normal</styleUrl>
       </Pair>
       <Pair>
         <key>highlight</key>
-        <styleUrl>#poly-BCAAA4-1200-77-nodesc-highlight</styleUrl>
+        <styleUrl>#poly-BCAAA4-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-BDBDBD-2000-77-nodesc-normal">
@@ -1525,44 +1145,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-CE93D8-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-E65100-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff0051e6</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d0051e6</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-E65100-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff0051e6</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d0051e6</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-E65100-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-E65100-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-E65100-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-E65100-2000-61-nodesc-normal">
@@ -1717,44 +1299,6 @@
         <styleUrl>#poly-EDA29B-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-F48FB1-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ffb18ff4</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4db18ff4</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-F48FB1-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ffb18ff4</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4db18ff4</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-F48FB1-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-F48FB1-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-F48FB1-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-F48FB1-2000-77-nodesc-normal">
       <LineStyle>
         <color>ffb18ff4</color>
@@ -1829,44 +1373,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-F57C00-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-F9A825-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff25a8f9</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d25a8f9</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-F9A825-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff25a8f9</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d25a8f9</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-F9A825-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-F9A825-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-F9A825-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-F9A825-2000-77-nodesc-normal">
@@ -1983,44 +1489,6 @@
         <styleUrl>#poly-FBC02D-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-FF5252-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff5252ff</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d5252ff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-FF5252-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff5252ff</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d5252ff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-FF5252-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-FF5252-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-FF5252-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-FF5252-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff5252ff</color>
@@ -2097,44 +1565,6 @@
         <styleUrl>#poly-FFCC80-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-FFD600-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff00d6ff</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d00d6ff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-FFD600-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff00d6ff</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d00d6ff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-FFD600-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-FFD600-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-FFD600-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-FFD600-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff00d6ff</color>
@@ -2173,44 +1603,6 @@
         <styleUrl>#poly-FFD600-2000-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
-    <Style id="poly-FFEA00-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff00eaff</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d00eaff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-FFEA00-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff00eaff</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d00eaff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-FFEA00-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-FFEA00-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-FFEA00-1200-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
     <Style id="poly-FFEA00-2000-77-nodesc-normal">
       <LineStyle>
         <color>ff00eaff</color>
@@ -2247,44 +1639,6 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#poly-FFEA00-2000-77-nodesc-highlight</styleUrl>
-      </Pair>
-    </StyleMap>
-    <Style id="poly-FFFF8D-1200-77-nodesc-normal">
-      <LineStyle>
-        <color>ff8dffff</color>
-        <width>1.2</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d8dffff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <Style id="poly-FFFF8D-1200-77-nodesc-highlight">
-      <LineStyle>
-        <color>ff8dffff</color>
-        <width>1.8</width>
-      </LineStyle>
-      <PolyStyle>
-        <color>4d8dffff</color>
-        <fill>1</fill>
-        <outline>1</outline>
-      </PolyStyle>
-      <BalloonStyle>
-        <text><![CDATA[<h3>$[name]</h3>]]></text>
-      </BalloonStyle>
-    </Style>
-    <StyleMap id="poly-FFFF8D-1200-77-nodesc">
-      <Pair>
-        <key>normal</key>
-        <styleUrl>#poly-FFFF8D-1200-77-nodesc-normal</styleUrl>
-      </Pair>
-      <Pair>
-        <key>highlight</key>
-        <styleUrl>#poly-FFFF8D-1200-77-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="poly-FFFF8D-2000-77-nodesc-normal">
@@ -3140,19 +2494,19 @@
       </Placemark>
       <Placemark>
         <name>Barna</name>
-        <styleUrl>#poly-795548-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                147.7507095,-21.6501848,0
-                147.8006103,-22.3344187,0
-                147.9841689,-22.6752592,0
-                148.5417251,-22.5890665,0
-                148.4950332,-22.4520613,0
-                148.3137588,-21.622101,0
-                147.7507095,-21.6501848,0
+                147.75071,-21.650185,0
+                147.80061,-22.334419,0
+                147.984169,-22.675259,0
+                148.541725,-22.589066,0
+                148.495033,-22.452061,0
+                148.313759,-21.622101,0
+                147.75071,-21.650185,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -3160,19 +2514,19 @@
       </Placemark>
       <Placemark>
         <name>Baradha</name>
-        <styleUrl>#poly-9C27B0-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-9C27B0-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.3137588,-21.622101,0
-                148.4799269,-22.4127108,0
-                148.6414604,-22.4143853,0
-                149.1825371,-22.3381921,0
-                149.0675338,-21.6064489,0
-                148.9784316,-21.5965656,0
-                148.3137588,-21.622101,0
+                148.313759,-21.622101,0
+                148.479927,-22.412711,0
+                148.64146,-22.414385,0
+                149.182537,-22.338192,0
+                149.067534,-21.606449,0
+                148.978432,-21.596566,0
+                148.313759,-21.622101,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -3180,20 +2534,20 @@
       </Placemark>
       <Placemark>
         <name>Gabalbara</name>
-        <styleUrl>#poly-1A237E-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-1A237E-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.4799269,-22.4127108,0
-                148.5417251,-22.5890665,0
-                147.9841689,-22.6752592,0
-                148.2510498,-23.1298448,0
-                148.5861328,-23.462835,0
-                149.3775444,-23.4035767,0
-                148.6414604,-22.4143853,0
-                148.4799269,-22.4127108,0
+                148.479927,-22.412711,0
+                148.541725,-22.589066,0
+                147.984169,-22.675259,0
+                148.25105,-23.129845,0
+                148.586133,-23.462835,0
+                149.377544,-23.403577,0
+                148.64146,-22.414385,0
+                148.479927,-22.412711,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4351,14 +3705,14 @@
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.7293318,-25.5749326,0
+                146.729332,-25.574933,0
                 147.085855,-25.721776,0
                 147.624718,-25.750704,0
-                147.6714097,-25.2424916,0
-                147.4434436,-24.8318916,0
-                146.9078597,-25.0012753,0
-                146.8337025,-25.2226159,0
-                146.7293318,-25.5749326,0
+                147.67141,-25.242492,0
+                147.443444,-24.831892,0
+                146.90786,-25.001275,0
+                146.833702,-25.222616,0
+                146.729332,-25.574933,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4379,8 +3733,8 @@
                 148.767296,-27.712985,0
                 149.140831,-27.186518,0
                 149.096886,-26.106399,0
-                148.1987533,-26.1211964,0
-                147.8197251,-25.9089235,0
+                148.198753,-26.121196,0
+                147.819725,-25.908924,0
                 147.624718,-25.750704,0
                 147.085855,-25.721776,0
               </coordinates>
@@ -4422,11 +3776,11 @@
               <coordinates>
                 150.898644,-27.751882,0
                 151.601769,-27.887913,0
-                152.3285552,-27.9087909,0
-                152.2939075,-27.4476286,0
+                152.328555,-27.908791,0
+                152.293908,-27.447629,0
                 151.184288,-26.205012,0
                 150.810753,-25.612089,0
-                150.0938953,-25.6219951,0
+                150.093895,-25.621995,0
                 149.756066,-25.928686,0
                 149.096886,-26.106399,0
                 149.140831,-27.186518,0
@@ -4445,15 +3799,15 @@
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.1278309,-25.2648488,0
+                146.127831,-25.264849,0
                 146.020714,-25.056026,0
                 145.185753,-26.027449,0
                 145.229698,-26.814543,0
                 145.713097,-26.932142,0
                 146.789757,-26.657555,0
                 147.085855,-25.721776,0
-                146.3805159,-25.4261919,0
-                146.1278309,-25.2648488,0
+                146.380516,-25.426192,0
+                146.127831,-25.264849,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4488,11 +3842,11 @@
               <tessellate>1</tessellate>
               <coordinates>
                 146.020714,-25.056026,0
-                146.1086043,-24.3824064,0
-                145.6856314,-24.3523832,0
-                145.5867536,-24.8019769,0
-                144.7957384,-24.7670663,0
-                144.2464221,-24.6223327,0
+                146.108604,-24.382406,0
+                145.685631,-24.352383,0
+                145.586754,-24.801977,0
+                144.795738,-24.767066,0
+                144.246422,-24.622333,0
                 143.647667,-24.956461,0
                 143.735558,-25.869388,0
                 145.185753,-26.027449,0
@@ -4573,21 +3927,21 @@
       </Placemark>
       <Placemark>
         <name>Biri</name>
-        <styleUrl>#poly-B2EBF2-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-B2EBF2-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                149.0675338,-21.6064489,0
-                148.6500533,-21.1588836,0
-                148.0595382,-20.0611756,0
-                147.5782447,-19.8427702,0
-                147.4958471,-20.3225712,0
-                147.2700576,-20.4377262,0
-                147.7507095,-21.6501848,0
-                148.9784316,-21.5965656,0
-                149.0675338,-21.6064489,0
+                149.067534,-21.606449,0
+                148.650053,-21.158884,0
+                148.059538,-20.061176,0
+                147.578245,-19.84277,0
+                147.495847,-20.322571,0
+                147.270058,-20.437726,0
+                147.75071,-21.650185,0
+                148.978432,-21.596566,0
+                149.067534,-21.606449,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4595,19 +3949,19 @@
       </Placemark>
       <Placemark>
         <name>Yangga</name>
-        <styleUrl>#poly-01579B-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-01579B-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.4436695,-21.4272666,0
-                146.4241104,-21.688472,0
-                147.7507095,-21.6501848,0
-                147.2700576,-20.4377262,0
-                147.1992163,-20.4873225,0
-                147.0608261,-20.3939146,0
-                146.4436695,-21.4272666,0
+                146.44367,-21.427267,0
+                146.42411,-21.688472,0
+                147.75071,-21.650185,0
+                147.270058,-20.437726,0
+                147.199216,-20.487322,0
+                147.060826,-20.393915,0
+                146.44367,-21.427267,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4615,24 +3969,24 @@
       </Placemark>
       <Placemark>
         <name>Yuggera</name>
-        <styleUrl>#poly-F48FB1-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F48FB1-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                152.3285552,-27.9087909,0
+                152.328555,-27.908791,0
                 153.600665,-27.929191,0
-                153.6655501,-27.3394454,0
-                153.5144881,-26.9239073,0
-                153.2425764,-27.1147576,0
-                152.8992537,-27.1563102,0
-                152.7646712,-27.4150532,0
-                152.5669173,-27.4199293,0
-                152.4598006,-27.2125037,0
-                152.0642927,-27.210061,0
-                152.2939075,-27.4476286,0
-                152.3285552,-27.9087909,0
+                153.66555,-27.339445,0
+                153.514488,-26.923907,0
+                153.242576,-27.114758,0
+                152.899254,-27.15631,0
+                152.764671,-27.415053,0
+                152.566917,-27.419929,0
+                152.459801,-27.212504,0
+                152.064293,-27.210061,0
+                152.293908,-27.447629,0
+                152.328555,-27.908791,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4640,22 +3994,22 @@
       </Placemark>
       <Placemark>
         <name>Gubbi Gubbi</name>
-        <styleUrl>#poly-BCAAA4-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-BCAAA4-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                152.8992537,-27.1563102,0
-                153.2425764,-27.1147576,0
-                153.5144881,-26.9239073,0
-                153.4128645,-25.7572284,0
-                153.0228499,-25.8066919,0
-                152.6685408,-25.8857905,0
-                152.4405745,-25.196865,0
-                152.5641707,-25.0103292,0
-                151.93795,-25.0103292,0
-                152.8992537,-27.1563102,0
+                152.899254,-27.15631,0
+                153.242576,-27.114758,0
+                153.514488,-26.923907,0
+                153.412864,-25.757228,0
+                153.02285,-25.806692,0
+                152.668541,-25.88579,0
+                152.440574,-25.196865,0
+                152.564171,-25.010329,0
+                151.93795,-25.010329,0
+                152.899254,-27.15631,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4663,19 +4017,19 @@
       </Placemark>
       <Placemark>
         <name>Badtjala</name>
-        <styleUrl>#poly-0288D1-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-0288D1-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                152.5641707,-25.0103292,0
-                152.4405745,-25.196865,0
-                152.6685408,-25.8857905,0
-                153.4128645,-25.7572284,0
-                153.528221,-24.6663631,0
-                153.0201033,-24.6963111,0
-                152.5641707,-25.0103292,0
+                152.564171,-25.010329,0
+                152.440574,-25.196865,0
+                152.668541,-25.88579,0
+                153.412864,-25.757228,0
+                153.528221,-24.666363,0
+                153.020103,-24.696311,0
+                152.564171,-25.010329,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4683,22 +4037,22 @@
       </Placemark>
       <Placemark>
         <name>Waka Waka</name>
-        <styleUrl>#poly-FFEA00-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-FFEA00-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                152.4598006,-27.2125037,0
-                152.5669173,-27.4199293,0
-                152.7646712,-27.4150532,0
-                152.8992537,-27.1563102,0
-                151.93795,-25.0103292,0
-                151.6605452,-24.9306542,0
+                152.459801,-27.212504,0
+                152.566917,-27.419929,0
+                152.764671,-27.415053,0
+                152.899254,-27.15631,0
+                151.93795,-25.010329,0
+                151.660545,-24.930654,0
                 150.810753,-25.612089,0
                 151.184288,-26.205012,0
-                152.0642927,-27.210061,0
-                152.4598006,-27.2125037,0
+                152.064293,-27.210061,0
+                152.459801,-27.212504,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4706,23 +4060,23 @@
       </Placemark>
       <Placemark>
         <name>Gureng Gureng</name>
-        <styleUrl>#poly-673AB7-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-673AB7-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
                 150.810753,-25.612089,0
-                151.6605452,-24.9306542,0
-                151.93795,-25.0103292,0
-                152.5641707,-25.0103292,0
-                152.5257185,-24.5814714,0
-                152.0203474,-23.8952556,0
-                151.5671614,-23.8374859,0
-                151.3996199,-23.9128326,0
-                151.2567976,-23.8123606,0
-                150.7267073,-23.9128326,0
-                150.9793928,-24.7412196,0
+                151.660545,-24.930654,0
+                151.93795,-25.010329,0
+                152.564171,-25.010329,0
+                152.525718,-24.581471,0
+                152.020347,-23.895256,0
+                151.567161,-23.837486,0
+                151.39962,-23.912833,0
+                151.256798,-23.812361,0
+                150.726707,-23.912833,0
+                150.979393,-24.74122,0
                 150.810753,-25.612089,0
               </coordinates>
             </LinearRing>
@@ -4731,22 +4085,22 @@
       </Placemark>
       <Placemark>
         <name>Bayali</name>
-        <styleUrl>#poly-F9A825-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F9A825-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                151.2567976,-23.8123606,0
-                151.3996199,-23.9128326,0
-                151.5671614,-23.8374859,0
-                151.272686,-23.4237401,0
-                151.1738091,-23.4766544,0
-                150.9994011,-23.4035767,0
+                151.256798,-23.812361,0
+                151.39962,-23.912833,0
+                151.567161,-23.837486,0
+                151.272686,-23.42374,0
+                151.173809,-23.476654,0
+                150.999401,-23.403577,0
                 150.904644,-23.486731,0
-                150.5819206,-23.5861952,0
-                150.7267073,-23.9128326,0
-                151.2567976,-23.8123606,0
+                150.581921,-23.586195,0
+                150.726707,-23.912833,0
+                151.256798,-23.812361,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4754,26 +4108,26 @@
       </Placemark>
       <Placemark>
         <name>Darumbal</name>
-        <styleUrl>#poly-FFFF8D-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-FFFF8D-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                150.5819206,-23.5861952,0
+                150.581921,-23.586195,0
                 150.904644,-23.486731,0
-                150.9994011,-23.4035767,0
-                151.1696892,-23.1348592,0
-                150.8730583,-23.002194,0
-                150.8744316,-22.1551586,0
-                150.2454643,-22.1017289,0
-                149.9762993,-22.0686432,0
-                150.2042656,-22.7618018,0
-                149.4324761,-22.7921906,0
-                149.1825371,-22.3381921,0
-                148.6414604,-22.4143853,0
-                149.3775444,-23.4035767,0
-                150.5819206,-23.5861952,0
+                150.999401,-23.403577,0
+                151.169689,-23.134859,0
+                150.873058,-23.002194,0
+                150.874432,-22.155159,0
+                150.245464,-22.101729,0
+                149.976299,-22.068643,0
+                150.204266,-22.761802,0
+                149.432476,-22.792191,0
+                149.182537,-22.338192,0
+                148.64146,-22.414385,0
+                149.377544,-23.403577,0
+                150.581921,-23.586195,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4781,19 +4135,19 @@
       </Placemark>
       <Placemark>
         <name>Guwinmal</name>
-        <styleUrl>#poly-FF5252-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-FF5252-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                149.4324761,-22.7921906,0
-                150.2042656,-22.7618018,0
-                149.9762993,-22.0686432,0
-                149.6580489,-21.3738858,0
-                149.0675338,-21.6064489,0
-                149.1825371,-22.3381921,0
-                149.4324761,-22.7921906,0
+                149.432476,-22.792191,0
+                150.204266,-22.761802,0
+                149.976299,-22.068643,0
+                149.658049,-21.373886,0
+                149.067534,-21.606449,0
+                149.182537,-22.338192,0
+                149.432476,-22.792191,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4801,19 +4155,19 @@
       </Placemark>
       <Placemark>
         <name>Yuwi</name>
-        <styleUrl>#poly-7CB342-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-7CB342-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                149.0675338,-21.6064489,0
-                149.6580489,-21.3738858,0
-                149.1032393,-20.8280938,0
-                148.7763961,-20.9025212,0
-                148.7599166,-21.1255815,0
-                148.6500533,-21.1588836,0
-                149.0675338,-21.6064489,0
+                149.067534,-21.606449,0
+                149.658049,-21.373886,0
+                149.103239,-20.828094,0
+                148.776396,-20.902521,0
+                148.759917,-21.125582,0
+                148.650053,-21.158884,0
+                149.067534,-21.606449,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4821,20 +4175,20 @@
       </Placemark>
       <Placemark>
         <name>Giya</name>
-        <styleUrl>#poly-F9A825-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F9A825-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.6500533,-21.1588836,0
-                148.7599166,-21.1255815,0
-                148.7763961,-20.9025212,0
-                149.1032393,-20.8280938,0
-                149.342192,-20.0611757,0
-                148.573149,-19.7745422,0
-                148.0595382,-20.0611756,0
-                148.6500533,-21.1588836,0
+                148.650053,-21.158884,0
+                148.759917,-21.125582,0
+                148.776396,-20.902521,0
+                149.103239,-20.828094,0
+                149.342192,-20.061176,0
+                148.573149,-19.774542,0
+                148.059538,-20.061176,0
+                148.650053,-21.158884,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4842,28 +4196,28 @@
       </Placemark>
       <Placemark>
         <name>Yuru</name>
-        <styleUrl>#poly-FFEA00-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-FFEA00-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.0595382,-20.0611756,0
-                148.573149,-19.7745422,0
-                147.6063522,-19.6659513,0
-                147.5325378,-19.6714472,0
-                147.514685,-19.6623949,0
-                147.4494537,-19.6232704,0
-                147.4367507,-19.6210067,0
-                147.4055083,-19.625534,0
-                147.3876556,-19.6462289,0
-                147.3584731,-19.6743568,0
-                147.3361571,-19.6934291,0
-                147.3275741,-19.70151,0
-                147.3117812,-19.7037725,0
-                147.3035415,-19.7050654,0
-                147.2798522,-19.7060351,0
-                148.0595382,-20.0611756,0
+                148.059538,-20.061176,0
+                148.573149,-19.774542,0
+                147.606352,-19.665951,0
+                147.532538,-19.671447,0
+                147.514685,-19.662395,0
+                147.449454,-19.62327,0
+                147.436751,-19.621007,0
+                147.405508,-19.625534,0
+                147.387656,-19.646229,0
+                147.358473,-19.674357,0
+                147.336157,-19.693429,0
+                147.327574,-19.70151,0
+                147.311781,-19.703772,0
+                147.303542,-19.705065,0
+                147.279852,-19.706035,0
+                148.059538,-20.061176,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4871,31 +4225,31 @@
       </Placemark>
       <Placemark>
         <name>Bindal</name>
-        <styleUrl>#poly-E65100-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-E65100-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.8366225,-19.2428486,0
-                146.8421157,-19.7037725,0
-                147.2802115,-19.7048635,0
-                147.3035415,-19.7050654,0
-                147.3275741,-19.70151,0
-                147.3361571,-19.6934291,0
+                146.836622,-19.242849,0
+                146.842116,-19.703772,0
+                147.280212,-19.704864,0
+                147.303542,-19.705065,0
+                147.327574,-19.70151,0
+                147.336157,-19.693429,0
                 147.35703,-19.675852,0
                 147.378316,-19.655161,0
-                147.3923922,-19.6412577,0
-                147.4055083,-19.625534,0
-                147.4367507,-19.6210067,0
-                147.4494537,-19.6232704,0
-                147.5325378,-19.6714472,0
-                147.6063522,-19.6659513,0
-                147.5260596,-19.2500532,0
-                147.2115759,-19.3135698,0
-                147.07974,-19.1229462,0
-                146.9437842,-19.2033722,0
-                146.8366225,-19.2428486,0
+                147.392392,-19.641258,0
+                147.405508,-19.625534,0
+                147.436751,-19.621007,0
+                147.449454,-19.62327,0
+                147.532538,-19.671447,0
+                147.606352,-19.665951,0
+                147.52606,-19.250053,0
+                147.211576,-19.31357,0
+                147.07974,-19.122946,0
+                146.943784,-19.203372,0
+                146.836622,-19.242849,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4903,33 +4257,33 @@
       </Placemark>
       <Placemark>
         <name>Guga-Badhun</name>
-        <styleUrl>#poly-7CB342-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-7CB342-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.8366225,-19.2428486,0
-                146.4823584,-19.2344943,0
-                145.8863501,-18.6083396,0
-                145.4853491,-18.6135455,0
-                145.3617529,-18.3452347,0
-                145.3590063,-17.9067086,0
-                145.3535132,-17.4566152,0
-                144.9580054,-17.4539951,0
-                144.6943335,-18.9619769,0
-                144.5158057,-19.1592725,0
-                144.1065649,-19.4185125,0
-                144.1065649,-19.816933,0
-                144.8865942,-19.806597,0
-                145.0568823,-20.0389954,0
-                146.6444067,-20.1318588,0
-                147.1992163,-20.4873225,0
-                147.4958471,-20.3225712,0
-                147.5782447,-19.8427702,0
-                147.2798522,-19.7060351,0
-                146.8421157,-19.7037725,0
-                146.8366225,-19.2428486,0
+                146.836622,-19.242849,0
+                146.482358,-19.234494,0
+                145.88635,-18.60834,0
+                145.485349,-18.613546,0
+                145.361753,-18.345235,0
+                145.359006,-17.906709,0
+                145.353513,-17.456615,0
+                144.958005,-17.453995,0
+                144.694334,-18.961977,0
+                144.515806,-19.159272,0
+                144.106565,-19.418512,0
+                144.106565,-19.816933,0
+                144.886594,-19.806597,0
+                145.056882,-20.038995,0
+                146.644407,-20.131859,0
+                147.199216,-20.487322,0
+                147.495847,-20.322571,0
+                147.578245,-19.84277,0
+                147.279852,-19.706035,0
+                146.842116,-19.703772,0
+                146.836622,-19.242849,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4937,17 +4291,17 @@
       </Placemark>
       <Placemark>
         <name>Wuli-wuli</name>
-        <styleUrl>#poly-B2EBF2-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-B2EBF2-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                150.0938953,-25.6219951,0
+                150.093895,-25.621995,0
                 150.810753,-25.612089,0
-                150.9793928,-24.7412196,0
-                149.9096467,-24.7204784,0
-                150.0938953,-25.6219951,0
+                150.979393,-24.74122,0
+                149.909647,-24.720478,0
+                150.093895,-25.621995,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4955,7 +4309,7 @@
       </Placemark>
       <Placemark>
         <name>Yiman</name>
-        <styleUrl>#poly-3949AB-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-3949AB-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
@@ -4963,10 +4317,10 @@
               <coordinates>
                 149.096886,-26.106399,0
                 149.756066,-25.928686,0
-                150.0938953,-25.6219951,0
-                149.9096467,-24.7204784,0
-                148.6475772,-25.2411011,0
-                148.5981387,-26.1124173,0
+                150.093895,-25.621995,0
+                149.909647,-24.720478,0
+                148.647577,-25.241101,0
+                148.598139,-26.112417,0
                 149.096886,-26.106399,0
               </coordinates>
             </LinearRing>
@@ -4975,18 +4329,19 @@
       </Placemark>
       <Placemark>
         <name>Gungabula</name>
-        <styleUrl>#poly-01579B-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-01579B-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                147.6862735,-25.6651782,0
-                147.8593082,-25.511592,0
-                148.5679263,-25.8605903,0
-                148.793146,-24.8977799,0
-                147.9224795,-24.8728643,0
-                147.6862735,-25.6651782,0
+                147.624718,-25.750704,0
+                147.819725,-25.908924,0
+                148.198753,-26.121196,0
+                148.598139,-26.112417,0
+                148.647577,-25.241101,0
+                147.67141,-25.242492,0
+                147.624718,-25.750704,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -4994,19 +4349,19 @@
       </Placemark>
       <Placemark>
         <name>Garingbal</name>
-        <styleUrl>#poly-AFB42B-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-AFB42B-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                147.4434436,-24.8318916,0
-                147.6714097,-25.2424916,0
-                148.6475772,-25.2411011,0
-                148.7071019,-24.5608005,0
-                148.5472013,-24.4992376,0
-                148.083029,-24.4517419,0
-                147.4434436,-24.8318916,0
+                147.443444,-24.831892,0
+                147.67141,-25.242492,0
+                148.647577,-25.241101,0
+                148.707102,-24.5608,0
+                148.547201,-24.499238,0
+                148.083029,-24.451742,0
+                147.443444,-24.831892,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5014,21 +4369,21 @@
       </Placemark>
       <Placemark>
         <name>Bidjara</name>
-        <styleUrl>#poly-9C27B0-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-9C27B0-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
                 146.020714,-25.056026,0
-                146.1278309,-25.2648488,0
-                146.3805159,-25.4261919,0
-                146.7293318,-25.5749326,0
-                146.9078597,-25.0012753,0
-                147.4434436,-24.8318916,0
-                148.083029,-24.4517419,0
-                147.3281982,-24.1563691,0
-                146.1086043,-24.3824064,0
+                146.127831,-25.264849,0
+                146.380516,-25.426192,0
+                146.729332,-25.574933,0
+                146.90786,-25.001275,0
+                147.443444,-24.831892,0
+                148.083029,-24.451742,0
+                147.328198,-24.156369,0
+                146.108604,-24.382406,0
                 146.020714,-25.056026,0
               </coordinates>
             </LinearRing>
@@ -5037,19 +4392,19 @@
       </Placemark>
       <Placemark>
         <name>Gayiri</name>
-        <styleUrl>#poly-BCAAA4-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-BCAAA4-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.083029,-24.4517419,0
-                148.5472013,-24.4992376,0
-                148.5861328,-23.462835,0
-                148.2510498,-23.1298448,0
-                147.2458008,-23.3670596,0
-                147.3281982,-24.1563691,0
-                148.083029,-24.4517419,0
+                148.083029,-24.451742,0
+                148.547201,-24.499238,0
+                148.586133,-23.462835,0
+                148.25105,-23.129845,0
+                147.245801,-23.36706,0
+                147.328198,-24.156369,0
+                148.083029,-24.451742,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5057,17 +4412,17 @@
       </Placemark>
       <Placemark>
         <name>Wangan</name>
-        <styleUrl>#poly-A1C2FA-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-A1C2FA-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                147.2458008,-23.3670596,0
-                148.2510498,-23.1298448,0
-                147.8006103,-22.3344187,0
-                147.0370605,-22.5222915,0
-                147.2458008,-23.3670596,0
+                147.245801,-23.36706,0
+                148.25105,-23.129845,0
+                147.80061,-22.334419,0
+                147.03706,-22.522292,0
+                147.245801,-23.36706,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5075,19 +4430,19 @@
       </Placemark>
       <Placemark>
         <name>Yangalingu</name>
-        <styleUrl>#poly-F9A825-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F9A825-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.1086043,-24.3824064,0
-                147.3281982,-24.1563691,0
-                147.2458008,-23.3670596,0
-                147.0370605,-22.5222915,0
-                145.6251881,-22.5782755,0
-                145.8943531,-23.352109,0
-                146.1086043,-24.3824064,0
+                146.108604,-24.382406,0
+                147.328198,-24.156369,0
+                147.245801,-23.36706,0
+                147.03706,-22.522292,0
+                145.625188,-22.578276,0
+                145.894353,-23.352109,0
+                146.108604,-24.382406,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5095,18 +4450,18 @@
       </Placemark>
       <Placemark>
         <name>Miyan</name>
-        <styleUrl>#poly-F48FB1-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F48FB1-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                145.6251881,-22.5782755,0
-                146.4711353,-22.5630583,0
-                146.4436695,-21.4272666,0
-                145.3010914,-21.4016969,0
-                145.2351734,-22.3853995,0
-                145.6251881,-22.5782755,0
+                145.625188,-22.578276,0
+                146.471135,-22.563058,0
+                146.44367,-21.427267,0
+                145.301091,-21.401697,0
+                145.235173,-22.3854,0
+                145.625188,-22.578276,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5114,18 +4469,18 @@
       </Placemark>
       <Placemark>
         <name>Yilba</name>
-        <styleUrl>#poly-673AB7-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-673AB7-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                145.3010914,-21.4016969,0
-                146.4436695,-21.4272666,0
-                147.0608261,-20.3939146,0
-                146.6444067,-20.1318588,0
-                145.0568823,-20.0389954,0
-                145.3010914,-21.4016969,0
+                145.301091,-21.401697,0
+                146.44367,-21.427267,0
+                147.060826,-20.393915,0
+                146.644407,-20.131859,0
+                145.056882,-20.038995,0
+                145.301091,-21.401697,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5133,18 +4488,18 @@
       </Placemark>
       <Placemark>
         <name>Yambina</name>
-        <styleUrl>#poly-FFD600-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-FFD600-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.4711353,-22.5630583,0
-                147.0370605,-22.5222915,0
-                147.8006103,-22.3344187,0
-                147.7507095,-21.6501848,0
-                146.4241104,-21.688472,0
-                146.4711353,-22.5630583,0
+                146.471135,-22.563058,0
+                147.03706,-22.522292,0
+                147.80061,-22.334419,0
+                147.75071,-21.650185,0
+                146.42411,-21.688472,0
+                146.471135,-22.563058,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5152,17 +4507,17 @@
       </Placemark>
       <Placemark>
         <name>Wadjigu</name>
-        <styleUrl>#poly-F9A825-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F9A825-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.6475772,-25.2411011,0
-                149.9096467,-24.7204784,0
-                149.3874461,-23.7641114,0
-                148.7071019,-24.5608005,0
-                148.6475772,-25.2411011,0
+                148.647577,-25.241101,0
+                149.909647,-24.720478,0
+                149.387446,-23.764111,0
+                148.707102,-24.5608,0
+                148.647577,-25.241101,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5170,22 +4525,22 @@
       </Placemark>
       <Placemark>
         <name>Gangulu</name>
-        <styleUrl>#poly-F48FB1-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-F48FB1-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                148.5472013,-24.4992376,0
-                148.7071019,-24.5608005,0
-                149.3874461,-23.7641114,0
-                149.9096467,-24.7204784,0
-                150.9793928,-24.7412196,0
-                150.7267073,-23.9128326,0
-                150.5819206,-23.5861952,0
-                149.3775444,-23.4035767,0
-                148.5861328,-23.462835,0
-                148.5472013,-24.4992376,0
+                148.547201,-24.499238,0
+                148.707102,-24.5608,0
+                149.387446,-23.764111,0
+                149.909647,-24.720478,0
+                150.979393,-24.74122,0
+                150.726707,-23.912833,0
+                150.581921,-23.586195,0
+                149.377544,-23.403577,0
+                148.586133,-23.462835,0
+                148.547201,-24.499238,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5193,21 +4548,21 @@
       </Placemark>
       <Placemark>
         <name>Nyawaygi</name>
-        <styleUrl>#poly-795548-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.4823584,-19.2344943,0
-                146.8366225,-19.2428486,0
-                146.9437842,-19.2033722,0
-                147.07974,-19.1229462,0
-                146.5364939,-18.4654173,0
-                146.3634593,-18.4966765,0
-                146.2261301,-18.4914671,0
-                145.8863501,-18.6083396,0
-                146.4823584,-19.2344943,0
+                146.482358,-19.234494,0
+                146.836622,-19.242849,0
+                146.943784,-19.203372,0
+                147.07974,-19.122946,0
+                146.536494,-18.465417,0
+                146.363459,-18.496676,0
+                146.22613,-18.491467,0
+                145.88635,-18.60834,0
+                146.482358,-19.234494,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5215,22 +4570,22 @@
       </Placemark>
       <Placemark>
         <name>Wargamaygan</name>
-        <styleUrl>#poly-9FA8DA-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-9FA8DA-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                145.8863501,-18.6083396,0
-                146.2261301,-18.4914671,0
-                146.3634593,-18.4966765,0
-                146.5364939,-18.4654173,0
-                146.3162174,-18.0888434,0
-                146.0649052,-18.0679555,0
-                145.3549137,-18.1371373,0
-                145.3617529,-18.3452347,0
-                145.4853491,-18.6135455,0
-                145.8863501,-18.6083396,0
+                145.88635,-18.60834,0
+                146.22613,-18.491467,0
+                146.363459,-18.496676,0
+                146.536494,-18.465417,0
+                146.316217,-18.088843,0
+                146.064905,-18.067956,0
+                145.354914,-18.137137,0
+                145.361753,-18.345235,0
+                145.485349,-18.613546,0
+                145.88635,-18.60834,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5238,20 +4593,20 @@
       </Placemark>
       <Placemark>
         <name>Djirbalngan</name>
-        <styleUrl>#poly-0288D1-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-0288D1-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                146.3162174,-18.0888434,0
-                146.2448063,-17.4742346,0
-                145.8712711,-17.4742346,0
-                145.5059757,-17.2225576,0
-                145.3535132,-17.4566152,0
-                145.3549137,-18.1371373,0
-                146.0649052,-18.0679555,0
-                146.3162174,-18.0888434,0
+                146.316217,-18.088843,0
+                146.244806,-17.474235,0
+                145.871271,-17.474235,0
+                145.505976,-17.222558,0
+                145.353513,-17.456615,0
+                145.354914,-18.137137,0
+                146.064905,-18.067956,0
+                146.316217,-18.088843,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5259,17 +4614,17 @@
       </Placemark>
       <Placemark>
         <name>Mbabaram</name>
-        <styleUrl>#poly-FFFF8D-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-FFFF8D-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                144.9580054,-17.4539951,0
-                145.3535132,-17.4566152,0
-                145.5059757,-17.2225576,0
-                144.9017277,-17.2514131,0
-                144.9580054,-17.4539951,0
+                144.958005,-17.453995,0
+                145.353513,-17.456615,0
+                145.505976,-17.222558,0
+                144.901728,-17.251413,0
+                144.958005,-17.453995,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5277,18 +4632,18 @@
       </Placemark>
       <Placemark>
         <name>Yidinjdji</name>
-        <styleUrl>#poly-E65100-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-E65100-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                145.5059757,-17.2225576,0
-                145.8712711,-17.4742346,0
-                146.2448063,-17.4742346,0
-                146.0484257,-16.8444,0
-                145.7861271,-16.8470288,0
-                145.5059757,-17.2225576,0
+                145.505976,-17.222558,0
+                145.871271,-17.474235,0
+                146.244806,-17.474235,0
+                146.048426,-16.8444,0
+                145.786127,-16.847029,0
+                145.505976,-17.222558,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5296,17 +4651,17 @@
       </Placemark>
       <Placemark>
         <name>Djabuganjdji</name>
-        <styleUrl>#poly-A1C2FA-1200-77-nodesc</styleUrl>
+        <styleUrl>#poly-A1C2FA-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
             <LinearRing>
               <tessellate>1</tessellate>
               <coordinates>
-                145.5059757,-17.2225576,0
-                145.7861271,-16.8470288,0
-                145.6049115,-16.4893196,0
-                145.2808148,-16.5999001,0
-                145.5059757,-17.2225576,0
+                145.505976,-17.222558,0
+                145.786127,-16.847029,0
+                145.604912,-16.48932,0
+                145.280815,-16.5999,0
+                145.505976,-17.222558,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -5335,6 +4690,891 @@
             126.642951,-27.894676,0
           </coordinates>
         </Point>
+      </Placemark>
+      <Placemark>
+        <name>Kokatha</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                131.906765,-30.433427,0
+                133.647913,-30.69,0
+                135.312527,-31.075429,0
+                136.301297,-31.713125,0
+                136.872196,-31.656798,0
+                137.311649,-31.206838,0
+                137.773075,-31.169244,0
+                137.707157,-30.698062,0
+                137.223759,-30.129596,0
+                136.784306,-29.863182,0
+                136.010974,-29.741748,0
+                135.044177,-28.725541,0
+                133.791736,-28.204002,0
+                132.385486,-28.397464,0
+                130.473865,-27.387644,0
+                130.056384,-27.91315,0
+                129.572986,-28.513373,0
+                130.232166,-29.550785,0
+                131.906765,-30.433427,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Antakarinja</name>
+        <styleUrl>#poly-7CB342-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                135.044177,-28.725541,0
+                135.989002,-26.898827,0
+                134.363025,-25.181355,0
+                132.605213,-25.89508,0
+                133.791736,-28.204002,0
+                135.044177,-28.725541,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Yankuntjatjara</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                132.605213,-25.89508,0
+                131.155017,-25.14158,0
+                130.539783,-25.776422,0
+                130.781482,-26.761576,0
+                130.473865,-27.387644,0
+                132.385486,-28.397464,0
+                133.791736,-28.204002,0
+                132.605213,-25.89508,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Pitjantjatjara</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                131.155017,-25.14158,0
+                131.067127,-24.503419,0
+                129.836658,-24.022658,0
+                128.474353,-24.102911,0
+                128.562244,-25.815988,0
+                128.540271,-26.683072,0
+                130.473865,-27.387644,0
+                130.781482,-26.761576,0
+                130.539783,-25.776422,0
+                131.155017,-25.14158,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Luritja</name>
+        <styleUrl>#poly-01579B-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                129.836658,-24.022658,0
+                131.067127,-24.503419,0
+                131.155017,-25.14158,0
+                132.605213,-25.89508,0
+                134.363025,-25.181355,0
+                132.385486,-23.298142,0
+                132.121814,-22.569659,0
+                132.407459,-22.163267,0
+                130.10033,-22.00038,0
+                129.836658,-24.022658,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Arrernte</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                132.407459,-22.163267,0
+                132.121814,-22.569659,0
+                132.385486,-23.298142,0
+                134.363025,-25.181355,0
+                135.989002,-26.898827,0
+                136.516345,-26.91842,0
+                136.911853,-24.942508,0
+                136.648181,-21.837306,0
+                134.802478,-21.714877,0
+                132.407459,-22.163267,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Nakako</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                128.562244,-25.815988,0
+                127.968982,-25.618025,0
+                126.408924,-26.368518,0
+                127.112048,-28.320122,0
+                130.056384,-27.91315,0
+                130.473865,-27.387644,0
+                128.540271,-26.683072,0
+                128.562244,-25.815988,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ngalea</name>
+        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                127.112048,-28.320122,0
+                129.045642,-30.312454,0
+                131.906765,-30.433427,0
+                130.232166,-29.550785,0
+                129.572986,-28.513373,0
+                130.056384,-27.91315,0
+                127.112048,-28.320122,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ngatatjara</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                126.408924,-26.368518,0
+                127.968982,-25.618025,0
+                128.562244,-25.815988,0
+                128.474353,-24.102911,0
+                127.112048,-23.560235,0
+                124.936756,-23.761491,0
+                124.387439,-24.503419,0
+                125.244373,-25.300604,0
+                126.408924,-26.368518,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Pintupi</name>
+        <styleUrl>#poly-FF5252-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                127.112048,-23.560235,0
+                128.474353,-24.102911,0
+                129.836658,-24.022658,0
+                130.10033,-22.00038,0
+                129.309314,-21.346969,0
+                129.594959,-20.772832,0
+                128.847888,-20.381989,0
+                128.0349,-20.464355,0
+                126.936267,-19.824875,0
+                125.068592,-21.019162,0
+                125.617908,-22.468172,0
+                127.112048,-23.560235,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Mardu</name>
+        <styleUrl>#poly-AFB42B-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                125.068592,-21.019162,0
+                123.750232,-21.592345,0
+                123.81615,-20.670076,0
+                123.178943,-20.0108,0
+                122.08031,-22.061485,0
+                121.496303,-21.929171,0
+                121.317931,-23.524505,0
+                123.047107,-25.240994,0
+                123.442615,-24.403411,0
+                124.387439,-24.503419,0
+                124.936756,-23.761491,0
+                127.112048,-23.560235,0
+                125.617908,-22.468172,0
+                125.068592,-21.019162,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Nyangumarda</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                123.178943,-20.0108,0
+                122.541736,-19.203563,0
+                121.091541,-18.933593,0
+                119.570258,-19.699858,0
+                120.12232,-20.113053,0
+                121.103542,-20.744695,0
+                121.435879,-21.418693,0
+                121.496303,-21.929171,0
+                122.08031,-22.061485,0
+                123.178943,-20.0108,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Karajarri</name>
+        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                121.882556,-17.891219,0
+                121.091541,-18.933593,0
+                122.541736,-19.203563,0
+                123.376697,-18.225464,0
+                121.882556,-17.891219,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Nyanganyatjara</name>
+        <styleUrl>#poly-673AB7-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                122.212146,-28.320122,0
+                123.200916,-31.105884,0
+                125.177931,-31.155585,0
+                126.321033,-30.539814,0
+                129.045642,-30.312454,0
+                127.112048,-28.320122,0
+                126.452869,-28.725541,0
+                123.860095,-26.6438,0
+                122.212146,-28.320122,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ngaanyatjarra</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                123.047107,-25.240994,0
+                122.959216,-26.171486,0
+                123.860095,-26.6438,0
+                124.211658,-25.776422,0
+                125.244373,-25.300604,0
+                124.387439,-24.503419,0
+                123.442615,-24.403411,0
+                123.047107,-25.240994,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Mandjindja</name>
+        <styleUrl>#poly-F9A825-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                125.244373,-25.300604,0
+                124.211658,-25.776422,0
+                123.860095,-26.6438,0
+                126.452869,-28.725541,0
+                127.112048,-28.320122,0
+                126.408924,-26.368518,0
+                125.244373,-25.300604,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Tjupany</name>
+        <styleUrl>#poly-9FA8DA-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                119.116848,-25.004451,0
+                118.38862,-26.54323,0
+                117.56616,-27.127651,0
+                118.744444,-27.754098,0
+                119.421619,-26.781194,0
+                121.530994,-27.133726,0
+                120.805896,-25.835766,0
+                119.116848,-25.004451,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Wawula</name>
+        <styleUrl>#poly-673AB7-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                120.805896,-25.835766,0
+                121.75072,-25.360184,0
+                123.047107,-25.240994,0
+                121.317931,-23.524505,0
+                119.724914,-23.428774,0
+                119.613407,-23.662444,0
+                119.116848,-25.004451,0
+                120.805896,-25.835766,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Tjalkanti</name>
+        <styleUrl>#poly-FF5252-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                122.959216,-26.171486,0
+                121.706775,-27.718813,0
+                122.212146,-28.320122,0
+                123.860095,-26.6438,0
+                122.959216,-26.171486,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Nana</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                121.706775,-27.718813,0
+                122.959216,-26.171486,0
+                123.047107,-25.240994,0
+                121.75072,-25.360184,0
+                120.805896,-25.835766,0
+                121.530994,-27.133726,0
+                121.706775,-27.718813,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kuwarra</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                119.98716,-29.627226,0
+                120.652088,-28.918049,0
+                122.212146,-28.320122,0
+                121.706775,-27.718813,0
+                121.530994,-27.133726,0
+                119.421619,-26.781194,0
+                118.744444,-27.754098,0
+                118.256059,-28.36985,0
+                119.98716,-29.627226,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Wangkathaa</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                122.212146,-28.320122,0
+                120.652088,-28.918049,0
+                119.98716,-29.627226,0
+                120.978302,-30.989458,0
+                122.315992,-31.080341,0
+                123.200916,-31.105884,0
+                122.212146,-28.320122,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Andegerebenha</name>
+        <styleUrl>#poly-01579B-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                139.068314,-23.271471,0
+                138.936478,-22.380398,0
+                139.244095,-21.728728,0
+                138.738724,-21.07409,0
+                137.618119,-20.97154,0
+                137.310501,-21.749138,0
+                138.057572,-23.210902,0
+                139.068314,-23.271471,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Warluwarra</name>
+        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                139.244095,-21.728728,0
+                140.430619,-21.585777,0
+                140.430619,-20.169252,0
+                138.738724,-21.07409,0
+                139.244095,-21.728728,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Bularnu</name>
+        <styleUrl>#poly-FFD600-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                137.618119,-20.97154,0
+                138.738724,-21.07409,0
+                140.430619,-20.169252,0
+                140.342728,-19.424994,0
+                137.398392,-20.251731,0
+                137.618119,-20.97154,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Alyawarre</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                137.310501,-21.749138,0
+                137.618119,-20.97154,0
+                137.398392,-20.251731,0
+                136.277786,-19.900894,0
+                135.135208,-20.622343,0
+                134.802478,-21.714877,0
+                136.648181,-21.837306,0
+                137.310501,-21.749138,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Wakaya</name>
+        <styleUrl>#poly-F48FB1-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                136.277786,-19.900894,0
+                137.398392,-20.251731,0
+                140.342728,-19.424994,0
+                138.804642,-19.030803,0
+                137.178665,-19.155386,0
+                136.827103,-19.50786,0
+                136.277786,-19.900894,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Wambaya</name>
+        <styleUrl>#poly-673AB7-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                138.804642,-19.030803,0
+                136.985792,-18.009156,0
+                135.783679,-18.134121,0
+                137.178665,-19.155386,0
+                138.804642,-19.030803,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Anmatyerre</name>
+        <styleUrl>#poly-9C27B0-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                135.135208,-20.622343,0
+                133.66304,-20.437149,0
+                132.25679,-21.197058,0
+                132.407459,-22.163267,0
+                134.802478,-21.714877,0
+                135.135208,-20.622343,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kaytej</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                133.66304,-20.437149,0
+                135.135208,-20.622343,0
+                136.277786,-19.900894,0
+                136.827103,-19.50786,0
+                133.970658,-19.259134,0
+                133.66304,-20.437149,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Warumungu</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                135.783679,-18.134121,0
+                134.717728,-18.311427,0
+                135.354935,-18.686498,0
+                133.443314,-18.832136,0
+                133.970658,-19.259134,0
+                136.827103,-19.50786,0
+                137.178665,-19.155386,0
+                135.783679,-18.134121,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Warlmanpu</name>
+        <styleUrl>#poly-01579B-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                134.717728,-18.311427,0
+                133.706986,-17.851903,0
+                131.905228,-18.227967,0
+                133.443314,-18.832136,0
+                135.354935,-18.686498,0
+                134.717728,-18.311427,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Warlpiri</name>
+        <styleUrl>#poly-FFEA00-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                131.905228,-18.227967,0
+                128.982865,-18.561566,0
+                128.894974,-19.309768,0
+                130.301224,-20.405054,0
+                129.594959,-20.772832,0
+                129.309314,-21.346969,0
+                130.10033,-22.00038,0
+                132.407459,-22.163267,0
+                132.25679,-21.197058,0
+                133.66304,-20.437149,0
+                133.970658,-19.259134,0
+                133.443314,-18.832136,0
+                131.905228,-18.227967,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Polygon 38</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                128.894974,-19.309768,0
+                126.96138,-18.915301,0
+                126.936267,-19.824875,0
+                128.0349,-20.464355,0
+                128.847888,-20.381989,0
+                129.594959,-20.772832,0
+                130.301224,-20.405054,0
+                128.894974,-19.309768,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kukatja</name>
+        <styleUrl>#poly-9C27B0-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                126.96138,-18.915301,0
+                126.412064,-18.852931,0
+                125.774857,-18.873724,0
+                125.599076,-19.661908,0
+                125.068592,-21.019162,0
+                126.936267,-19.824875,0
+                126.96138,-18.915301,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Polygon 40</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                125.774857,-18.873724,0
+                125.159622,-18.852931,0
+                124.632279,-18.227967,0
+                124.017044,-18.624044,0
+                124.412552,-19.889353,0
+                125.599076,-19.661908,0
+                125.774857,-18.873724,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Yulparitja</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                124.412552,-19.889353,0
+                123.81615,-20.670076,0
+                123.750232,-21.592345,0
+                125.068592,-21.019162,0
+                125.599076,-19.661908,0
+                124.412552,-19.889353,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Mangala</name>
+        <styleUrl>#poly-F48FB1-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                124.017044,-18.624044,0
+                123.841263,-18.248836,0
+                123.376697,-18.225464,0
+                122.541736,-19.203563,0
+                123.178943,-20.0108,0
+                123.81615,-20.670076,0
+                124.412552,-19.889353,0
+                124.017044,-18.624044,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Polygon 43</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                126.412064,-18.852931,0
+                126.96138,-18.915301,0
+                128.894974,-19.309768,0
+                128.982865,-18.561566,0
+                128.829056,-17.454082,0
+                128.060013,-17.076396,0
+                127.730423,-17.872816,0
+                126.565872,-18.74893,0
+                126.412064,-18.852931,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ngandji</name>
+        <styleUrl>#poly-AFB42B-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                136.985792,-18.009156,0
+                135.618607,-16.675483,0
+                134.476029,-17.452674,0
+                134.717728,-18.311427,0
+                135.783679,-18.134121,0
+                136.985792,-18.009156,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Jingili</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                134.476029,-17.452674,0
+                133.685013,-15.865513,0
+                133.289505,-16.456432,0
+                133.706986,-17.851903,0
+                134.717728,-18.311427,0
+                134.476029,-17.452674,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Alawa</name>
+        <styleUrl>#poly-FF5252-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                135.618607,-16.675483,0
+                135.508744,-15.733661,0
+                135.047318,-15.161834,0
+                134.476029,-14.864718,0
+                133.970658,-15.267847,0
+                133.685013,-15.865513,0
+                134.476029,-17.452674,0
+                135.618607,-16.675483,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
       </Placemark>
     </Folder>
     <Folder>
@@ -5763,6 +6003,8 @@
                 113.971655,-25.893729,0
                 114.44956,-25.883846,0
                 115.504248,-25.846774,0
+                116.150657,-25.74956,0
+                116.16856,-25.017452,0
                 115.31748,-24.913749,0
                 114.702246,-24.804096,0
                 114.268286,-24.659406,0
@@ -6052,7 +6294,7 @@
               <tessellate>1</tessellate>
               <coordinates>
                 114.253694,-23.732866,0
-                114.491676,-24.156045,0
+                114.2280041,-24.2061567,0
                 114.268286,-24.659406,0
                 114.702246,-24.804096,0
                 115.31748,-24.913749,0
