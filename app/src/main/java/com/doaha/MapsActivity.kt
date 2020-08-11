@@ -151,7 +151,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
 
         mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 120000 // two minute interval
+        mLocationRequest.interval = 120000 // In Milliseconds || two minute interval
         mLocationRequest.fastestInterval = 120000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
