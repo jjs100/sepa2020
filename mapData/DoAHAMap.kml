@@ -3860,67 +3860,6 @@
           </outerBoundaryIs>
         </Polygon>
       </Placemark>
-      <Placemark>
-        <name>Barna</name>
-        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
-        <Polygon>
-          <outerBoundaryIs>
-            <LinearRing>
-              <tessellate>1</tessellate>
-              <coordinates>
-                147.75071,-21.650185,0
-                147.80061,-22.334419,0
-                147.984169,-22.675259,0
-                148.541725,-22.589066,0
-                148.495033,-22.452061,0
-                148.313759,-21.622101,0
-                147.75071,-21.650185,0
-              </coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>Baradha</name>
-        <styleUrl>#poly-9C27B0-2000-77-nodesc</styleUrl>
-        <Polygon>
-          <outerBoundaryIs>
-            <LinearRing>
-              <tessellate>1</tessellate>
-              <coordinates>
-                148.313759,-21.622101,0
-                148.479927,-22.412711,0
-                148.64146,-22.414385,0
-                149.182537,-22.338192,0
-                149.067534,-21.606449,0
-                148.978432,-21.596566,0
-                148.313759,-21.622101,0
-              </coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
-      <Placemark>
-        <name>Gabalbara</name>
-        <styleUrl>#poly-1A237E-2000-77-nodesc</styleUrl>
-        <Polygon>
-          <outerBoundaryIs>
-            <LinearRing>
-              <tessellate>1</tessellate>
-              <coordinates>
-                148.479927,-22.412711,0
-                148.541725,-22.589066,0
-                147.984169,-22.675259,0
-                148.25105,-23.129845,0
-                148.586133,-23.462835,0
-                149.377544,-23.403577,0
-                148.64146,-22.414385,0
-                148.479927,-22.412711,0
-              </coordinates>
-            </LinearRing>
-          </outerBoundaryIs>
-        </Polygon>
-      </Placemark>
     </Folder>
     <Folder>
       <name>Riverine/Spencer</name>
@@ -5008,7 +4947,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Kunjai</name>
+        <name>Kunja</name>
         <styleUrl>#poly-AFB42B-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -6475,6 +6414,26 @@
         </Polygon>
       </Placemark>
       <Placemark>
+        <name>Barna</name>
+        <styleUrl>#poly-795548-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                147.75071,-21.650185,0
+                147.80061,-22.334419,0
+                147.984169,-22.675259,0
+                148.541725,-22.589066,0
+                148.495033,-22.452061,0
+                148.313759,-21.622101,0
+                147.75071,-21.650185,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
         <name>Yuggera</name>
         <styleUrl>#poly-F48FB1-2000-77-nodesc</styleUrl>
         <Polygon>
@@ -6517,6 +6476,27 @@
                 152.564171,-25.010329,0
                 151.93795,-25.010329,0
                 152.899254,-27.15631,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Gabalbara</name>
+        <styleUrl>#poly-1A237E-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                148.479927,-22.412711,0
+                148.541725,-22.589066,0
+                147.984169,-22.675259,0
+                148.25105,-23.129845,0
+                148.586133,-23.462835,0
+                149.377544,-23.403577,0
+                148.64146,-22.414385,0
+                148.479927,-22.412711,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -6763,7 +6743,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Guga-Badhun</name>
+        <name>Gugu-Badhun</name>
         <styleUrl>#poly-7CB342-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -6791,6 +6771,26 @@
                 147.279852,-19.706035,0
                 146.842116,-19.703772,0
                 146.836622,-19.242849,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Baradha</name>
+        <styleUrl>#poly-9C27B0-2000-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                148.313759,-21.622101,0
+                148.479927,-22.412711,0
+                148.64146,-22.414385,0
+                149.182537,-22.338192,0
+                149.067534,-21.606449,0
+                148.978432,-21.596566,0
+                148.313759,-21.622101,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
@@ -6936,7 +6936,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Yangalingu</name>
+        <name>Yagalingu</name>
         <styleUrl>#poly-F9A825-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -7860,7 +7860,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Warlmanpu</name>
+        <name>Warlmanpa</name>
         <styleUrl>#poly-01579B-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -7905,7 +7905,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Polygon 38</name>
+        <name>Ngarti</name>
         <styleUrl>#poly-006064-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -7947,7 +7947,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Polygon 40</name>
+        <name>Walmatjarri</name>
         <styleUrl>#poly-880E4F-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -8007,7 +8007,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Polygon 43</name>
+        <name>Jaru</name>
         <styleUrl>#poly-CE93D8-2000-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -9325,6 +9325,7 @@
                 123.6698245,-16.9476866,0
                 124.0653323,-16.6531998,0
                 123.351221,-16.2211707,0
+                123.2819215,-16.3094488,0
                 123.2193851,-16.5268519,0
                 123.4940433,-17.2207265,0
                 123.6698245,-16.9476866,0
@@ -9568,7 +9569,8 @@
                 122.714014,-16.5479156,0
                 122.9666995,-16.6847737,0
                 123.2193851,-16.5268519,0
-                123.0326175,-16.1367609,0
+                123.0819818,-16.4372736,0
+                123.0216312,-16.2343565,0
                 122.714014,-16.5479156,0
               </coordinates>
             </LinearRing>
@@ -9909,7 +9911,7 @@
         </Polygon>
       </Placemark>
       <Placemark>
-        <name>Mudbarra</name>
+        <name>Mudburra</name>
         <styleUrl>#poly-558B2F-1200-77-nodesc</styleUrl>
         <Polygon>
           <outerBoundaryIs>
@@ -10096,6 +10098,24 @@
                 133.2169437,-14.9407066,0
                 133.970658,-15.267847,0
                 134.476029,-14.864718,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Djawi</name>
+        <styleUrl>#poly-000000-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                123.0216312,-16.2343565,0
+                123.0819818,-16.4372736,0
+                123.2193851,-16.5268519,0
+                123.2819215,-16.3094488,0
+                123.0216312,-16.2343565,0
               </coordinates>
             </LinearRing>
           </outerBoundaryIs>
