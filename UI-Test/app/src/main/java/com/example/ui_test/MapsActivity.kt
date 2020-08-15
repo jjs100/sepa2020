@@ -1,5 +1,6 @@
 package com.example.ui_test
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
@@ -150,6 +151,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
 
+        val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
+        layer.addLayerToMap()
+
         mLocationRequest = LocationRequest()
         mLocationRequest.interval = 120000 // In Milliseconds || two minute interval
         mLocationRequest.fastestInterval = 120000
@@ -171,6 +175,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
             mMap.isMyLocationEnabled = true
+        }
+
+        layer.setOnFeatureClickListener {
+            val intent = Intent(this, MainListActivity::class.java)
+            intent.putExtra("name", it.getProperty("name"))
+            startActivity(intent)
         }
     }
 
