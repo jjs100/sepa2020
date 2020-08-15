@@ -23,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".MainListActivity"></activity>
+
     </application>
 
 </manifest>

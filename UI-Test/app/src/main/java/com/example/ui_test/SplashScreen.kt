@@ -13,7 +13,7 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.splash_layout)
 
         StartButton.setOnClickListener {
-            val intent = Intent(this, Map::class.java)
+            val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
     }
