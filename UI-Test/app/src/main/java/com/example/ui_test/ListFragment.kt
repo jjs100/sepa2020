@@ -19,6 +19,16 @@ class ListFragment : Fragment() {
     //implementation of dummy data class for now, will be replaced with data from database
     private val nationData = listOf(
         Dummy("Elders", "Here is some elder data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
+        Dummy("Some Other Title", "Here is some other data"),
         Dummy("Some Other Title", "Here is some other data")
     )
 
