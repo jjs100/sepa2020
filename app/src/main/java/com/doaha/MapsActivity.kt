@@ -90,9 +90,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 var aSuperPolygon: MutableList<LatLng> = mutableListOf()
                 if (kmlContainerList != null) {
                     for (aKmlContainer in kmlContainerList) {
-                        for (kmlContainerList in aKmlContainer.containers)
+                        for (kmlContainerList1 in aKmlContainer.containers)
                         {
-                            for (eachMapElement in kmlContainerList.placemarks)
+                            for (eachMapElement in kmlContainerList1.placemarks)
                             {
                                 if (eachMapElement.geometry is KmlPolygon)
                                 {
@@ -149,6 +149,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+
+        //Set map settings
+        with(mMap.uiSettings){
+            //Enable RHS zoom controls for debug
+            this.isZoomControlsEnabled = true
+            //Enable gesture zoom controls
+            this.isZoomGesturesEnabled = true
+        }
 
         mLocationRequest = LocationRequest()
         mLocationRequest.interval = 120000 // In Milliseconds || two minute interval
@@ -239,7 +247,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mLocationCallback,
                             Looper.myLooper()
                         )
-                        mMap.setMyLocationEnabled(true)
+                        mMap.isMyLocationEnabled = true
                     }
 
                 } else {
