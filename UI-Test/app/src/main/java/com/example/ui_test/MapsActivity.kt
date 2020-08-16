@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -112,6 +113,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             val t = Toast.makeText(this@MapsActivity, "You are in the northern melbourne zone", Toast.LENGTH_LONG)
                                             t.show()
                                         }
+
+                                        //Map header
+                                        //Need to implement grabbing the region name for this string for header
+                                        var mapHeaderText : String = "FillerText(until region can be pulled)"
+
+                                        //set header text as mapHeaderText var value
+                                        val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
+                                        mapHeaderTextView.text = mapHeaderText
+
+                                        /*just for ref - can change stuff onclick
+                                        mapHeaderTextView.setOnClickListener {
+                                            mapHeaderTextView.text = "onClick text"
+                                        }*/
+
+                                        var mapAckText : String = "[Acknowledgement of traditional owners here]"
+
+                                        //set acknowledgement text as mapAckText var value
+                                        val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
+                                        mapAckTextView.text = mapAckText
                                     }
 
 
@@ -123,6 +143,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
             }
+
         }
     }
 
