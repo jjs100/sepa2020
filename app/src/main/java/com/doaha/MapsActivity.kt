@@ -97,6 +97,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // set up app view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
@@ -104,6 +105,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
     }
@@ -116,18 +118,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        // sets map variable
         mMap = googleMap
+        // sets map type to HYBRID, i.e. satellite view with road overlay
         mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
 
+        // set kml layer
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
+        // add layer overlay to map
         layer.addLayerToMap()
 
+        // pings user location
         mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
         mLocationRequest.interval = 30000
         mLocationRequest.fastestInterval = 30000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
+        // check/request app permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     this,
