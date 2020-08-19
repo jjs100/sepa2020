@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.splash_layout.*
 import android.content.Intent
-import kotlin.collections.Map
 
 class SplashScreen : AppCompatActivity() {
 

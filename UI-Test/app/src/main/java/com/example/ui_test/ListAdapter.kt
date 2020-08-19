@@ -25,16 +25,16 @@ class ListAdapter(private val list: List<Dummy>) : RecyclerView.Adapter<DummyVie
 class DummyViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         RecyclerView.ViewHolder(inflater.inflate(R.layout.recyclerview_item, parent, false)) {
 
-    private var dTitle: TextView? = null
-    private var dInfo:TextView? = null
+            private var dTitle: TextView? = null
+            private var dInfo: TextView? = null
 
-    init {
-        dTitle = itemView.findViewById(R.id.dummyTitle)
-        dInfo = itemView.findViewById(R.id.dummyInfo)
-    }
+            init {
+                dTitle = itemView.findViewById(R.id.dummyTitle)
+                dInfo = itemView.findViewById(R.id.dummyInfo)
+            }
 
-    fun bind(dummy: Dummy) {
-        dTitle?.text = dummy.title
-        dInfo?.text = dummy.name
-    }
+            fun bind(dummy: Dummy) {
+                dTitle?.text = dummy.title
+                dInfo?.text = dummy.name
+             }
 }
