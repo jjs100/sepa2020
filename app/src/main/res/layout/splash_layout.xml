@@ -24,6 +24,13 @@
         android:contentDescription="Image for the splash screen"
         android:background="@drawable/maptemp" />
 
+    <Button
+        android:id="@+id/StartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F34747"
+        android:text="START" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
@@ -40,10 +47,10 @@
         android:layout_height="53dp" />
 
     <Button
-        android:id="@+id/StartButton"
+        android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F34747"
-        android:text="START" />
+        android:text="SEARCH"
+        android:onClick="searchButton"/>
 
 </LinearLayout>
