@@ -25,12 +25,30 @@ class DataDisplay : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Main) {
             delay(1000L)
             val region = docRef.get().await()
-            Picasso.get().load(region.getString("img1")).into(image1)
-            Picasso.get().load(region.getString("img2")).into(image2)
-            Picasso.get().load(region.getString("img3")).into(image3)
-            welcomeText.text = region.getString("Welcome").toString()
-            ackText.text = "Acknowledgments: " + region.getString("Acknowledgements")
-            infoText.text = region.getString("Info").toString()
+            if (region.getString("img1") != "") {
+                Picasso.get().load(region.getString("img1")).into(image1)
+            }
+            if (region.getString("img2") != "") {
+                Picasso.get().load(region.getString("img2")).into(image2)
+            }
+            if (region.getString("img3") != "") {
+                Picasso.get().load(region.getString("img3")).into(image3)
+            }
+            if (region.getString("Welcome") != "") {
+                welcomeText.text = region.getString("Welcome").toString()
+            } else {
+                welcomeText.text = "Welcome Unavailable"
+            }
+            if (region.getString("Acknowledgements") != "") {
+                ackText.text = "Acknowledgments: " + region.getString("Acknowledgements")
+            } else {
+                ackText.text = "Acknowledgements Unavailable"
+            }
+            if (region.getString("Info") != "") {
+                infoText.text = region.getString("Info").toString()
+            } else {
+                infoText.text = "Information Unavailable"
+            }
         }
     }
 }
