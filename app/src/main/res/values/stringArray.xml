@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="zones_array">
+        <item>Baraba Baraba</item>
+        <item>Bidwell</item>
+        <item>Bindjali</item>
+        <item>Boonwurrung</item>
+        <item>Buandig</item>
+        <item>Dadi Dadi</item>
+        <item>Djabwurung</item>
+        <item>Djargurdwurung</item>
+        <item>Gadubanud</item>
+        <item>Giraiwurung</item>
+        <item>Gulidjan</item>
+        <item>Gunditjmara</item>
+        <item>Jardwadjali</item>
+        <item>Jaitmatang</item>
+        <item>Kurnai</item>
+        <item>Latje Latje</item>
+        <item>Meru</item>
+        <item>Ngargad</item>
+        <item>Ngarigo</item>
+        <item>Ngarrindjeri</item>
+        <item>Ngurraiillam</item>
+        <item>Taungurong</item>
+        <item>Wadi Wadi</item>
+        <item>Wathaurong</item>
+        <item>Waveroo</item>
+        <item>Wemba Wemba</item>
+        <item>Woiworung</item>
+        <item>Yorta Yorta</item>
+    </string-array>
+</resources>
