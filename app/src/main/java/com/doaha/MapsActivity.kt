@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -81,14 +82,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             t.show()
                                         }
 
-                                        /*
-                                        //Map header
-                                        //Need to implement grabbing the region name for this string for header
-                                        var mapHeaderText : String = "testingName" //eachPlacemark.getProperty("name")
 
-                                        //set header text as mapHeaderText var value
+                                        //Map header
+                                        //create val reference to xml textView
                                         val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
-                                        mapHeaderTextView.text = mapHeaderText
+                                        if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
+                                        {
+                                            //assign
+                                            var mapHeaderText : String = eachPlacemark.getProperty("name")
+                                            //set header text as mapHeaderText var value
+                                            mapHeaderTextView.text = mapHeaderText
+                                        }
+
+
+
+
+
 
                                         /*just for ref - can change stuff onclick
                                         mapHeaderTextView.setOnClickListener {
@@ -100,7 +109,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         //set acknowledgement text as mapAckText var value
                                         val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
                                         mapAckTextView.text = mapAckText
-                                        */
+
                                     }
                                 }
                             }
