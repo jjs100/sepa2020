@@ -11,13 +11,14 @@ import com.doaha.ListAdapter
 
 
 //dummy data class for proof of progress
-data class Dummy(val name: String, val title: String)
+//replace this with correct dataclass for information from database
+data class Dummy(val title: String, val info: String)
 
 
 class ListFragment : Fragment() {
 
     //implementation of dummy data class for now, will be replaced with data from database
-    private val nationData = listOf(
+    private var nationData = listOf(
         Dummy("Elders", "Here is some elder data"),
         Dummy("Some Other Title", "Here is some other data"),
         Dummy("Some Other Title", "Here is some other data"),
@@ -40,8 +41,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View =
+        savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_main, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,6 +49,7 @@ class ListFragment : Fragment() {
         list_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = ListAdapter(nationData)
+            this.setHasFixedSize(true)
         }
     }
 

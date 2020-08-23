@@ -12,8 +12,7 @@
     <TextView
         android:id="@+id/Heading"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="                      SEPB - App Name"
+        android:layout_height="168dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#000000" />
 
@@ -21,23 +20,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="Image for the splash screen"
-        android:background="@drawable/maptemp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:drawableTint="#FB0707"
-        android:text="       Please select your location below"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#000000"
-        android:textColorHighlight="#000000" />
-
-    <Spinner
-        android:id="@+id/LocationSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="53dp" />
+        android:background="@drawable/maptemp"
+        android:contentDescription="Image for the splash screen" />
 
     <Button
         android:id="@+id/StartButton"
