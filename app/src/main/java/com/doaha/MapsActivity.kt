@@ -22,6 +22,7 @@ import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
+import java.util.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -52,6 +53,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 // adding KML layer to map
                 val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
                 layer.addLayerToMap()
+
+                // get time for calculating runtime
+                val timeStart = Calendar.getInstance().time
+                println("Start of code: $timeStart")
 
                 val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
                 val aSuperPolygon: MutableList<LatLng> = mutableListOf()
@@ -92,6 +97,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 // the removal is so that new polygons don't continuously get drawn whenever
                 // the location is retrieved
                 layer.removeLayerFromMap()
+
+                // get time for calculating runtime
+                val timeEnd = Calendar.getInstance().time
+                println("End of code: $timeEnd")
             }
         }
     }
