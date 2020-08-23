@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.recyclerview_item.view.*
 class ListAdapter(private val list: List<Dummy>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private val expandedPositionSet: HashSet<Int> = HashSet()
-    lateinit var context: Context
+    private lateinit var context: Context
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

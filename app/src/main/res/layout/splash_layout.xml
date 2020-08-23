@@ -12,6 +12,7 @@
         android:id="@+id/splashMessage"
         android:layout_width="match_parent"
         android:layout_height="174dp"
+        android:fontFamily="@font/source_code_pro_medium"
         android:text="@string/splash_message"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText" />
@@ -28,6 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorText"
-        android:text="START" />
+        android:text="@string/button_text" />
 
 </LinearLayout>
