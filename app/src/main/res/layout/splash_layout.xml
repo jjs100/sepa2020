@@ -4,30 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFC107"
-    android:backgroundTint="@android:color/holo_orange_light"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
 
 
     <TextView
-        android:id="@+id/Heading"
+        android:id="@+id/splashMessage"
         android:layout_width="match_parent"
-        android:layout_height="168dp"
+        android:layout_height="230dp"
+        android:text="@string/splash_message"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#000000" />
+        android:textColor="@color/colorText" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/maptemp"
-        android:contentDescription="Image for the splash screen" />
+        android:layout_height="348dp"
+        android:background="@drawable/splash_map" />
 
     <Button
         android:id="@+id/StartButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F34747"
+        android:background="@color/colorText"
         android:text="START" />
 
 </LinearLayout>

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DOAHA</string>
     <string name="title_activity_maps">Map</string>
+    <string name="splash_message">"Aboriginal and Torres Strait Islander viewers are advised that this application may contain names and images of people who have since passed away."</string>
 </resources>

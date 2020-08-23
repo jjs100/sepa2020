@@ -4,12 +4,16 @@
     android:id="@+id/expand_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black">
+    android:background="@color/colorPrimaryDark"
+    android:padding="2dp">
 
     <RelativeLayout
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/mainTitle"
@@ -17,9 +21,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:gravity="start"
-            android:padding="8dp"
-            android:text="Question"
-            android:textColor="@android:color/white"
+            android:padding="10dp"
+            android:textColor="@color/colorText"
             android:textSize="17sp" />
 
     </RelativeLayout>
@@ -29,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleLayout"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorExpandableBox"
         android:padding="10dp">
 
         <TextView
@@ -37,8 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Answer"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
     </LinearLayout>
