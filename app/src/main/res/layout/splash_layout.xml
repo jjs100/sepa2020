@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/splashMessage"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="174dp"
         android:text="@string/splash_message"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText" />
@@ -19,8 +19,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="348dp"
-        android:background="@drawable/splash_map" />
+        android:layout_height="428dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/map" />
 
     <Button
         android:id="@+id/StartButton"
