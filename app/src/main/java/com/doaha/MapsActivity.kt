@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.TextView
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -94,21 +96,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             mapHeaderTextView.text = mapHeaderText
                                         }
 
-
-
-
-
-
-                                        /*just for ref - can change stuff onclick
-                                        mapHeaderTextView.setOnClickListener {
-                                            mapHeaderTextView.text = "onClick text"
-                                        }*/
-
+                                        //EXTENSION - If user touched the current location header, shows the acknowledgement of country
+                                        //needs to pull acknowledgement from database
                                         var mapAckText : String = "[Acknowledgement of traditional owners here]"
 
                                         //set acknowledgement text as mapAckText var value
                                         val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
                                         mapAckTextView.text = mapAckText
+
+                                        //if header location is clicked, acknowledgement TextView appears/disappears
+                                        mapHeaderTextView.setOnClickListener {
+                                            if(mapAckTextView.visibility == View.GONE){
+                                                mapAckTextView.visibility = View.VISIBLE
+                                            }
+                                            else{
+                                                mapAckTextView.visibility = View.GONE
+                                            }
+
+                                        }
+
+                                        //Searchbar implementation hinging on XML searchView
+                                        //val mapSearchView: SearchView = findViewById<SearchView>(R.id.searchViewMap)
+                                        //mapSearchView.setSearchableInfo([info])
+
+
+
+
 
                                     }
                                 }
