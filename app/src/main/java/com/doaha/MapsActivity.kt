@@ -137,8 +137,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // add layer overlay to map
         layer.addLayerToMap()
 
+        //Set map settings
+        with(mMap.uiSettings){
+            //Enable RHS zoom controls for debug
+            this.isZoomControlsEnabled = true
+            //Enable gesture zoom controls
+            this.isZoomGesturesEnabled = true
+        }
+
         // pings user location
-        mLocationRequest = LocationRequest()
+	mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
         mLocationRequest.interval = 30000
         mLocationRequest.fastestInterval = 30000
