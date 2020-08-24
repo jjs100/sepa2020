@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.doaha.model.enum.MapSource
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,6 +24,11 @@ import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
+import java.io.BufferedReader
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -33,6 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var mLastLocation: Location? = null
     internal var mCurrLocationMarker: Marker? = null
     internal var mFusedLocationClient: FusedLocationProviderClient? = null
+    lateinit var liveKmlFileString: String
 
     internal var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -82,7 +89,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //                    t.show()
 //                }
 
-                val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
+                val layer = loadMapFile(MapSource.ONLINE)
                 layer.addLayerToMap()
 
                 var kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
@@ -260,6 +267,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }// other 'case' lines to check for other
         // permissions this app might request
+    }
+
+    fun loadMapFile(mapSource: MapSource): KmlLayer {
+        if(mapSource == MapSource.ONLINE){
+            var fileString:String = ""
+            val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
+            val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
+            while(linesOfFileIterator.hasNext()){
+                fileString += linesOfFileIterator.next()
+            }
+            val liveKmlUrl:String = fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
+            val inputStreamReader = URL(liveKmlUrl).openConnection() as HttpURLConnection
+            val thread = Thread(Runnable {
+                liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(BufferedReader::readText)
+            })
+
+            thread.start()
+            thread.join()
+            return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
+        }
+        return KmlLayer(mMap, R.raw.proto, applicationContext)
     }
 
     companion object {
