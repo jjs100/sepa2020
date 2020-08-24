@@ -1,7 +1,6 @@
 package com.doaha
 
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -23,81 +22,54 @@ import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
+import java.util.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    var mapFrag: SupportMapFragment? = null
-    lateinit var mLocationRequest: LocationRequest
+    private var mapFrag: SupportMapFragment? = null
+    private lateinit var mLocationRequest: LocationRequest
     var mLastLocation: Location? = null
     internal var mCurrLocationMarker: Marker? = null
-    internal var mFusedLocationClient: FusedLocationProviderClient? = null
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
 
-    internal var mLocationCallback: LocationCallback = object : LocationCallback() {
+    private var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             val locationList = locationResult.locations
             if (locationList.isNotEmpty()) {
                 //The last location in the list is the newest
                 val location = locationList.last()
-                Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude())
+                Log.i("MapsActivity", "Location: " + location.latitude + " " + location.longitude)
                 mLastLocation = location
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker?.remove()
                 }
 
-                //move map camera
+                // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 11.0F))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
 
-                // LEAVING THIS CODE HERE FOR REFERENCE
-//                // Adding a zone
-//                var coord1 = LatLng(-37.792749, 145.226018) // top left
-//                var coord2 = LatLng(-37.793805, 145.235371) // top right
-//                var coord3 = LatLng(-37.796675, 145.235060) // bottom right
-//                var coord4 = LatLng(-37.795770, 145.225506) // bottom left
-//                val NRingwoodPoints = listOf(coord1, coord2, coord3, coord4) // putting coords into a list. list is for the containsLocation() call
-//                // saving coords and lines to variable. can't be done with list because the add() needs in format LatLng not List<LatLng>
-//                val ringwoodBlock = PolygonOptions().add(coord1, coord2, coord3, coord4).strokeColor(Color.GREEN)
-//                mMap.addPolygon(ringwoodBlock) // drawing onto map
-//
-//                var coord5 = LatLng(-37.789027, 145.226554) // top left
-//                var coord6 = LatLng(-37.790083, 145.235969) // top right
-//                var coord7 = LatLng(-37.793805, 145.235371) // bottom right
-//                var coord8 = LatLng(-37.792749, 145.226018) // bottom left
-//                var coord9 = LatLng(-37.788688, 145.228673) // top middle
-//                val NRingwoodPoints2 = listOf(coord5, coord6, coord7, coord8, coord9)
-//                val ringwoodBlock2 = PolygonOptions().add(coord5, coord9, coord6, coord7, coord8).strokeColor(Color.RED)
-//                mMap.addPolygon((ringwoodBlock2))
-
-//                if (PolyUtil.containsLocation(userLocation, NRingwoodPoints, true)) // if user in polygon
-//                {
-//                    // TRUE: Tell user they are in zone
-//                    val t = Toast.makeText(this@MapsActivity, "You are in GREEN ZONE", Toast.LENGTH_LONG)
-//                    t.show()
-//                }
-//                else if (PolyUtil.containsLocation(userLocation, NRingwoodPoints2, true))
-//                {
-//                    val t = Toast.makeText(this@MapsActivity, "You are in RED ZONE", Toast.LENGTH_LONG)
-//                    t.show()
-//                }
-
+                // adding KML layer to map
                 val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
                 layer.addLayerToMap()
 
-                var kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
+                // get time for calculating runtime
+                val timeStart = Calendar.getInstance().time
+                println("Start of code: $timeStart")
 
-                var aSuperPolygon: MutableList<LatLng> = mutableListOf()
+                val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
+                val aSuperPolygon: MutableList<LatLng> = mutableListOf()
                 if (kmlContainerList != null) {
                     for (aKmlContainer in kmlContainerList) {
-                        for (kmlContainerList1 in aKmlContainer.containers)
+                        for (eachContainer in aKmlContainer.containers)
                         {
-                            for (eachMapElement in kmlContainerList1.placemarks)
+                            for (eachPlacemark in eachContainer.placemarks)
                             {
-                                if (eachMapElement.geometry is KmlPolygon)
+                                if (eachPlacemark.geometry is KmlPolygon)
                                 {
                                     //When a Polygon
-                                    var aPolygon : KmlPolygon = eachMapElement.geometry as KmlPolygon
+                                    val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
 
                                     //make a super polygon to reduce computation time for user location
                                     aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
@@ -108,26 +80,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                                         if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
                                         {
-                                            val t = Toast.makeText(this@MapsActivity, "You are in the northern melbourne zone", Toast.LENGTH_LONG)
+                                            val locName = eachPlacemark.getProperty("name")
+                                            // toast is just for testing purposes
+                                            val t = Toast.makeText(this@MapsActivity,"You are in $locName", Toast.LENGTH_LONG)
                                             t.show()
                                         }
                                     }
-
-
                                 }
                             }
                         }
                     }
                 }
+                // we add and remove the layer from the map
+                // this is because the layer needs to be added to the map in this function
+                // so that the data within the layer can be used.
+                // the removal is so that new polygons don't continuously get drawn whenever
+                // the location is retrieved
+                layer.removeLayerFromMap()
 
-
+                // get time for calculating runtime
+                val timeEnd = Calendar.getInstance().time
+                println("End of code: $timeEnd")
             }
         }
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        // set up app view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
@@ -135,6 +114,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
     }
@@ -147,8 +127,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+        // sets map variable
         mMap = googleMap
-        //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+        // sets map type to HYBRID, i.e. satellite view with road overlay
+        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+
+        // set kml layer
+        val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
+        // add layer overlay to map
+        layer.addLayerToMap()
 
         //Set map settings
         with(mMap.uiSettings){
@@ -158,11 +145,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             this.isZoomGesturesEnabled = true
         }
 
-        mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 120000 // In Milliseconds || two minute interval
-        mLocationRequest.fastestInterval = 120000
+        // pings user location
+	mLocationRequest = LocationRequest()
+        // In Milliseconds || 30 secs
+        mLocationRequest.interval = 30000
+        mLocationRequest.fastestInterval = 30000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
+        // check/request app permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -179,6 +169,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
             mMap.isMyLocationEnabled = true
+        }
+
+        // this listen will be changed to send the user
+        // to the Nation info activity when implemented
+        layer.setOnFeatureClickListener {
+            val locName = it.getProperty("name")
+            val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
+            t.show()
         }
     }
 
@@ -263,6 +261,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     companion object {
-        val MY_PERMISSIONS_REQUEST_LOCATION = 99
+        const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 }
