@@ -1,5 +1,6 @@
 package com.doaha
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -137,6 +138,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // add layer overlay to map
         layer.addLayerToMap()
 
+
         //Set map settings
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
@@ -172,11 +174,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // this listen will be changed to send the user
-        // to the Nation info activity when implemented
-        layer.setOnFeatureClickListener {
-            val locName = it.getProperty("name")
+        // to the Nation info activity
+	layer.setOnFeatureClickListener {
+            val intent = Intent(this, MainListActivity::class.java)
+            //intent.putExtra("name", it.getProperty("name"))
+	    val locName = it.getProperty("name")
             val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
             t.show()
+            startActivity(intent)
         }
     }
 
