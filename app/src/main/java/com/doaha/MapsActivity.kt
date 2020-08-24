@@ -1,5 +1,6 @@
 package com.doaha
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.doaha.model.enum.MapSource
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -25,6 +27,13 @@ import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
+import java.io.BufferedReader
+import java.io.ByteArrayInputStream
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.*
+
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -35,6 +44,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var mLastLocation: Location? = null
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
+    lateinit var liveKmlFileString: String
+
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -53,8 +64,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
 
                 // adding KML layer to map
-                val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
+                val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
+
+                // get time for calculating runtime
+                val timeStart = Calendar.getInstance().time
+                println("Start of code: $timeStart")
 
                 val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
                 val aSuperPolygon: MutableList<LatLng> = mutableListOf()
@@ -135,6 +150,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 // the removal is so that new polygons don't continuously get drawn whenever
                 // the location is retrieved
                 layer.removeLayerFromMap()
+
+                // get time for calculating runtime
+                val timeEnd = Calendar.getInstance().time
+                println("End of code: $timeEnd")
             }
         }
     }
@@ -171,8 +190,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // add layer overlay to map
         layer.addLayerToMap()
 
+
+        //Set map settings
+        with(mMap.uiSettings){
+            //Enable RHS zoom controls for debug
+            this.isZoomControlsEnabled = true
+            //Enable gesture zoom controls
+            this.isZoomGesturesEnabled = true
+        }
+
         // pings user location
-        mLocationRequest = LocationRequest()
+	mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
         mLocationRequest.interval = 30000
         mLocationRequest.fastestInterval = 30000
@@ -198,11 +226,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // this listen will be changed to send the user
-        // to the Nation info activity when implemented
-        layer.setOnFeatureClickListener {
-            val locName = it.getProperty("name")
+        // to the Nation info activity
+	layer.setOnFeatureClickListener {
+            val intent = Intent(this, MainListActivity::class.java)
+            //intent.putExtra("name", it.getProperty("name"))
+	    val locName = it.getProperty("name")
             val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
             t.show()
+            startActivity(intent)
         }
     }
 
@@ -284,6 +315,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }// other 'case' lines to check for other
         // permissions this app might request
+    }
+
+    fun loadMapFile(mapSource: MapSource): KmlLayer {
+        if(mapSource == MapSource.ONLINE){
+            var fileString:String = ""
+            val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
+            val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
+            while(linesOfFileIterator.hasNext()){
+                fileString += linesOfFileIterator.next()
+            }
+            val liveKmlUrl:String = fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
+            val inputStreamReader = URL(liveKmlUrl).openConnection() as HttpURLConnection
+            val thread = Thread(Runnable {
+                liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(BufferedReader::readText)
+            })
+
+            thread.start()
+            thread.join()
+            return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
+        }
+        return KmlLayer(mMap, R.raw.proto, applicationContext)
     }
 
     companion object {
