@@ -60,7 +60,7 @@ class ListFragment : Fragment() {
     private fun callData() : List<Dummy>{
         val docRef = FirebaseFirestore.getInstance().collection("zones").document("Bidwell")
         var nationList = listOf<Dummy>()
-
+        //accessDatabase("Bidwell")
 
         docRef.get()
             .addOnSuccessListener { document ->
@@ -68,8 +68,8 @@ class ListFragment : Fragment() {
                 /*if (document != null) {
                 Log.d("exist", "documentsnapshot data: ${document.data}")
                 welcome = document.getString("Welcome").toString()
-                *//*ack_data.text = "Acknowledgments: " + document.getString("Acknowledgements")
-                   info_data.text = document.getString("Info").toString()*//*
+                *//**//*ack_data.text = "Acknowledgments: " + document.getString("Acknowledgements")
+                   info_data.text = document.getString("Info").toString()*//**//*
 
             } else {
                 Log.d("no exist", "no such document")
@@ -81,10 +81,27 @@ class ListFragment : Fragment() {
         /*nationList = listOf(Dummy("Welcome", "$welcome")*/
                 /*Dummy("Acknowledgement", region.getString("Acknowledgements").toString()),
                Dummy("Information", region.getString("Info").toString())*/
-        while (check) {
-
+        while(check)
+        {
+            Thread.sleep(1000)
         }
         return listOf(Dummy("Welcome", welcome))
+    }
+
+    private fun accessDatabase(zoneId: String) {
+        val docRef = FirebaseFirestore.getInstance().collection("zones").document(zoneId)
+
+
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                Log.d("exist", "documentsnapshot data: ${document.data}")
+                welcome = document.getString("Welcome").toString()
+
+                } else {
+                    Log.d("no exist", "no such document")
+                }
+            }
     }
 
 
