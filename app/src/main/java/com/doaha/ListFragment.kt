@@ -28,7 +28,7 @@ class ListFragment : Fragment() {
     //implementation of dummy data class for now, will be replaced with data from database
     var welcome = "test"
     private var check = true
-    private var nationData = callData()
+    private var nationData = listOf(Dummy("Welcome", "$welcome"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
