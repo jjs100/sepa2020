@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import java.lang.String
+
 
 class NoteAdapter(options: FirestoreRecyclerOptions<Note?>) :
     FirestoreRecyclerAdapter<Note, NoteAdapter.NoteHolder>(options) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="team_array">
+        <item>Jordan</item>
+        <item>James</item>
+        <item>Josiah</item>
+        <item>Lachlan</item>
+        <item>Julian</item>
+        <item>Matthew</item>
+    </string-array>
+</resources>

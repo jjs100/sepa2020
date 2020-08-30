@@ -1,6 +1,7 @@
 package com.example.firebaseuitest2
 
 import android.os.Bundle
+import com.example.firebaseuitest2.StartActivity.Companion.EXTRA_MESSAGE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +9,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(){
     private val db = FirebaseFirestore.getInstance()
     private val notebookRef = db.collection("test")
     private var adapter: NoteAdapter? = null
@@ -19,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
-        val query :Query = notebookRef.whereEqualTo("name", "Jordan")
+        val query :Query = notebookRef.whereEqualTo("name", "${intent.getStringExtra(EXTRA_MESSAGE)}")
         val options = FirestoreRecyclerOptions.Builder<Note>()
             .setQuery(query, Note::class.java)
             .build()
