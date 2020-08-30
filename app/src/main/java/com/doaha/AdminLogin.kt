@@ -3,6 +3,7 @@ package com.doaha
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -22,7 +23,7 @@ class AdminLogin : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_login)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.google_maps_key))
+            //.requestIdToken(getString(R.string.google_maps_key))
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -42,7 +43,7 @@ class AdminLogin : AppCompatActivity(){
         println("onSTART END")
     }
 
-    //Verificiation of authenticated user
+    //Verification of authenticated user
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         println("onActivityResult START")
         super.onActivityResult(requestCode, resultCode, data)
@@ -56,13 +57,22 @@ class AdminLogin : AppCompatActivity(){
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         println("handleSignInResult START")
-        println("Sign In: "+ completedTask.toString())
+        println("Sign In: $completedTask")
         try {
             val account = completedTask.getResult(ApiException::class.java)
             val idToken = account!!.idToken
             println("Sign In: " + idToken.toString())
+            if (completedTask.result!!.email == getString(R.string.admin_email)) {
+                // go to admin page
+                val intent = Intent(this, AdminPage::class.java)
+                startActivity(intent)
+            } else {
+                val t = Toast.makeText(this, "Log in failed: Permission Denied", Toast.LENGTH_LONG)
+                t.show()
+            }
         } catch (e: ApiException) {
             println("Sign In: "+ "signInResult:failed code=" + e.statusCode)
+
         }
         println("handleSignInResult END")
     }

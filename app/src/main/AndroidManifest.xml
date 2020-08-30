@@ -43,6 +43,7 @@
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MainListActivity"/>
         <activity android:name=".AdminLogin"/>
+        <activity android:name=".AdminPage"/>
     </application>
 
 </manifest>
