@@ -4,13 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-class ListAdapter(private val list: List<Dummy>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(private val list: List<Nation>) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private val expandedPositionSet: HashSet<Int> = HashSet()
     private lateinit var context: Context
