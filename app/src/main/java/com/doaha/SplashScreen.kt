@@ -15,5 +15,9 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
+
+        splashMessage.setOnClickListener {
+            startActivity(Intent(this, AdminLogin::class.java))
+        }
     }
 }

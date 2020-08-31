@@ -3,4 +3,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="button_text">Start!</string>
     <string name="splash_message">"Aboriginal and Torres Strait Islander viewers are advised that this application may contain names and images of people who have since passed away."</string>
+    <string name="admin_email">doaha2020@gmail.com</string>
 </resources>
