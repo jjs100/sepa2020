@@ -6,8 +6,8 @@ import android.os.Bundle
 class MainListActivity : SingleFragmentActivity() {
 
     //val locName = intent.getStringExtra ("name")
-    private val compNationData = DataLoad("Bidwell")
-    val adwfkiushkjadhkajshfbkas = compNationData.returnData()
-    var test = "test"
+    //private val compNationData = DataLoad("Bidwell")
+    //val adwfkiushkjadhkajshfbkas = compNationData.returnData()
+    //var test = "test"
     override fun createFragment() = ListFragment.newInstance()
 }
