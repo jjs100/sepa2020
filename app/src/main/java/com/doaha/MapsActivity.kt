@@ -85,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
 
                                     //make a super polygon to reduce computation time for user location
-                                    aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
+                                    aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)/*
                                     if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
                                     {
                                         //When a user is within a greater polygon
@@ -139,8 +139,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                                     }
+                                    */
                                 }
                             }
+                            grahamScan(aSuperPolygon)
                         }
                     }
                 }
@@ -336,6 +338,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
         }
         return KmlLayer(mMap, R.raw.proto, applicationContext)
+    }
+
+    fun grahamScan(listOfLatLngPoints : MutableList<LatLng>){
+        var variableListOfLatLngPoints = listOfLatLngPoints
+        var stack = "test"
+        for(LanLngPoint in listOfLatLngPoints){
+            println("trst")
+        }
     }
 
     companion object {
