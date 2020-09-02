@@ -31,7 +31,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         list_recycler_view.apply {
             val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-            divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.divier)!!)
+            divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider)!!)
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
             val nationData = getDocuments() //Gets data for list adaptor

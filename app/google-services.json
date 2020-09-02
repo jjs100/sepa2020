@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "344250883168-mjqr5tg2vt55ljp2rm43qg6lgcostraq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doaha",
+            "certificate_hash": "0ca431401c51a6d27c083e85dfbd44ca94928fb4"
+          }
+        },
+        {
+          "client_id": "344250883168-mfatce68nm81g66ag364iaeo58q3nfqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doaha",
+            "certificate_hash": "711d6ef0b84c66d6ed6a1e30d75f23a2682dada6"
+          }
+        },
+        {
           "client_id": "344250883168-kcja8bdckqm3tv9tr5haakk83vjcct8m.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -28,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "344250883168-kcja8bdckqm3tv9tr5haakk83vjcct8m.apps.googleusercontent.com",
+              "client_id": "344250883168-f2qus1an6dfum402dc0rhv541fi1ji67.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -57,7 +73,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "344250883168-kcja8bdckqm3tv9tr5haakk83vjcct8m.apps.googleusercontent.com",
+              "client_id": "344250883168-f2qus1an6dfum402dc0rhv541fi1ji67.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
