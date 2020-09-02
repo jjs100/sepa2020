@@ -34,7 +34,7 @@ class ListFragment : Fragment() {
             divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.divier)!!)
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
-            val nationData = getDocuments()
+            val nationData = getDocuments() //Gets data for list adaptor
             adapter = ListAdapter(nationData)
             this.setHasFixedSize(true)
         }
@@ -44,21 +44,20 @@ class ListFragment : Fragment() {
         fun newInstance(): ListFragment = ListFragment()
     }
 
+    //Pulls data from firebase and inserts it into mutablelist
     private fun getDocuments() : MutableList<Nation> {
         val tempOut = mutableListOf<Nation>()
         val db = FirebaseFirestore.getInstance()
-        db.collection("zones").document("Baraba Baraba")
+        db.collection("zones").document("Baraba Baraba") //gets specific region from database
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
-                    val tempWelcome = document.getString("Welcome")
-                    val tempAck = document.getString("Acknowledgements")
-                    val tempInfo = document.getString("Info")
-                    tempOut.add(Nation("Welcome", "$tempWelcome"))
-                    tempOut.add(Nation("Acknowledgements", "$tempAck"))
-                    tempOut.add(Nation("Information", "$tempInfo"))
-                    list_recycler_view.adapter?.notifyDataSetChanged()
+                    //Puts data from database into NationData list
+                    tempOut.add(Nation("Welcome", document.getString("Welcome")))
+                    tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
+                    tempOut.add(Nation("Information", document.getString("Info")))
+                    list_recycler_view.adapter?.notifyDataSetChanged() //Refreshes recycler view
                 } else {
                     Log.d(ContentValues.TAG, "No such document")
                 }
