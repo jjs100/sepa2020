@@ -10,17 +10,17 @@
     <RelativeLayout
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="49dp"
         android:layout_marginTop="5dp"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/toprecycler">
 
         <TextView
             android:id="@+id/mainTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/convergence"
-            android:gravity="start"
+            android:gravity="end"
             android:padding="10dp"
             android:textColor="@color/colorText"
             android:textSize="20sp" />

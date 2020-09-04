@@ -1,7 +1,9 @@
 package com.doaha
 
-import android.content.Context
+
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,32 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_main.*
-import com.doaha.ListAdapter
-
-
-//dummy data class for proof of progress
-//replace this with correct dataclass for information from database
-data class Dummy(val title: String, val info: String)
-
 
 class ListFragment : Fragment() {
-
-    //implementation of dummy data class for now, will be replaced with data from database
-    private var nationData = listOf(
-        Dummy("Local Elders", "Here is some elder data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data"),
-        Dummy("Some Other Title", "Here is some other data")
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +31,10 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         list_recycler_view.apply {
             val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-            divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.divier)!!)
+            divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider)!!)
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
+            val nationData = getDocuments() //Gets data for list adaptor
             adapter = ListAdapter(nationData)
             this.setHasFixedSize(true)
         }
@@ -61,5 +42,29 @@ class ListFragment : Fragment() {
 
     companion object {
         fun newInstance(): ListFragment = ListFragment()
+    }
+
+    //Pulls data from firebase and inserts it into mutablelist
+    private fun getDocuments() : MutableList<Nation> {
+        val tempOut = mutableListOf<Nation>()
+        val db = FirebaseFirestore.getInstance()
+        db.collection("zones").document("Baraba Baraba") //gets specific region from database
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
+                    //Puts data from database into NationData list
+                    tempOut.add(Nation("Welcome", document.getString("Welcome")))
+                    tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
+                    tempOut.add(Nation("Information", document.getString("Info")))
+                    list_recycler_view.adapter?.notifyDataSetChanged() //Refreshes recycler view
+                } else {
+                    Log.d(ContentValues.TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(ContentValues.TAG, "get failed with ", exception)
+            }
+        return tempOut
     }
 }
