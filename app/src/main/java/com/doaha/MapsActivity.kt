@@ -229,7 +229,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // to the Nation info activity
 	layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
-	        val locName = it.getProperty("name")
+	          val locName = it.getProperty("name")
             intent.putExtra("name", locName)
             val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
             t.show()
