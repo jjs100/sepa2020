@@ -1,5 +1,9 @@
 package com.doaha
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -10,10 +14,13 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.RemoteViews
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.doaha.model.enum.MapSource
 import com.google.android.gms.location.*
@@ -45,6 +52,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     lateinit var liveKmlFileString: String
     private final var TAG: String = MapsActivity.javaClass.simpleName
+
+    private var channelID = "Notification_Channel"
+    private val notificationID = 101
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -347,6 +357,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
         }
         return KmlLayer(mMap, R.raw.proto, applicationContext)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance: Int = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotification() {
+        val intent = Intent(this, MapsActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        // set notification content
+        // placeholder content
+        val builder = NotificationCompat.Builder(this, channelID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Test Notification")
+            .setContentText("You are in XXXXXX")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        // Set the intent that will fire when the user taps the notification
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(notificationID, builder.build())
+        }
     }
 
     companion object {

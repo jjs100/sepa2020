@@ -4,4 +4,8 @@
     <string name="button_text">Start!</string>
     <string name="splash_message">"Aboriginal and Torres Strait Islander viewers are advised that this application may contain names and images of people who have since passed away."</string>
     <string name="admin_email">doaha2020@gmail.com</string>
+    <!-- Placeholder channel information -->
+    <string name="channel_name">Notification Channel</string>
+    <string name="channel_description">Notification Description</string>
+    <!-- END PLACEHOLDER -->
 </resources>
