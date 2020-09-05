@@ -2,6 +2,7 @@ package com.doaha
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -35,7 +35,6 @@ import java.net.URL
 import java.util.*
 
 
-
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -45,6 +44,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     lateinit var liveKmlFileString: String
+    private final var TAG: String = MapsActivity.javaClass.simpleName
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -183,7 +183,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // sets map variable
         mMap = googleMap
         // sets map type to HYBRID, i.e. satellite view with road overlay
-        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+        //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+
+        // applies custom map style json
+        try {
+            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style_standard))
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
 
         // set kml layer
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
@@ -200,7 +211,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // pings user location
-	mLocationRequest = LocationRequest()
+	    mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
         mLocationRequest.interval = 30000
         mLocationRequest.fastestInterval = 30000
@@ -227,7 +238,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // this listen will be changed to send the user
         // to the Nation info activity
-	layer.setOnFeatureClickListener {
+	    layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
 	          val locName = it.getProperty("name")
             intent.putExtra("name", locName)
