@@ -59,6 +59,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     mCurrLocationMarker?.remove()
                 }
 
+                //Search elements
+
+
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
@@ -130,9 +133,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                                         }
 
-                                        //Searchbar implementation hinging on XML searchView
-                                        //val mapSearchView: SearchView = findViewById<SearchView>(R.id.searchViewMap)
-                                        //mapSearchView.setSearchableInfo([info])
+
 
 
 
@@ -170,6 +171,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
+
+        //searchview stuff
+        //Searchbar implementation hinging on XML searchView
+        //val mapSearchView: SearchView = findViewById<SearchView>(R.id.searchViewMap)
+        //mapSearchView.setSearchableInfo([info])
     }
 
     public override fun onPause() {
