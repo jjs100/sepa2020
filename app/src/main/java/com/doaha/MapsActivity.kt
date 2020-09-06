@@ -1,5 +1,6 @@
 package com.doaha
 
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -23,6 +24,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
@@ -104,41 +108,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                                         //Map header
-                                        //create val reference to xml textView
-                                        val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
                                         if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
                                         {
+
+                                            //create val reference to xml textView
+                                            val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
                                             //assign
                                             var mapHeaderText : String = eachPlacemark.getProperty("name")
                                             //set header text as mapHeaderText var value
                                             mapHeaderTextView.text = mapHeaderText
-                                        }
 
-                                        //EXTENSION - If user touched the current location header, shows the acknowledgement of country
-                                        //needs to pull acknowledgement from database
-                                        var mapAckText : String = "[Acknowledgement of traditional owners here]"
 
-                                        //set acknowledgement text as mapAckText var value
-                                        val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
-                                        mapAckTextView.text = mapAckText
+                                            // If user touched the current location header, shows the acknowledgement of country
+                                            //pull acknowledgement from database
+                                            var mapAckText : String = pullAcknowledgement(mapHeaderText)
+                                            //set acknowledgement text as mapAckText var value
+                                            var mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
+                                            mapAckTextView.text = mapAckText
 
-                                        //if header location is clicked, acknowledgement TextView appears/disappears
-                                        mapHeaderTextView.setOnClickListener {
-                                            if(mapAckTextView.visibility == View.GONE){
-                                                mapAckTextView.visibility = View.VISIBLE
+                                            //if header location is clicked, acknowledgement TextView appears/disappears
+                                            mapHeaderTextView.setOnClickListener {
+                                                if(mapAckTextView.visibility == View.GONE){
+                                                    mapAckTextView.visibility = View.VISIBLE
+                                                }
+                                                else{
+                                                    mapAckTextView.visibility = View.GONE
+                                                }
+
                                             }
-                                            else{
-                                                mapAckTextView.visibility = View.GONE
-                                            }
-
                                         }
-
-
-
-
-
-
-
                                     }
                                 }
                             }
@@ -157,6 +155,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 println("End of code: $timeEnd")
             }
         }
+    }
+
+    fun pullAcknowledgement(nation: String) : String{
+        //acknowledgement string to return
+        private var ack : String = ""
+        //firebase instance
+        val db = FirebaseFirestore.getInstance()
+        //access specific document from collection, assign acknowledgement to ack string
+        db.collection("zones").document(nation)
+            .get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.getString("Acknowledgements")}")
+                    ack = document.getString("Acknowledgements")!!
+                    return ack
+                } else{
+                  Log.d(ContentValues.TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(ContentValues.TAG, "get failed with ", exception)
+            }
+
+        val t = Toast.makeText(this@MapsActivity,ack, Toast.LENGTH_LONG)
+        t.show()
+        return ack
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

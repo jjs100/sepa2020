@@ -34,9 +34,10 @@
     <TextView
         android:id="@+id/textViewMapAck"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:minHeight="10dp"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorExpandableBox"
