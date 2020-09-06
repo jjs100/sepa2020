@@ -3,6 +3,7 @@ package com.doaha
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.location.Location
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +12,12 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.doaha.model.enum.MapSource
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 
 import kotlinx.coroutines.*
@@ -27,6 +28,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,8 +48,11 @@ import java.net.URL
 import java.util.*
 
 
-
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    //data storage to pass name without intents
+    object nation {
+        @JvmStatic var name = ""
+    }
 
     private lateinit var mMap: GoogleMap
     private var mapFrag: SupportMapFragment? = null
@@ -53,6 +61,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     lateinit var liveKmlFileString: String
+    private var TAG: String = MapsActivity::class.java.simpleName
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -119,7 +128,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             //create val reference to xml textView
                                             val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
                                             //assign
-                                            var mapHeaderText : String = eachPlacemark.getProperty("name")
+                                            val mapHeaderText : String = eachPlacemark.getProperty("name")
                                             //set header text as mapHeaderText var value
                                             mapHeaderTextView.text = mapHeaderText
 
@@ -253,10 +262,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
 
-        //searchview stuff
-        //Searchbar implementation hinging on XML searchView
-        //val mapSearchView: SearchView = findViewById<SearchView>(R.id.searchViewMap)
-        //mapSearchView.setSearchableInfo([info])
+        // Initialize the AutocompleteSupportFragment and Places
+        Places.initialize(applicationContext, "AIzaSyCR2p7njEKk846Xikrj5pGiSoYggJzgN4U")
+        //val pC: PlacesClient = Places.createClient(applicationContext)
+
+        val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.NAME, Place.Field.LAT_LNG))
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                val newLocation = place.latLng
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10.0F))
+            }
+
+            override fun onError(p0: Status) {
+                Log.i(TAG, "An error occurred: $p0")
+            }
+        })
     }
 
     public override fun onPause() {
@@ -270,7 +295,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // sets map variable
         mMap = googleMap
         // sets map type to HYBRID, i.e. satellite view with road overlay
-        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+        //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+
+        // applies custom map style json
+        try {
+            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style_standard))
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
 
         // set kml layer
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
@@ -287,7 +323,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // pings user location
-	mLocationRequest = LocationRequest()
+	    mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
         mLocationRequest.interval = 30000
         mLocationRequest.fastestInterval = 30000
@@ -314,10 +350,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // this listen will be changed to send the user
         // to the Nation info activity
-	layer.setOnFeatureClickListener {
+	    layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
-	          val locName = it.getProperty("name")
-            intent.putExtra("name", locName)
+            val locName = it.getProperty("name")
+            nation.name = locName
             val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
             t.show()
             startActivity(intent)
