@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.doaha.model.enum.MapSource
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,6 +24,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
@@ -44,7 +49,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     lateinit var liveKmlFileString: String
-    private final var TAG: String = MapsActivity.javaClass.simpleName
+    private var TAG: String = MapsActivity::class.java.simpleName
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -106,14 +111,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
                                         {
                                             //assign
-                                            var mapHeaderText : String = eachPlacemark.getProperty("name")
+                                            val mapHeaderText : String = eachPlacemark.getProperty("name")
                                             //set header text as mapHeaderText var value
                                             mapHeaderTextView.text = mapHeaderText
                                         }
 
                                         //EXTENSION - If user touched the current location header, shows the acknowledgement of country
                                         //needs to pull acknowledgement from database
-                                        var mapAckText : String = "[Acknowledgement of traditional owners here]"
+                                        val mapAckText : String = "[Acknowledgement of traditional owners here]"
 
                                         //set acknowledgement text as mapAckText var value
                                         val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
@@ -170,6 +175,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
+
+        // Initialize the AutocompleteSupportFragment and Places
+        Places.initialize(applicationContext(),
+        val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.NAME, Place.Field.LAT_LNG))
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place.
+                Log.i(TAG, "Place: ${place.name}, ${place.latLng}")
+            }
+
+            override fun onError(p0: Status) {
+                // TODO: Handle the error.
+                Log.i(TAG, "An error occurred: $p0")
+            }
+        })
     }
 
     public override fun onPause() {
