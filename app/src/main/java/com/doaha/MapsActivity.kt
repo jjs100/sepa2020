@@ -132,14 +132,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             //set header text as mapHeaderText var value
                                             mapHeaderTextView.text = mapHeaderText
 
-
-                                            // If user touched the current location header, shows the acknowledgement of country
                                             //pull acknowledgement from database
-                                            /*var mapAckText : String = pullAcknowledgement(mapHeaderText)
-                                            //set acknowledgement text as mapAckText var value
-                                            var mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
-                                            mapAckTextView.text = mapAckText*/
-
                                             var mapAckText : String = "[Acknowledgement of traditional owners here]"
                                             val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
                                             val docRef = FirebaseFirestore.getInstance().collection("zones").document(mapHeaderText)
@@ -184,71 +177,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
-
-  /*  suspend fun getAck(nation : String): List<DocumentSnapshot> {
-        val snapshot = FirebaseFirestore.getInstance().collection("zones").document(nation).get().await()
-        return snapshot.documents
-    }
-
-    suspend fun getAckFromFirestore(nation : String){
-        try {
-            val listOfAck = getAck(nation)
-            return listOfAck.toString()
-        }
-        catch (e: Exception) {
-            Log.d(ContentValues.TAG, "")
-        }
-    }*/
-
-    /*fun pullAck(nation : String, myCallback: (List<String>) -> Unit){
-        val db = FirebaseFirestore.getInstance()
-        db.collection("zones").get().addOnCompleteListener{ task ->
-            if(task.isSuccessful){
-                val list = ArrayList<String>()
-                for (document in task.result!!){
-                    if(document.data["Welcome"].toString() == "Welcome to $nation"){
-                        val ack = document.data["Acknowledgements"].toString()
-                        list.add(ack)
-                    }
-                    myCallback(list)
-                }
-
-            }
-        }
-    }*/
-
-    /*fun pullAcknowledgement(nation: String) : String{
-        //acknowledgement string to return
-        var ack : String = ""
-        //firebase instance
-        val db = FirebaseFirestore.getInstance()
-        //access specific document from collection, assign acknowledgement to ack string
-        *//*db.collection("zones").document(nation)
-            .get()
-            .addOnSuccessListener { document ->
-                if(document != null){
-                    Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.getString("Acknowledgements")}")
-                    ack = document.getString("Acknowledgements")!!
-                } else{
-                  Log.d(ContentValues.TAG, "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(ContentValues.TAG, "get failed with ", exception)
-            }*//*
-
-        GlobalScope.async {
-            val docRef = FirebaseFirestore.getInstance().collection("zones").document(nation)
-            docRef.get().await()
-            ack = docRef.get().await().getString("Acknowledgements")!!
-        }
-
-        val t = Toast.makeText(this@MapsActivity,ack, Toast.LENGTH_LONG)
-        t.show()
-        return ack
-    }
-*/
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
         super.onCreate(savedInstanceState)
