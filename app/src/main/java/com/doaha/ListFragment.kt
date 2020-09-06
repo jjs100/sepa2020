@@ -2,6 +2,7 @@ package com.doaha
 
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.common.collect.Maps
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -34,7 +36,9 @@ class ListFragment : Fragment() {
             divider.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider)!!)
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
-            val nationData = getDocuments() //Gets data for list adaptor
+            //get name from maps activity
+            var name = MapsActivity.nation.name
+            val nationData = getDocuments(name) //Gets data for list adaptor
             adapter = ListAdapter(nationData)
             this.setHasFixedSize(true)
         }
@@ -45,10 +49,10 @@ class ListFragment : Fragment() {
     }
 
     //Pulls data from firebase and inserts it into mutablelist
-    private fun getDocuments() : MutableList<Nation> {
+    private fun getDocuments(nation : String) : MutableList<Nation> {
         val tempOut = mutableListOf<Nation>()
         val db = FirebaseFirestore.getInstance()
-        db.collection("zones").document("Baraba Baraba") //gets specific region from database
+        db.collection("zones").document(nation) //gets specific region from database
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
@@ -57,7 +61,8 @@ class ListFragment : Fragment() {
                     tempOut.add(Nation("Welcome", document.getString("Welcome")))
                     tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
                     tempOut.add(Nation("Information", document.getString("Info")))
-                    list_recycler_view.adapter?.notifyDataSetChanged() //Refreshes recycler view
+                    //Refreshes recycler view
+                    list_recycler_view.adapter?.notifyDataSetChanged()
                 } else {
                     Log.d(ContentValues.TAG, "No such document")
                 }

@@ -41,6 +41,10 @@ import java.util.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+    //data storage to pass name without intents
+    object nation {
+        @JvmStatic var name = ""
+    }
 
     private lateinit var mMap: GoogleMap
     private var mapFrag: SupportMapFragment? = null
@@ -177,7 +181,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFrag?.getMapAsync(this)
 
         // Initialize the AutocompleteSupportFragment and Places
-        Places.initialize(applicationContext(),
+        Places.initialize(applicationContext, "AIzaSyCR2p7njEKk846Xikrj5pGiSoYggJzgN4U")
+        //val pC: PlacesClient = Places.createClient(applicationContext)
+
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
 
         // Specify the types of place data to return.
@@ -186,12 +192,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: ${place.name}, ${place.latLng}")
+                val newLocation = place.latLng
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10.0F))
             }
 
             override fun onError(p0: Status) {
-                // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: $p0")
             }
         })
@@ -265,8 +270,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // to the Nation info activity
 	    layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
-	          val locName = it.getProperty("name")
-            intent.putExtra("name", locName)
+            val locName = it.getProperty("name")
+            nation.name = locName
             val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
             t.show()
             startActivity(intent)
