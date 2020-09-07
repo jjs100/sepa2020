@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.doaha.model.enum.MapSource
+import com.doaha.model.map.kml.CustomKmlContainer
 import com.google.android.gms.location.*
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,7 +25,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
-import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
 import java.io.BufferedReader
@@ -32,7 +32,6 @@ import java.io.ByteArrayInputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.*
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -45,7 +44,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     lateinit var liveKmlFileString: String
     private final var TAG: String = MapsActivity.javaClass.simpleName
+    private lateinit var tasmaniaSoutheast: CustomKmlContainer
+    private lateinit var riverineSpencer: CustomKmlContainer
+    private lateinit var eyreGulf: CustomKmlContainer
+    private lateinit var northeastRainforest: CustomKmlContainer
+    private lateinit var eastWestCapeTorresStrait: CustomKmlContainer
+    private lateinit var desert: CustomKmlContainer
+    private lateinit var southwestNorthwest: CustomKmlContainer
+    private lateinit var kimberleyFitzmaurice: CustomKmlContainer
+    private lateinit var northArnhem: CustomKmlContainer
 
+    //set header text as mapHeaderText var value
+    private lateinit var mapHeaderTextView: TextView
+
+    //set acknowledgement text as mapAckText var value
+    private lateinit var mapAckTextView: TextView
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -63,97 +76,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val userLocation = LatLng(location.latitude, location.longitude)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
 
-                // adding KML layer to map
-                val layer = loadMapFile(MapSource.LOCAL)
-                layer.addLayerToMap()
+                //Finish entire list
+                    verifyLocationToNation(
+                        userLocation
+                    )
 
-                // get time for calculating runtime
-                val timeStart = Calendar.getInstance().time
-                println("Start of code: $timeStart")
-
-                val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
-                val aSuperPolygon: MutableList<LatLng> = mutableListOf()
-                if (kmlContainerList != null) {
-                    for (aKmlContainer in kmlContainerList) {
-                        for (eachContainer in aKmlContainer.containers)
-                        {
-                            for (eachPlacemark in eachContainer.placemarks)
-                            {
-                                if (eachPlacemark.geometry is KmlPolygon)
-                                {
-                                    //When a Polygon
-                                    val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
-
-                                    //make a super polygon to reduce computation time for user location
-                                    aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
-                                    if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
-                                    {
-                                        //When a user is within a greater polygon
-                                        println("in the super polygon")
-
-                                        if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
-                                        {
-                                            val locName = eachPlacemark.getProperty("name")
-                                            // toast is just for testing purposes
-                                            val t = Toast.makeText(this@MapsActivity,"You are in $locName", Toast.LENGTH_LONG)
-                                            t.show()
-                                        }
-
-
-                                        //Map header
-                                        //create val reference to xml textView
-                                        val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
-                                        if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
-                                        {
-                                            //assign
-                                            var mapHeaderText : String = eachPlacemark.getProperty("name")
-                                            //set header text as mapHeaderText var value
-                                            mapHeaderTextView.text = mapHeaderText
-                                        }
-
-                                        //EXTENSION - If user touched the current location header, shows the acknowledgement of country
-                                        //needs to pull acknowledgement from database
-                                        var mapAckText : String = "[Acknowledgement of traditional owners here]"
-
-                                        //set acknowledgement text as mapAckText var value
-                                        val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
-                                        mapAckTextView.text = mapAckText
-
-                                        //if header location is clicked, acknowledgement TextView appears/disappears
-                                        mapHeaderTextView.setOnClickListener {
-                                            if(mapAckTextView.visibility == View.GONE){
-                                                mapAckTextView.visibility = View.VISIBLE
-                                            }
-                                            else{
-                                                mapAckTextView.visibility = View.GONE
-                                            }
-
-                                        }
-
-                                        //Searchbar implementation hinging on XML searchView
-                                        //val mapSearchView: SearchView = findViewById<SearchView>(R.id.searchViewMap)
-                                        //mapSearchView.setSearchableInfo([info])
-
-
-
-
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                // we add and remove the layer from the map
-                // this is because the layer needs to be added to the map in this function
-                // so that the data within the layer can be used.
-                // the removal is so that new polygons don't continuously get drawn whenever
-                // the location is retrieved
-                layer.removeLayerFromMap()
-
-                // get time for calculating runtime
-                val timeEnd = Calendar.getInstance().time
-                println("End of code: $timeEnd")
             }
         }
     }
@@ -187,7 +114,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // applies custom map style json
         try {
-            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style_standard))
+            val success = mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this,
+                    R.raw.map_style_standard
+                )
+            )
 
             if (!success) {
                 Log.e(TAG, "Style parsing failed.")
@@ -197,13 +129,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // set kml layer
-        val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
+        val layer = loadMapFile(MapSource.LOCAL)
         // add layer overlay to map
         layer.addLayerToMap()
-
+        // create super zones
+        createSuperZoneObjects(layer)
 
         //Set map settings
-        with(mMap.uiSettings){
+        with(mMap.uiSettings) {
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
             //Enable gesture zoom controls
@@ -211,7 +144,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         // pings user location
-	    mLocationRequest = LocationRequest()
+        mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
         mLocationRequest.interval = 30000
         mLocationRequest.fastestInterval = 30000
@@ -225,26 +158,46 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 //Location Permission already granted
-                mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+                mFusedLocationClient?.requestLocationUpdates(
+                    mLocationRequest,
+                    mLocationCallback,
+                    Looper.myLooper()
+                )
                 mMap.isMyLocationEnabled = true
             } else {
                 //Request Location Permission
                 checkLocationPermission()
             }
         } else {
-            mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+            mFusedLocationClient?.requestLocationUpdates(
+                mLocationRequest,
+                mLocationCallback,
+                Looper.myLooper()
+            )
             mMap.isMyLocationEnabled = true
         }
 
         // this listen will be changed to send the user
         // to the Nation info activity
-	    layer.setOnFeatureClickListener {
+        layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
-	          val locName = it.getProperty("name")
+            val locName = it.getProperty("name")
             intent.putExtra("name", locName)
-            val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
+            val t = Toast.makeText(this@MapsActivity, "this is $locName", Toast.LENGTH_SHORT)
             t.show()
             startActivity(intent)
+        }
+
+        mapHeaderTextView = findViewById<TextView>(R.id.textViewMapHeader)
+        mapAckTextView = findViewById<TextView>(R.id.textViewMapAck)
+        //if header location is clicked, acknowledgement TextView appears/disappears
+        mapHeaderTextView.setOnClickListener {
+            if (mapAckTextView.visibility == View.GONE) {
+                mapAckTextView.visibility = View.VISIBLE
+            } else {
+                mapAckTextView.visibility = View.GONE
+            }
+
         }
     }
 
@@ -329,24 +282,99 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun loadMapFile(mapSource: MapSource): KmlLayer {
-        if(mapSource == MapSource.ONLINE){
-            var fileString:String = ""
-            val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
-            val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
-            while(linesOfFileIterator.hasNext()){
+        if (mapSource == MapSource.ONLINE) {
+            var fileString: String = ""
+            val inputStream: InputStream =
+                applicationContext.resources.openRawResource(R.raw.online)
+            val linesOfFileIterator: Iterator<String> =
+                inputStream.bufferedReader().lineSequence().iterator()
+            while (linesOfFileIterator.hasNext()) {
                 fileString += linesOfFileIterator.next()
             }
-            val liveKmlUrl:String = fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
+            val liveKmlUrl: String =
+                fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
             val inputStreamReader = URL(liveKmlUrl).openConnection() as HttpURLConnection
             val thread = Thread(Runnable {
-                liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(BufferedReader::readText)
+                liveKmlFileString =
+                    inputStreamReader.inputStream.bufferedReader().use(BufferedReader::readText)
             })
 
             thread.start()
             thread.join()
-            return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
+            return KmlLayer(
+                mMap,
+                ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)),
+                applicationContext
+            )
         }
         return KmlLayer(mMap, R.raw.proto, applicationContext)
+    }
+
+    private fun createSuperZoneObjects(kmlLayer: KmlLayer) {
+        for (kmlContainer in kmlLayer.containers) {
+            for (aLayer in kmlContainer.containers) {
+                when (aLayer.getProperty("name")) {
+                    "Tasmania/Southeast" -> tasmaniaSoutheast = CustomKmlContainer(aLayer)
+                    "Riverine/Spencer" -> riverineSpencer = CustomKmlContainer(aLayer)
+                    "Eyre/Gulf" -> eyreGulf = CustomKmlContainer(aLayer)
+                    "Northeast/Rainforest" -> northeastRainforest = CustomKmlContainer(aLayer)
+                    "East Cape/West Cape/Torres Strait" -> eastWestCapeTorresStrait = CustomKmlContainer(aLayer)
+                    "Desert" -> desert = CustomKmlContainer(aLayer)
+                    "Southwest/Northwest" -> southwestNorthwest = CustomKmlContainer(aLayer)
+                    "Kimberley/Fitzmaurice" -> kimberleyFitzmaurice = CustomKmlContainer(aLayer)
+                    "North/Arnhem" -> northArnhem = CustomKmlContainer(aLayer)
+                }
+            }
+        }
+    }
+
+    private fun verifyLocationToNation(
+        userLocation: LatLng
+    ) {
+        if(!this::tasmaniaSoutheast.isInitialized){
+            return
+        }
+        var listOfLayers: List<CustomKmlContainer> = listOf<CustomKmlContainer>(
+            tasmaniaSoutheast,
+            riverineSpencer,
+            eyreGulf,
+            northeastRainforest,
+            eastWestCapeTorresStrait,
+            desert,
+            southwestNorthwest,
+            kimberleyFitzmaurice,
+            northArnhem
+        )
+        for (aLayer in listOfLayers) {
+            if (!PolyUtil.containsLocation(userLocation, aLayer.aSuperRegion, true)) {
+                continue
+            }
+
+            for (aPlaceMarker in aLayer.kmlContainer.placemarks) {
+                if (aPlaceMarker is KmlPolygon) {
+                    if (!PolyUtil.containsLocation(
+                            userLocation,
+                            aPlaceMarker.outerBoundaryCoordinates,
+                            true
+                        )
+                    ) {
+                        continue
+                    }
+
+                    // Toast is just for testing purposes
+                    Toast.makeText(
+                        this@MapsActivity,
+                        "You are in " + aPlaceMarker.getProperty("name"),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    mapHeaderTextView.text = aPlaceMarker.getProperty("name")
+                    mapAckTextView.text = "[Acknowledgement of traditional owners here]"
+
+                } else {
+                    continue
+                }
+            }
+        }
     }
 
     companion object {
