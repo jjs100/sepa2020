@@ -9,13 +9,14 @@
         android:id="@+id/textViewCurrentLoc"
         android:layout_width="match_parent"
         android:layout_height="16dp"
-        android:autoSizeTextType="uniform"
-        android:background="#CF620E"
+        android:textSize="14sp"
+        android:background="#CF3B0E"
         android:gravity="center"
         android:text="Current Location:"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         android:textColorHighlight="#000000" />
+
     <TextView
         android:id="@+id/textViewMapHeader"
         android:layout_width="match_parent"
@@ -26,17 +27,19 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         android:textColorHighlight="#000000"
-        android:background="#FFCF620E"
+        android:background="#CF3B0E"
         />
+
     <TextView
         android:id="@+id/textViewMapAck"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:minHeight="10dp"
         android:gravity="center"
-        android:autoSizeTextType="uniform"
-        android:text="Acknowledgement of Traditional Owners \n text auto sizes. \n "
+        android:textSize="12sp"
+        android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FF6600"
+        android:textColor="@color/colorExpandableBox"
         android:textColorHighlight="#eb9234"
         android:background="#433B30"
         android:visibility="gone"/>

@@ -1,5 +1,6 @@
 package com.doaha
 
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
@@ -19,6 +20,9 @@ import com.doaha.model.enum.MapSource
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
+
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -28,6 +32,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
@@ -67,6 +75,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker?.remove()
                 }
+
+                //Search elements
+
 
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
@@ -110,43 +121,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
                                         //Map header
-                                        //create val reference to xml textView
-                                        val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
+                                        //IMPORTANT - this if statement is where we can tell exactly which region the user is in
                                         if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
                                         {
+
+                                            //create val reference to xml textView
+                                            val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
                                             //assign
                                             val mapHeaderText : String = eachPlacemark.getProperty("name")
                                             //set header text as mapHeaderText var value
                                             mapHeaderTextView.text = mapHeaderText
-                                        }
 
-                                        //EXTENSION - If user touched the current location header, shows the acknowledgement of country
-                                        //needs to pull acknowledgement from database
-                                        val mapAckText : String = "[Acknowledgement of traditional owners here]"
+                                            //pull acknowledgement from database
+                                            var mapAckText : String = "[Acknowledgement of traditional owners here]"
+                                            val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
+                                            val docRef = FirebaseFirestore.getInstance().collection("zones").document(mapHeaderText)
 
-                                        //set acknowledgement text as mapAckText var value
-                                        val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
-                                        mapAckTextView.text = mapAckText
-
-                                        //if header location is clicked, acknowledgement TextView appears/disappears
-                                        mapHeaderTextView.setOnClickListener {
-                                            if(mapAckTextView.visibility == View.GONE){
-                                                mapAckTextView.visibility = View.VISIBLE
-                                            }
-                                            else{
-                                                mapAckTextView.visibility = View.GONE
+                                            GlobalScope.launch(Dispatchers.Main) {
+                                                delay(1000L)
+                                                val region = docRef.get().await()
+                                                if (region.getString("Acknowledgements") != "") {
+                                                    mapAckTextView.text = "Acknowledgments: " + region.getString("Acknowledgements")
+                                                } else {
+                                                    mapAckTextView.text = "Acknowledgements Unavailable"
+                                                }
                                             }
 
+                                            //if header location is clicked, acknowledgement TextView appears/disappears
+                                            mapHeaderTextView.setOnClickListener {
+                                                if(mapAckTextView.visibility == View.GONE){
+                                                    mapAckTextView.visibility = View.VISIBLE
+                                                }
+                                                else{
+                                                    mapAckTextView.visibility = View.GONE
+                                                }
+
+                                            }
                                         }
-
-                                        //Searchbar implementation hinging on XML searchView
-                                        //val mapSearchView: SearchView = findViewById<SearchView>(R.id.searchViewMap)
-                                        //mapSearchView.setSearchableInfo([info])
-
-
-
-
-
                                     }
                                 }
                             }
@@ -166,7 +177,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
         super.onCreate(savedInstanceState)
