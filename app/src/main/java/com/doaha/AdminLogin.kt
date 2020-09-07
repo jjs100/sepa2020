@@ -2,7 +2,6 @@ package com.doaha
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,7 +18,6 @@ class AdminLogin : AppCompatActivity(){
 
     //Creation of Google sign-in object and add options
     override fun onCreate(savedInstanceState: Bundle?) {
-        println("onCreate START")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_login)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -27,59 +25,45 @@ class AdminLogin : AppCompatActivity(){
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        println("onCreate END")
     }
 
     //Link sign-in object and create on-click listener, once clicked launching google sign-in flow
     public override fun onStart() {
-        println("onSTART START")
         super.onStart()
         val mGmailSignIn = findViewById<SignInButton>(R.id.sign_in_button)
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        println("onSTART STARTSign In: " + account.toString())
         mGmailSignIn.setOnClickListener {
             signIn()
         }
-        println("onSTART END")
     }
 
     //Verification of authenticated user
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        println("onActivityResult START")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data))
         }
-        println("onActivityResult END")
     }
 
-
+    //Verify user that is signed in
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        println("handleSignInResult START")
-        println("Sign In: $completedTask")
+        val t = Toast.makeText(this, "Log in failed: Permission Denied", Toast.LENGTH_LONG)
         try {
             val account = completedTask.getResult(ApiException::class.java)
             val idToken = account!!.idToken
-            println("Sign In: " + idToken.toString())
             if (completedTask.result!!.email == getString(R.string.admin_email)) {
                 // go to admin page
-                val intent = Intent(this, AdminPage::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, AdminPage::class.java))
             } else {
-                val t = Toast.makeText(this, "Log in failed: Permission Denied", Toast.LENGTH_LONG)
                 t.show()
             }
         } catch (e: ApiException) {
-            println("Sign In: "+ "signInResult:failed code=" + e.statusCode)
-
+            t.show()
         }
-        println("handleSignInResult END")
     }
+
+    //Google sign flow
     private fun signIn() {
-        println("signIn START")
-        val signInIntent = mGoogleSignInClient!!.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-        println("signIn END")
+        startActivityForResult(mGoogleSignInClient!!.signInIntent, RC_SIGN_IN)
     }
 }
