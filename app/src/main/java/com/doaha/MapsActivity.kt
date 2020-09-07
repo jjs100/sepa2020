@@ -181,7 +181,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFrag?.getMapAsync(this)
 
         // Initialize the AutocompleteSupportFragment and Places
-        Places.initialize(applicationContext, "AIzaSyCR2p7njEKk846Xikrj5pGiSoYggJzgN4U")
+        Places.initialize(applicationContext, getString(R.string.google_maps_auto_complete_key))
         //val pC: PlacesClient = Places.createClient(applicationContext)
 
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
