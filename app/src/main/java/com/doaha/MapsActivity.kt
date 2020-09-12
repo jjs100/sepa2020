@@ -77,10 +77,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
 
-                // get time for calculating runtime
-                val timeStart = Calendar.getInstance().time
-                println("Start of code: $timeStart")
-
                 val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
                 val aSuperPolygon: MutableList<LatLng> = mutableListOf()
                 if (kmlContainerList != null) {
@@ -98,8 +94,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
                                     if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
                                     {
-                                        //When a user is within a greater polygon
-                                        println("in the super polygon")
 
                                         if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
                                         {
@@ -107,6 +101,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             // toast is just for testing purposes
                                             val t = Toast.makeText(this@MapsActivity,"You are in $locName", Toast.LENGTH_LONG)
                                             t.show()
+
+                                            sendNotification(locName)
                                         }
 
 
@@ -160,10 +156,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 // the removal is so that new polygons don't continuously get drawn whenever
                 // the location is retrieved
                 layer.removeLayerFromMap()
-
-                // get time for calculating runtime
-                val timeEnd = Calendar.getInstance().time
-                println("End of code: $timeEnd")
             }
         }
     }
@@ -180,6 +172,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
+
+        createNotificationChannel()
     }
 
     public override fun onPause() {
@@ -223,8 +217,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // pings user location
 	    mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
-        mLocationRequest.interval = 30000
-        mLocationRequest.fastestInterval = 30000
+        mLocationRequest.interval = 10000
+        mLocationRequest.fastestInterval = 10000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         // check/request app permissions
@@ -372,7 +366,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun sendNotification() {
+    private fun sendNotification(locName: String) {
+        val place = locName
         val intent = Intent(this, MapsActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -384,7 +379,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val builder = NotificationCompat.Builder(this, channelID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Test Notification")
-            .setContentText("You are in XXXXXX")
+            .setContentText("You are in $place")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
