@@ -1,5 +1,9 @@
 package com.doaha
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,10 +15,13 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.RemoteViews
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.doaha.model.enum.MapSource
 import com.google.android.gms.common.api.Status
@@ -63,6 +70,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var liveKmlFileString: String
     private var TAG: String = MapsActivity::class.java.simpleName
 
+    private var channelID = "Notification_Channel"
+    private val notificationID = 101
+
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -87,10 +97,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
 
-                // get time for calculating runtime
-                val timeStart = Calendar.getInstance().time
-                println("Start of code: $timeStart")
-
                 val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
                 val aSuperPolygon: MutableList<LatLng> = mutableListOf()
                 if (kmlContainerList != null) {
@@ -108,8 +114,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
                                     if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
                                     {
-                                        //When a user is within a greater polygon
-                                        println("in the super polygon")
 
                                         if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
                                         {
@@ -117,6 +121,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             // toast is just for testing purposes
                                             val t = Toast.makeText(this@MapsActivity,"You are in $locName", Toast.LENGTH_LONG)
                                             t.show()
+
+                                            sendNotification(locName)
                                         }
 
 
@@ -170,10 +176,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 // the removal is so that new polygons don't continuously get drawn whenever
                 // the location is retrieved
                 layer.removeLayerFromMap()
-
-                // get time for calculating runtime
-                val timeEnd = Calendar.getInstance().time
-                println("End of code: $timeEnd")
             }
         }
     }
@@ -191,6 +193,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
 
+        createNotificationChannel()
         // Initialize the AutocompleteSupportFragment and Places
         Places.initialize(applicationContext, getString(R.string.google_maps_auto_complete_key))
         //val pC: PlacesClient = Places.createClient(applicationContext)
@@ -217,7 +220,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onPause()
 
         //stop location updates when Activity is no longer active
-        mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
+        //mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -254,8 +257,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // pings user location
 	    mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
-        mLocationRequest.interval = 30000
-        mLocationRequest.fastestInterval = 30000
+        mLocationRequest.interval = 10000
+        mLocationRequest.fastestInterval = 10000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         // check/request app permissions
@@ -388,6 +391,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
         }
         return KmlLayer(mMap, R.raw.proto, applicationContext)
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance: Int = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotification(locName: String) {
+        val place = locName
+        val intent = Intent(this, MapsActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        // set notification content
+        // placeholder content
+        val builder = NotificationCompat.Builder(this, channelID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Test Notification")
+            .setContentText("You are in $place")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        // Set the intent that will fire when the user taps the notification
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(notificationID, builder.build())
+        }
     }
 
     companion object {
