@@ -213,7 +213,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onError(p0: Status) {
                 Log.i(TAG, "An error occurred: $p0")
             }
-        }
+        })
     }
 
     public override fun onPause() {
