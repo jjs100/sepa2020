@@ -221,7 +221,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onPause()
 
         //Stop location updates when Activity is no longer active
-        mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
+        //mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
