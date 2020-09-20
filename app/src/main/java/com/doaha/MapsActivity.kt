@@ -28,10 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
@@ -110,7 +107,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     // Set viewed Region Text
                                     val camPos = mMap.cameraPosition.target
                                     val mapViewedRegion: TextView = findViewById<TextView>(R.id.textViewViewedRegion)
-                                    if (PolyUtil.containsLocation(camPos, aPolygon.outerBoundaryCoordinates, true)){
+                                    if (PolyUtil.containsLocation(
+                                            camPos,
+                                            aPolygon.outerBoundaryCoordinates,
+                                            true
+                                        )){
                                         val regionName = eachPlacemark.getProperty("name")
                                         mapViewedRegion.text = regionName
                                     }
@@ -267,6 +268,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.e(TAG, "Can't find style. Error: ", e)
         }
 
+        // Set map bounds to australia
+        // Create a LatLngBounds that includes Australia
+        val australiaBounds = LatLngBounds(
+            LatLng(-44.0, 113.0), LatLng(-10.0, 154.0)
+        )
+        // Set Camera to show map bounds
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
+
         // set kml layer
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
         // add layer overlay to map
@@ -326,16 +335,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+
+        // These markers are for testing purposes only
         // Marker for Zone (Test implementation)
-//        val PERTH  = LatLng(-31.90, 115.86)
-//        val perth  = mMap.addMarker(
-//            MarkerOptions()
-//                .alpha(0.0F)
-//                .title("Wajuk")
-//                .position(PERTH))
-//        perth.showInfoWindow()
+        val wajuk  = LatLng(-31.90, 115.86)
+        val wajukMarker  = mMap.addMarker(
+            MarkerOptions()
+                //.alpha(0.0F)
+                .title("Wajuk")
+                .position(wajuk)
+        )
+        //wajukMarker.showInfoWindow()
 
+        val wiilman = LatLng(-32.74, 117.09)
+        val wiilmanMarker  = mMap.addMarker(
+            MarkerOptions()
+                //.alpha(0.0F)
+                .title("Wiilman")
+                .position(wiilman)
+        )
+        //wiilmanMarker.showInfoWindow()
 
+        val pinjarup = LatLng(-32.70, 115.76)
+        val pinjarupMarker = mMap.addMarker(
+            MarkerOptions()
+                //.alpha(0.0F)
+                .title("Pinjarup")
+                .position(pinjarup)
+        )
+        //pinjarupMarker.showInfoWindow()
     }
 
     private fun checkLocationPermission() {
