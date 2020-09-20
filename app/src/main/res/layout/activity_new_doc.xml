@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".NewDocActivity">
+
+    <EditText
+        android:id="@+id/newID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ID"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/newWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Welcome"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/newAck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Acknowledgement"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/newInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Information"
+        android:inputType="text" />
+
+</LinearLayout>

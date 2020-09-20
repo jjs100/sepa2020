@@ -17,6 +17,7 @@ class SplashScreen : AppCompatActivity() {
         }
 
         splashMessage.setOnClickListener {
+            //admin login didn't work correctly
             startActivity(Intent(this, AdminLogin::class.java))
         }
     }

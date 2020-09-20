@@ -42,10 +42,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EditDocActivity"
+            android:parentActivityName=".AdminPage"/>
+        <activity
+            android:name=".NewDocActivity"
+            android:parentActivityName=".AdminPage"/>
         <activity android:name=".MapsActivity"/>
         <activity android:name=".MainListActivity"/>
         <activity android:name=".AdminLogin"/>
-        <activity android:name=".AdminPage"/>
+        <activity android:name=".AdminPage"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>
