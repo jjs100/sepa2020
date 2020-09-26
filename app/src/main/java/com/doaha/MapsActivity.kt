@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
@@ -126,7 +127,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
         super.onCreate(savedInstanceState)
@@ -168,6 +169,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     public override fun onPause() {
         super.onPause()
+        //Stop location updates when Activity is no longer active
+        //mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -353,7 +356,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun sendNotification(locName: String) {
-        val intent = Intent(this, MapsActivity::class.java).apply {
+        if((this.application as DoAHAApplication).getIsNotificationEnabled(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE))) {
+            val intent = Intent(this, MapsActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
