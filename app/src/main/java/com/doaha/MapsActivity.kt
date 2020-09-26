@@ -88,10 +88,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
-                val mapViewedRegion: TextView = findViewById(R.id.textViewMapHeader)
+                val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
                 val checkedCamPos = currentRegion(camPos, layer)
                 if (checkedCamPos != null) {
-                    mapViewedRegion.text = checkedCamPos
+                    mapHeaderTextView.text = checkedCamPos
                 }
 
                 val checkedUserLocation = currentRegion(userLocation, layer)
@@ -117,7 +117,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
 
                     //if header location is clicked, acknowledgement TextView appears/disappears
-                    mapAckTextView.setOnClickListener {
+                    mapHeaderTextView.setOnClickListener {
                         if(mapAckTextView.visibility == View.GONE){
                             mapAckTextView.visibility = View.VISIBLE
                         }
