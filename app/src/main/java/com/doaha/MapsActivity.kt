@@ -356,23 +356,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun sendNotification(locName: String) {
-        if((this.application as DoAHAApplication).getIsNotificationEnabled(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE))) {
+        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            )
+        ) {
             val intent = Intent(this, MapsActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        // set notification content
-        val builder = NotificationCompat.Builder(this, channelID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Test Notification")
-            .setContentText("You are in $locName")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        // Set the intent that will fire when the user taps the notification
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+            // set notification content
+            val builder = NotificationCompat.Builder(this, channelID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("Test Notification")
+                .setContentText("You are in $locName")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
 
-        with(NotificationManagerCompat.from(this)) {
-            notify(notificationID, builder.build())
+            with(NotificationManagerCompat.from(this)) {
+                notify(notificationID, builder.build())
+            }
         }
     }
 
