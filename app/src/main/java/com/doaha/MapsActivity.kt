@@ -86,104 +86,48 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
 
-                // Set viewed Region Text
-                if (currentRegion(userLocation, layer) != null) {
-                    val camPos = mMap.cameraPosition.target
-                    val mapViewedRegion: TextView = findViewById(R.id.textViewMapHeader)
-                    if (currentRegion(camPos, layer) != null) {
-                        mapViewedRegion.text = currentRegion(camPos, layer)
-                    }
+                // Update Current Location Header
+                val camPos = mMap.cameraPosition.target
+                val mapViewedRegion: TextView = findViewById(R.id.textViewMapHeader)
+                val checkedCamPos = currentRegion(camPos, layer)
+                if (checkedCamPos != null) {
+                    mapViewedRegion.text = checkedCamPos
                 }
 
-                val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
-                val aSuperPolygon: MutableList<LatLng> = mutableListOf()
-                if (kmlContainerList != null) {
-                    for (aKmlContainer in kmlContainerList) {
-                        for (eachContainer in aKmlContainer.containers)
-                        {
-                            for (eachPlacemark in eachContainer.placemarks)
-                            {
-                                if (eachPlacemark.geometry is KmlPolygon)
-                                {
-                                    //When a Polygon
-                                    val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
-                                    //make a super polygon to reduce computation time for user location
-                                    aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
+                val checkedUserLocation = currentRegion(userLocation, layer)
+                if (checkedUserLocation != null) {
+                    val mapHeaderText : String = checkedUserLocation
 
-                                    // Set viewed Region Text
-//                                    val camPos = mMap.cameraPosition.target
-//                                    val mapViewedRegion: TextView = findViewById(R.id.textViewMapHeader)
-//                                    if (PolyUtil.containsLocation(
-//                                            camPos,
-//                                            aPolygon.outerBoundaryCoordinates,
-//                                            true
-//                                        )){
-//                                        val regionName = eachPlacemark.getProperty("name")
-//                                        mapViewedRegion.text = regionName
-//                                    }
+                    //pull acknowledgement from database
+                    val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
+                    val docRef = FirebaseFirestore.getInstance().collection(
+                        "zones"
+                    ).document(mapHeaderText)
 
-                                    if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
-                                    {
-
-                                        if (PolyUtil.containsLocation(
-                                                userLocation,
-                                                aPolygon.outerBoundaryCoordinates,
-                                                true
-                                            ))
-                                        {
-                                            val locName = eachPlacemark.getProperty("name")
-                                            //sendNotification(locName)
-                                        }
-
-
-                                        //Map header
-                                        //IMPORTANT - this if statement is where we can tell exactly which region the user is in
-                                        if (PolyUtil.containsLocation(
-                                                userLocation,
-                                                aPolygon.outerBoundaryCoordinates,
-                                                true
-                                            ))
-                                        {
-
-
-                                            //assign
-                                            val mapHeaderText : String = eachPlacemark.getProperty("name")
-
-                                            //pull acknowledgement from database
-                                            val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
-                                            val docRef = FirebaseFirestore.getInstance().collection(
-                                                "zones"
-                                            ).document(mapHeaderText)
-
-                                            GlobalScope.launch(Dispatchers.Main) {
-                                                delay(1000L)
-                                                val region = docRef.get().await()
-                                                if (region.getString("Acknowledgements") != "") {
-                                                    mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                                        "Acknowledgements"
-                                                    )
-                                                } else {
-                                                    mapAckTextView.text = getString(R.string.ackUnavailable)
-                                                }
-                                            }
-
-                                            //if header location is clicked, acknowledgement TextView appears/disappears
-                                            mapAckTextView.setOnClickListener {
-                                                if(mapAckTextView.visibility == View.GONE){
-                                                    mapAckTextView.visibility = View.VISIBLE
-                                                }
-                                                else{
-                                                    mapAckTextView.visibility = View.GONE
-                                                }
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(1000L)
+                        val region = docRef.get().await()
+                        if (region.getString("Acknowledgements") != "") {
+                            mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                "Acknowledgements"
+                            )
+                        } else {
+                            mapAckTextView.text = getString(R.string.ackUnavailable)
                         }
                     }
+
+                    //if header location is clicked, acknowledgement TextView appears/disappears
+                    mapAckTextView.setOnClickListener {
+                        if(mapAckTextView.visibility == View.GONE){
+                            mapAckTextView.visibility = View.VISIBLE
+                        }
+                        else{
+                            mapAckTextView.visibility = View.GONE
+                        }
+
+                    }
                 }
+
                 // we add and remove the layer from the map
                 // this is because the layer needs to be added to the map in this function
                 // so that the data within the layer can be used.
@@ -271,8 +215,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // pings user location In Milliseconds || 30 secs
 	    mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 1000
-        mLocationRequest.fastestInterval = 1000
+        // In Milliseconds || 30 secs
+        mLocationRequest.interval = 10000
+        mLocationRequest.fastestInterval = 10000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         // check/request app permissions
