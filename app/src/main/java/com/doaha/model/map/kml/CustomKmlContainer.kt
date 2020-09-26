@@ -14,7 +14,17 @@ class CustomKmlContainer() {
 
     constructor(aKmlContainer: KmlContainer) : this() {
         this.kmlContainer = aKmlContainer
-        this.aSuperRegion = extractAllPointsFromAKmlContainer(aKmlContainer)
+        this.aSuperRegion = getOuterBoundaryForSuperRegion(aKmlContainer)
+    }
+
+    private fun getOuterBoundaryForSuperRegion(aKmlContainer: KmlContainer): MutableList<LatLng>{
+        var listOfLatLngPoints: MutableList<LatLng> = ArrayList()
+        listOfLatLngPoints = extractAllPointsFromAKmlContainer(aKmlContainer)
+
+        var aSuperRegionListOfLatLngPoints: MutableList<LatLng> = ArrayList()
+        aSuperRegionListOfLatLngPoints = grahamScan(listOfLatLngPoints)
+
+        return aSuperRegionListOfLatLngPoints
     }
 
     private fun extractAllPointsFromAKmlContainer(aKmlContainer: KmlContainer): MutableList<LatLng>{
@@ -25,8 +35,8 @@ class CustomKmlContainer() {
         return listOfLatLngPoints
     }
     private fun extractAllPointFromAnObject(aMapObject: KmlPlacemark):MutableList<LatLng>{
-        return if(aMapObject is KmlPolygon){
-            aMapObject.outerBoundaryCoordinates
+        return if(aMapObject.geometry is KmlPolygon){
+            return (aMapObject.geometry as KmlPolygon).outerBoundaryCoordinates
         }else{
             ArrayList()
         }
@@ -43,11 +53,12 @@ class CustomKmlContainer() {
             if(P0 == null){
                 //Assign P0 a value if not set
                 P0 = it
-            }else if(P0!!.latitude > it.latitude && P0!!.longitude > it.longitude){
-                //Check if point in lowest y and x value
+            }else if(P0!!.latitude > it.latitude ){
+                //Check if point in lowest y
                 P0 = it
-            }else{
-                println("The point: " + it.latitude + ", " + it.longitude)
+            }else if(P0!!.latitude == it.latitude && P0!!.longitude > it.longitude){
+                //Check if same y value then check for left most x value
+                P0 = it
             }
         }
 
@@ -58,25 +69,18 @@ class CustomKmlContainer() {
 
         for(LanLngPoint in listOfLatLngPoints){
             //Pop the last point from stack if we turn clockwise to reach the next point
-            while(stack.size > 1 && checkForCouterClockWiseTurn(stack[stack.size-1], stack[stack.size], LanLngPoint)){
+            while(stack.size > 2 && checkForCounterClockWiseTurn(stack[stack.size-2], stack[stack.size-1], LanLngPoint)){
                 stack.pop()
             }
             //Add point to stack
             stack.add(LanLngPoint)
         }
 
-        return listOfLatLngPoints
+        return stack
     }
 
-    fun checkForCouterClockWiseTurn(secondFromTopOfStackPoint:LatLng, topOfStackPoint: LatLng, currentPoint:LatLng) : Boolean{
-        //counter clockwise turn > 0
-        //collinar turn = 0
-        /*
-           [ a b c ]         [ e f ]        [ d f ]        [ d e ]        [ currentPoint(long)              currentPoint(lat)              1 ]
-    det =  [ d e f ]  = a*det[ h i ] - b*det[ g i ] - c*det[ g h ]  = det [ topOfStackPoint(long)           topOfStackPoint(lat)           1 ]
-           [ g h i ]                                                      [ secondFromTopOfStackPoint(long) secondFromTopOfStackPoint(lat) 1 ]
-         */
-        val intArray = arrayListOf<DoubleArray>()
+    private fun checkForCounterClockWiseTurn(secondFromTopOfStackPoint:LatLng, topOfStackPoint: LatLng, currentPoint:LatLng) : Boolean {
+        val intArray = arrayListOf<DoubleArray>(DoubleArray(3), DoubleArray(3), DoubleArray(3))
 
         intArray[0][0] = currentPoint.longitude;
         intArray[0][1] = currentPoint.latitude;
@@ -86,25 +90,33 @@ class CustomKmlContainer() {
         intArray[1][1] = topOfStackPoint.latitude;
         intArray[1][2] = 1.0;
 
-        intArray[2][0] = currentPoint.longitude;
-        intArray[2][1] = currentPoint.longitude;
+        intArray[2][0] = secondFromTopOfStackPoint.longitude;
+        intArray[2][1] = secondFromTopOfStackPoint.latitude;
         intArray[2][2] = 1.0;
 
-       // val det = determinantOfMatrix(intArray, 3)
-
-        return true
-        //https://www.geeksforgeeks.org/determinant-of-a-matrix/
-        //https://www.chilimath.com/lessons/advanced-algebra/determinant-3x3-matrix/
-        //https://math.stackexchange.com/questions/1324179/how-to-tell-if-3-connected-points-are-connected-clockwise-or-counter-clockwise
-        //https://stackoverflow.com/questions/42258637/how-to-know-the-angle-between-two-points
-        //https://www.google.com/search?q=lat+long+map&rlz=1C1CHBF_en-GBAU892AU892&sxsrf=ALeKk032GWiKKgWOi2muKI59ISrvOU5nog:1598886880139&source=lnms&tbm=isch&sa=X&ved=2ahUKEwj_gpvk3cXrAhXP7XMBHZ2VCwkQ_AUoAXoECGYQAw&biw=1455&bih=688#imgrc=NZ-IFOAr1N6IfM
-        //https://en.wikipedia.org/wiki/Graham_scan#Pseudocode
-        //https://www.geeksforgeeks.org/convex-hull-set-1-jarviss-algorithm-or-wrapping/
-        //https://www.geeksforgeeks.org/convex-hull-set-1-jarviss-algorithm-or-wrapping/
+        //Counter clockwise turn > 0
+        //Collinear turn = 0
+        //Clockwise turn < 0
+        return determinantOfMatrix(intArray) >= 0
     }
 
-    fun determinantOfMatrix(mat: ArrayList<DoubleArray>): Int {
-        return 1
+    private fun determinantOfMatrix(mat: ArrayList<DoubleArray>): Double {
+        /*
+           [ a b c ]         [ e f ]        [ d f ]        [ d e ]        [ currentPoint(long)              currentPoint(lat)              1 ]
+    det =  [ d e f ]  = a*det[ h i ] - b*det[ g i ] - c*det[ g h ]  = det [ topOfStackPoint(long)           topOfStackPoint(lat)           1 ]
+           [ g h i ]                                                      [ secondFromTopOfStackPoint(long) secondFromTopOfStackPoint(lat) 1 ]
+         */
+        val a = mat[0][0]
+        val b = mat[0][1]
+        val c = mat[0][2]
+        val d = mat[1][0]
+        val e = mat[1][1]
+        val f = mat[1][2]
+        val g = mat[2][0]
+        val h = mat[2][1]
+        val i = mat[2][2]
+        val value = a * (e * i - f * h) - b * (d * i - g * f) + c * (d * h - e * g)
+        return value
     }
 
 }
