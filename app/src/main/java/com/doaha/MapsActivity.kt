@@ -62,7 +62,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private lateinit var liveKmlFileString: String
     private var TAG: String = MapsActivity::class.java.simpleName
-
     private var channelID = "Notification_Channel"
     private val notificationID = 101
 
@@ -79,15 +78,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker?.remove()
                 }
-
-                //Search elements
-
-
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
-
-
 
                 // adding KML layer to map
                 val layer = loadMapFile(MapSource.LOCAL)
@@ -141,7 +134,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             val locName = eachPlacemark.getProperty("name")
                                             //sendNotification(locName)
                                         }
-
 
 
                                         //Map header
@@ -206,20 +198,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // set up app view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-
         supportActionBar?.title = "Map Location Activity"
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
-
         createNotificationChannel()
+
         // Initialize the AutocompleteSupportFragment and Places
         Places.initialize(applicationContext, getString(R.string.google_maps_auto_complete_key))
-        //val pC: PlacesClient = Places.createClient(applicationContext)
 
+        //val pC: PlacesClient = Places.createClient(applicationContext)
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
 
         // Specify the types of place data to return.
@@ -229,9 +219,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 val newLocation = place.latLng
-
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10.0F))
-
                 mMap.addMarker(
                     newLocation?.let {
                         MarkerOptions()
@@ -239,7 +227,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 )
             }
-
             override fun onError(p0: Status) {
                 Log.i(TAG, "An error occurred: $p0")
             }
@@ -248,48 +235,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     public override fun onPause() {
         super.onPause()
-
-        //stop location updates when Activity is no longer active
-        //mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         // sets map variable
         mMap = googleMap
-        // sets map type to HYBRID, i.e. satellite view with road overlay
-        //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-
         // applies custom map style json
         try {
             val success = mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    this,
-                    R.raw.map_style_standard
+                    this, R.raw.map_style_standard
                 )
             )
-
             if (!success) {
                 Log.e(TAG, "Style parsing failed.")
             }
         } catch (e: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", e)
         }
-
-        // Set map bounds to australia
-        // Create a LatLngBounds that includes Australia
+        // Set map bounds to australia and show aus map
         val australiaBounds = LatLngBounds(
             LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
         )
-        // Set Camera to show map bounds
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
 
-        // set kml layer
+        // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
-        // add layer overlay to map
         layer.addLayerToMap()
-
-
-        //Set map settings
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
@@ -297,9 +269,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             this.isZoomGesturesEnabled = true
         }
 
-        // pings user location
+        // pings user location In Milliseconds || 30 secs
 	    mLocationRequest = LocationRequest()
-        // In Milliseconds || 30 secs
         mLocationRequest.interval = 1000
         mLocationRequest.fastestInterval = 1000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
@@ -330,9 +301,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
             mMap.isMyLocationEnabled = true
         }
-
-        // this listen will be changed to send the user
-        // to the Nation info activity
+        // sends user to nation information page
 	    layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
             val locName = it.getProperty("name")
@@ -349,15 +318,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
+                // Show an explanation to the user *asynchronously* After the user sees the explanation, try again to request the permission.
                 AlertDialog.Builder(this)
                     .setTitle("Location Permission Needed")
                     .setMessage("This app needs the Location permission, please accept to use location functionality")
@@ -373,10 +339,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     .create()
                     .show()
-
-
             } else {
-                // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
@@ -394,15 +357,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             MY_PERMISSIONS_REQUEST_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
+                    // Location permissions enabled.
                     if (ContextCompat.checkSelfPermission(
                             this,
                             android.Manifest.permission.ACCESS_FINE_LOCATION
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-
                         mFusedLocationClient?.requestLocationUpdates(
                             mLocationRequest,
                             mLocationCallback,
@@ -410,17 +370,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         )
                         mMap.isMyLocationEnabled = true
                     }
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // disables location functionality
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
                 }
                 return
             }
-        }// other 'case' lines to check for other
-        // permissions this app might request
+        }
     }
 
     fun loadMapFile(mapSource: MapSource): KmlLayer {
@@ -438,7 +394,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     BufferedReader::readText
                 )
             })
-
             thread.start()
             thread.join()
             return KmlLayer(
@@ -467,11 +422,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val intent = Intent(this, MapsActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
-
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
         // set notification content
-        // placeholder content
         val builder = NotificationCompat.Builder(this, channelID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Test Notification")
