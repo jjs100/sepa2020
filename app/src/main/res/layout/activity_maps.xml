@@ -27,8 +27,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         android:textColorHighlight="#000000"
-        android:background="#CF3B0E"
-        />
+        android:background="#CF3B0E" />
 
     <TextView
         android:id="@+id/textViewMapAck"
