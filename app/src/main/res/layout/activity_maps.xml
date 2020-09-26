@@ -5,73 +5,29 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/textViewCurrentLoc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="16dp"
+        android:textSize="14sp"
+        android:background="#CF3B0E"
+        android:gravity="center"
+        android:text="Current Location:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#ffffff"
+        android:textColorHighlight="#000000" />
 
-        <TextView
-            android:id="@+id/textViewCurrentLoc"
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:layout_weight="0.5"
-            android:textSize="14sp"
-            android:background="#CF3B0E"
-            android:gravity="center"
-            android:text="Current Location:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#000000" />
-
-        <TextView
-            android:id="@+id/textViewViewedLoc"
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:layout_weight="0.5"
-            android:textSize="14sp"
-            android:background="#CF3B0E"
-            android:gravity="center"
-            android:text="Viewed Location:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#000000" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/textViewMapHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/textViewMapHeader"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:text="..."
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#000000"
-            android:background="#CF3B0E"
-            />
-
-        <TextView
-            android:id="@+id/textViewViewedRegion"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="0.5"
-            android:background="#CF3B0E"
-            android:gravity="center"
-            android:text="..."
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#000000"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-
-
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="..."
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#ffffff"
+        android:textColorHighlight="#000000"
+        android:background="#CF3B0E" />
 
     <TextView
         android:id="@+id/textViewMapAck"

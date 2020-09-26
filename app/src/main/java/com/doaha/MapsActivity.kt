@@ -1,5 +1,6 @@
 package com.doaha
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -59,7 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var mLastLocation: Location? = null
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-    lateinit var liveKmlFileString: String
+    private lateinit var liveKmlFileString: String
     private var TAG: String = MapsActivity::class.java.simpleName
 
     private var channelID = "Notification_Channel"
@@ -67,6 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
+        @SuppressLint("SetTextI18n")
         override fun onLocationResult(locationResult: LocationResult) {
             val locationList = locationResult.locations
             if (locationList.isNotEmpty()) {
@@ -85,9 +87,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val userLocation = LatLng(location.latitude, location.longitude)
                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
 
+
+
                 // adding KML layer to map
                 val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
+
+                // Set viewed Region Text
+                if (currentRegion(userLocation, layer) != null) {
+                    val camPos = mMap.cameraPosition.target
+                    val mapViewedRegion: TextView = findViewById(R.id.textViewMapHeader)
+                    if (currentRegion(camPos, layer) != null) {
+                        mapViewedRegion.text = currentRegion(camPos, layer)
+                    }
+                }
 
                 val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
                 val aSuperPolygon: MutableList<LatLng> = mutableListOf()
@@ -105,16 +118,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
 
                                     // Set viewed Region Text
-                                    val camPos = mMap.cameraPosition.target
-                                    val mapViewedRegion: TextView = findViewById<TextView>(R.id.textViewViewedRegion)
-                                    if (PolyUtil.containsLocation(
-                                            camPos,
-                                            aPolygon.outerBoundaryCoordinates,
-                                            true
-                                        )){
-                                        val regionName = eachPlacemark.getProperty("name")
-                                        mapViewedRegion.text = regionName
-                                    }
+//                                    val camPos = mMap.cameraPosition.target
+//                                    val mapViewedRegion: TextView = findViewById(R.id.textViewMapHeader)
+//                                    if (PolyUtil.containsLocation(
+//                                            camPos,
+//                                            aPolygon.outerBoundaryCoordinates,
+//                                            true
+//                                        )){
+//                                        val regionName = eachPlacemark.getProperty("name")
+//                                        mapViewedRegion.text = regionName
+//                                    }
 
                                     if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
                                     {
@@ -126,15 +139,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             ))
                                         {
                                             val locName = eachPlacemark.getProperty("name")
-                                            // toast is just for testing purposes
-                                            val t = Toast.makeText(
-                                                this@MapsActivity,
-                                                "You are in $locName",
-                                                Toast.LENGTH_LONG
-                                            )
-                                            t.show()
-
-                                            sendNotification(locName)
+                                            //sendNotification(locName)
                                         }
 
 
@@ -148,18 +153,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                             ))
                                         {
 
-                                            //create val reference to xml textView
-                                            val mapHeaderTextView: TextView = findViewById<TextView>(
-                                                R.id.textViewMapHeader
-                                            )
+
                                             //assign
                                             val mapHeaderText : String = eachPlacemark.getProperty("name")
-                                            //set header text as mapHeaderText var value
-                                            mapHeaderTextView.text = mapHeaderText
 
                                             //pull acknowledgement from database
-                                            var mapAckText : String = "[Acknowledgement of traditional owners here]"
-                                            val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
+                                            val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                                             val docRef = FirebaseFirestore.getInstance().collection(
                                                 "zones"
                                             ).document(mapHeaderText)
@@ -172,12 +171,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                                         "Acknowledgements"
                                                     )
                                                 } else {
-                                                    mapAckTextView.text = "Acknowledgements Unavailable"
+                                                    mapAckTextView.text = getString(R.string.ackUnavailable)
                                                 }
                                             }
 
                                             //if header location is clicked, acknowledgement TextView appears/disappears
-                                            mapHeaderTextView.setOnClickListener {
+                                            mapAckTextView.setOnClickListener {
                                                 if(mapAckTextView.visibility == View.GONE){
                                                     mapAckTextView.visibility = View.VISIBLE
                                                 }
@@ -230,7 +229,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 val newLocation = place.latLng
+
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10.0F))
+
+                mMap.addMarker(
+                    newLocation?.let {
+                        MarkerOptions()
+                            .position(it)
+                    }
+                )
             }
 
             override fun onError(p0: Status) {
@@ -271,7 +278,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Set map bounds to australia
         // Create a LatLngBounds that includes Australia
         val australiaBounds = LatLngBounds(
-            LatLng(-44.0, 113.0), LatLng(-10.0, 154.0)
+            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
         )
         // Set Camera to show map bounds
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
@@ -293,8 +300,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // pings user location
 	    mLocationRequest = LocationRequest()
         // In Milliseconds || 30 secs
-        mLocationRequest.interval = 10000
-        mLocationRequest.fastestInterval = 10000
+        mLocationRequest.interval = 1000
+        mLocationRequest.fastestInterval = 1000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         // check/request app permissions
@@ -334,36 +341,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             t.show()
             startActivity(intent)
         }
-
-
-        // These markers are for testing purposes only
-        // Marker for Zone (Test implementation)
-        val wajuk  = LatLng(-31.90, 115.86)
-        val wajukMarker  = mMap.addMarker(
-            MarkerOptions()
-                //.alpha(0.0F)
-                .title("Wajuk")
-                .position(wajuk)
-        )
-        //wajukMarker.showInfoWindow()
-
-        val wiilman = LatLng(-32.74, 117.09)
-        val wiilmanMarker  = mMap.addMarker(
-            MarkerOptions()
-                //.alpha(0.0F)
-                .title("Wiilman")
-                .position(wiilman)
-        )
-        //wiilmanMarker.showInfoWindow()
-
-        val pinjarup = LatLng(-32.70, 115.76)
-        val pinjarupMarker = mMap.addMarker(
-            MarkerOptions()
-                //.alpha(0.0F)
-                .title("Pinjarup")
-                .position(pinjarup)
-        )
-        //pinjarupMarker.showInfoWindow()
     }
 
     private fun checkLocationPermission() {
@@ -448,7 +425,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     fun loadMapFile(mapSource: MapSource): KmlLayer {
         if(mapSource == MapSource.ONLINE){
-            var fileString:String = ""
+            var fileString = ""
             val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
             val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
             while(linesOfFileIterator.hasNext()){
@@ -487,7 +464,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun sendNotification(locName: String) {
-        val place = locName
         val intent = Intent(this, MapsActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -499,7 +475,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val builder = NotificationCompat.Builder(this, channelID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Test Notification")
-            .setContentText("You are in $place")
+            .setContentText("You are in $locName")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         // Set the intent that will fire when the user taps the notification
             .setContentIntent(pendingIntent)
@@ -508,6 +484,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         with(NotificationManagerCompat.from(this)) {
             notify(notificationID, builder.build())
         }
+    }
+
+    private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
+
+        // we add and remove the layer from the map
+        // this is because the layer needs to be added to the map in this function
+        // so that the data within the layer can be used.
+        // the removal is so that new polygons don't continuously get drawn whenever
+        // the location is retrieved
+
+        val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
+        val aSuperPolygon: MutableList<LatLng> = mutableListOf()
+        if (kmlContainerList != null) {
+            for (aKmlContainer in kmlContainerList) {
+                for (eachContainer in aKmlContainer.containers) {
+                    for (eachPlacemark in eachContainer.placemarks) {
+                        if (eachPlacemark.geometry is KmlPolygon) {
+                            //When a Polygon
+                            val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                            //make a super polygon to reduce computation time for user location
+                            aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
+
+                            if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
+                                if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
+                                    return eachPlacemark.getProperty("name")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null
     }
 
     companion object {
