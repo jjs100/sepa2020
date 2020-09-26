@@ -80,12 +80,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
-
                 // adding KML layer to map
                 val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
-
                 // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
                 val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
@@ -97,7 +94,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val checkedUserLocation = currentRegion(userLocation, layer)
                 if (checkedUserLocation != null) {
                     val mapHeaderText : String = checkedUserLocation
-
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
@@ -115,7 +111,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mapAckTextView.text = getString(R.string.ackUnavailable)
                         }
                     }
-
                     //if header location is clicked, acknowledgement TextView appears/disappears
                     mapHeaderTextView.setOnClickListener {
                         if(mapAckTextView.visibility == View.GONE){
@@ -124,15 +119,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         else{
                             mapAckTextView.visibility = View.GONE
                         }
-
                     }
                 }
-
-                // we add and remove the layer from the map
-                // this is because the layer needs to be added to the map in this function
-                // so that the data within the layer can be used.
-                // the removal is so that new polygons don't continuously get drawn whenever
-                // the location is retrieved
+                //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
                 layer.removeLayerFromMap()
             }
         }
@@ -384,13 +373,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
-
-        // we add and remove the layer from the map
-        // this is because the layer needs to be added to the map in this function
-        // so that the data within the layer can be used.
-        // the removal is so that new polygons don't continuously get drawn whenever
-        // the location is retrieved
-
         val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
         val aSuperPolygon: MutableList<LatLng> = mutableListOf()
         if (kmlContainerList != null) {
@@ -402,7 +384,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
                             //make a super polygon to reduce computation time for user location
                             aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
-
                             if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
                                 if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
                                     return eachPlacemark.getProperty("name")
