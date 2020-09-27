@@ -49,7 +49,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
     object nation {
         @JvmStatic var name = ""
@@ -238,6 +238,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     Looper.myLooper()
                 )
                 mMap.isMyLocationEnabled = true
+                mMap.setOnMyLocationButtonClickListener(this)
             } else {
                 //Request Location Permission
                 checkLocationPermission()
@@ -249,6 +250,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Looper.myLooper()
             )
             mMap.isMyLocationEnabled = true
+            mMap.setOnMyLocationButtonClickListener(this)
         }
         // sends user to nation information page
 	    layer.setOnFeatureClickListener {
@@ -317,7 +319,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mLocationCallback,
                             Looper.myLooper()
                         )
-                        mMap.isMyLocationEnabled = true
                     }
                 } else {
                     // disables location functionality
@@ -418,6 +419,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         return null
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        //Do nothing if location is not currently set
+        if(mLastLocation == null){
+            Toast.makeText(this@MapsActivity, "Your current location hasn't loaded just yet, please try again in a moment", Toast.LENGTH_SHORT).show()
+            return true
+        }
+
+        //Set custom zoom distance for current location button
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude),
+            8F
+        ))
+
+        //If set to true default method invocation will trigger
+        return true
     }
 
     companion object {
