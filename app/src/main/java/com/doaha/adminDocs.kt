@@ -1,8 +1,8 @@
 package com.doaha
 
-class adminDoc{
-    var idDoc: String = ""
-    var ackDoc: String = ""
-    var infoDoc: String = ""
-    var welcomeDoc: String = ""
+class AdminDocs{
+    var Acknowledgements: String = ""
+    var Info: String = ""
+    var Welcome: String = ""
+    var itemID: String = ""
 }

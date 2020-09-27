@@ -10,18 +10,19 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 
 
-class DocAdapter(options: FirestoreRecyclerOptions<adminDoc?>, var clickListener: OnNoteItemClickListener) :
-    FirestoreRecyclerAdapter<adminDoc, DocAdapter.DocHolder>(options) {
+class DocAdapter(options: FirestoreRecyclerOptions<AdminDocs?>, var clickListener: OnNoteItemClickListener) :
+    FirestoreRecyclerAdapter<AdminDocs, DocAdapter.DocHolder>(options) {
 
-    override fun onBindViewHolder(holder: DocHolder, position: Int, model: adminDoc) {
+    override fun onBindViewHolder(holder: DocHolder, position: Int, model: AdminDocs) {
         //assigns data from Firestore to populate adminDoc class
-        holder.viewID.text = model.idDoc
-        holder.viewWelcome.text = model.welcomeDoc
-        holder.viewAck.text = model.ackDoc
-        holder.viewInfo.text = model.infoDoc
+        holder.viewID.text = model.itemID
+        holder.viewWelcome.text = model.Welcome
+        holder.viewAck.text = model.Acknowledgements
+        holder.viewInfo.text = model.Info
+
 
         //creates variable of the document snapshot which allows firestore data to be accessed in different activities
-        var docSnap : DocumentSnapshot = snapshots.getSnapshot(position)
+        val docSnap : DocumentSnapshot = snapshots.getSnapshot(position)
 
         holder.initialize(snapshots[position],clickListener, docSnap)
     }
@@ -44,7 +45,7 @@ class DocAdapter(options: FirestoreRecyclerOptions<adminDoc?>, var clickListener
         var viewInfo: TextView = itemView.findViewById(R.id.textInfo)
 
         //needed for ClickListener functionality for Editing Documents
-        fun initialize(item: adminDoc, action:OnNoteItemClickListener, documentSnapshot: DocumentSnapshot){
+        fun initialize(item: AdminDocs, action:OnNoteItemClickListener, documentSnapshot: DocumentSnapshot){
             itemView.setOnClickListener{
                 action.onItemClick(item,adapterPosition, documentSnapshot)
             }
@@ -53,6 +54,6 @@ class DocAdapter(options: FirestoreRecyclerOptions<adminDoc?>, var clickListener
     }
 
     interface OnNoteItemClickListener{
-        fun onItemClick(item: adminDoc, position: Int, documentSnapshot: DocumentSnapshot)
+        fun onItemClick(item: AdminDocs, position: Int, documentSnapshot: DocumentSnapshot)
     }
 }
