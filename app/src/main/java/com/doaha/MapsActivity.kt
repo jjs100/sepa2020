@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -121,6 +122,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mapAckTextView.visibility = View.GONE
                         }
                     }
+
                 }
                 //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
                 layer.removeLayerFromMap()
@@ -165,6 +167,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Log.i(TAG, "An error occurred: $p0")
             }
         })
+
+        //allow user to hide tooltip
+        val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        toolTip.setOnClickListener {
+            if(toolTip.visibility == View.VISIBLE) {
+                toolTip.visibility = View.GONE
+            }
+        }
     }
 
     public override fun onPause() {

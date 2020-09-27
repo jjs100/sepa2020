@@ -5,29 +5,41 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textViewCurrentLoc"
+    <!-- Header title is styled in a relative layout so the text can sit over the expandable box image -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:textSize="14sp"
-        android:background="#CF3B0E"
-        android:gravity="center"
-        android:text="@string/title_current_location"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#ffffff"
-        android:textColorHighlight="#000000" />
+        android:layout_height="45dp">
 
-    <TextView
-        android:id="@+id/textViewMapHeader"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:text="@string/buffer_text"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#ffffff"
-        android:textColorHighlight="#000000"
-        android:background="#CF3B0E" />
+        <ImageView
+            android:layout_width="450dp"
+            android:layout_height="60dp"
+            android:background="@color/colorPrimary"
+            android:paddingRight="30dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/toprecycler" />
+
+        <TextView
+            android:id="@+id/textViewCurrentLoc"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:gravity="center"
+            android:text="@string/title_current_location"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorText"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textViewMapHeader"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:scaleType="fitStart"
+            android:text="@string/buffer_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorTextAccent"
+            android:textStyle="bold"
+            android:paddingTop="8dp"/>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/textViewMapAck"
@@ -38,10 +50,17 @@
         android:textSize="12sp"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorExpandableBox"
+        android:textColor="@color/colorPrimaryDark"
         android:textColorHighlight="#eb9234"
-        android:background="#433B30"
+        android:background="@color/colorExpandableBox"
         android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:src="@drawable/divider"
+        android:scaleType="center"
+        />
 
     <fragment
         android:id="@+id/autocomplete_fragment"
@@ -51,11 +70,49 @@
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         />
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MapsActivity" />
+    <!-- Map activity and tooltip are in a relative layout so the tooltip can appear in the middle of the activity -->
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+        <!-- The Map itself -->
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MapsActivity" />
 
+        <!-- The tooltip, made of resource components & textviews so it can be adapted if necessary -->
+        <LinearLayout
+            android:id="@+id/toolTip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_border_yellow"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/source_code_pro_medium"
+                android:paddingVertical="10dp"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:text="@string/tool_tip"
+                android:textColor="@color/colorText"
+                android:textSize="26sp" />
+
+            <ImageView
+                android:id="@+id/imageDblTap"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/buffer_text"
+                android:padding="10dp"
+                android:src="@drawable/double_tap" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </LinearLayout>
+
