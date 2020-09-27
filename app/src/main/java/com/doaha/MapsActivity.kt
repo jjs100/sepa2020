@@ -369,13 +369,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
     }
 
     private fun sendNotification(locName: String) {
-//        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
-//                getSharedPreferences(
-//                    getString(R.string.preference_file_key),
-//                    Context.MODE_PRIVATE
-//                )
-//            )
-//        ) {
+        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) && (this.application as DoAHAApplication).getTheRegionUserWasPreviouslyIn(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) != locName
+        ) {
+            (this.application as DoAHAApplication).setTheRegionUserWasPreviouslyIn(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                ), locName
+            )
             val intent = Intent(this, MapsActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
@@ -393,7 +404,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             with(NotificationManagerCompat.from(this)) {
                 notify(notificationID, builder.build())
             }
-        //}
+        }
     }
 
     private fun currentRegion(location: LatLng, layer: KmlLayer): String? {

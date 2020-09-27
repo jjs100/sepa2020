@@ -11,4 +11,5 @@
     <string name="ackUnavailable">Acknowledgements Unavailable</string>
     <string name="preference_file_key">com.doaha.application.aPreferenceFile</string>
     <string name="notification_key">notificationsEnabled</string>
+    <string name="theRegionUserWasPreviouslyIn_key">theRegionUserWasPreviouslyIn</string>
 </resources>
