@@ -59,6 +59,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mapFrag: SupportMapFragment? = null
     private lateinit var mLocationRequest: LocationRequest
     var mLastLocation: Location? = null
+    private var mLastLocationName: String = ""
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private lateinit var liveKmlFileString: String
@@ -368,13 +369,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun sendNotification(locName: String) {
-//        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
-//                getSharedPreferences(
-//                    getString(R.string.preference_file_key),
-//                    Context.MODE_PRIVATE
-//                )
-//            )
-//        ) {
+        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) && mLastLocationName != locName
+        ) {
+            mLastLocationName = locName
             val intent = Intent(this, MapsActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
@@ -392,7 +394,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             with(NotificationManagerCompat.from(this)) {
                 notify(notificationID, builder.build())
             }
-        //}
+        }
     }
 
     private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
@@ -401,15 +403,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         if (kmlContainerList != null) {
             for (aKmlContainer in kmlContainerList) {
                 for (eachContainer in aKmlContainer.containers) {
-                    for (eachPlacemark in eachContainer.placemarks) {
-                        if (eachPlacemark.geometry is KmlPolygon) {
+                    for (eachPlaceMarker in eachContainer.placemarks) {
+                        if (eachPlaceMarker.geometry is KmlPolygon) {
                             //When a Polygon
-                            val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                            val aPolygon : KmlPolygon = eachPlaceMarker.geometry as KmlPolygon
                             //make a super polygon to reduce computation time for user location
                             aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
                             if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
                                 if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
-                                    return eachPlacemark.getProperty("name")
+                                    return eachPlaceMarker.getProperty("name")
                                 }
                             }
                         }
