@@ -19,9 +19,7 @@ class AdminRecycler : AppCompatActivity(),DocAdapter.OnNoteItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_recycler)
-/*
-        //Create Notification Button Switch
-        loadButtonConfig(findViewById<Switch>(R.id.notifications_toggle))*/
+
 
         //Creating variable for floating button to add new documents
         val buttonAddNote = findViewById<FloatingActionButton>(R.id.button_add_note)
