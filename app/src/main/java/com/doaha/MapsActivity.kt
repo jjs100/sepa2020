@@ -65,6 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var TAG: String = MapsActivity::class.java.simpleName
     private var channelID = "Notification_Channel"
     private val notificationID = 101
+    private var activityVisible: Boolean = true
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -94,12 +95,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 val checkedUserLocation = currentRegion(userLocation, layer)
                 if (checkedUserLocation != null) {
-                    val mapHeaderText : String = checkedUserLocation
+                    val checkedRegion : String = checkedUserLocation
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
                         "zones"
-                    ).document(mapHeaderText)
+                    ).document(checkedRegion)
 
                     GlobalScope.launch(Dispatchers.Main) {
                         delay(1000L)
@@ -121,12 +122,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             mapAckTextView.visibility = View.GONE
                         }
                     }
+
+                    if (!activityVisible) {
+                        sendNotification(checkedRegion)
+                    }
                 }
                 //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
                 layer.removeLayerFromMap()
+
+
             }
         }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
@@ -169,8 +178,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     public override fun onPause() {
         super.onPause()
-        //Stop location updates when Activity is no longer active
-        //mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
+        activityVisible = false
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        activityVisible = true
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -205,11 +218,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             this.isZoomGesturesEnabled = true
         }
 
-        // pings user location In Milliseconds || 30 secs
 	    mLocationRequest = LocationRequest()
-        // In Milliseconds || 30 secs
-        mLocationRequest.interval = 10000
-        mLocationRequest.fastestInterval = 10000
+        // In Milliseconds
+        mLocationRequest.interval = 2000
+        mLocationRequest.fastestInterval = 2000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         // check/request app permissions
@@ -356,13 +368,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun sendNotification(locName: String) {
-        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
-                getSharedPreferences(
-                    getString(R.string.preference_file_key),
-                    Context.MODE_PRIVATE
-                )
-            )
-        ) {
+//        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
+//                getSharedPreferences(
+//                    getString(R.string.preference_file_key),
+//                    Context.MODE_PRIVATE
+//                )
+//            )
+//        ) {
             val intent = Intent(this, MapsActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
@@ -380,7 +392,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             with(NotificationManagerCompat.from(this)) {
                 notify(notificationID, builder.build())
             }
-        }
+        //}
     }
 
     private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
