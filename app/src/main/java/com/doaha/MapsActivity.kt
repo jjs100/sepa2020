@@ -109,7 +109,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 "Acknowledgements"
                             )
                         } else {
-                            mapAckTextView.text = getString(R.string.ackUnavailable)
+                            mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
                     //if header location is clicked, acknowledgement TextView appears/disappears

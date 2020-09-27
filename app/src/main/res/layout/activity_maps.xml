@@ -12,7 +12,7 @@
         android:textSize="14sp"
         android:background="#CF3B0E"
         android:gravity="center"
-        android:text="Current Location:"
+        android:text="@string/title_current_location"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
         android:textColorHighlight="#000000" />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center"
-        android:text="..."
+        android:text="@string/buffer_text"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#ffffff"
