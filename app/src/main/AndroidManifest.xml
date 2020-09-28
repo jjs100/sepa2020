@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.doaha">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -20,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".AdminRecycler"
+            android:launchMode="singleTop" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,16 +37,24 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".SplashScreen" >
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity"/>
-        <activity android:name=".MainListActivity"/>
-        <activity android:name=".AdminLogin"/>
-        <activity android:name=".AdminPage"/>
+        <activity
+        android:name=".EditDocActivity"
+        android:parentActivityName=".AdminRecycler" />
+        <activity
+            android:name=".NewDocActivity"
+            android:parentActivityName=".AdminRecycler" />
+        <activity android:name=".MapsActivity" />
+        <activity android:name=".MainListActivity" />
+        <activity android:name=".AdminLogin" />
+        <activity
+            android:name=".AdminPage"/>
     </application>
 
 </manifest>
