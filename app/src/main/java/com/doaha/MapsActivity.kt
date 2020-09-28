@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -110,7 +111,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                                 "Acknowledgements"
                             )
                         } else {
-                            mapAckTextView.text = getString(R.string.ackUnavailable)
+                            mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
                     //if header location is clicked, acknowledgement TextView appears/disappears
@@ -174,6 +175,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 Log.i(TAG, "An error occurred: $p0")
             }
         })
+
+        //allow user to hide tooltip
+        val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        toolTip.setOnClickListener {
+            if(toolTip.visibility == View.VISIBLE) {
+                toolTip.visibility = View.GONE
+            }
+        }
     }
 
     public override fun onPause() {
