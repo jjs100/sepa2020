@@ -11,7 +11,7 @@
         android:id="@+id/notifications_toggle"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="Notification Toggle"
+        android:text="@string/title_notification_toggle"
         tools:checked="false" />
 
     <Button

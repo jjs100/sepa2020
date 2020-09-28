@@ -1,24 +1,24 @@
 package com.doaha
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.location.Location
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.RemoteViews
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -27,10 +27,6 @@ import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
-
-import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -40,23 +36,21 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.*
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
     object nation {
         @JvmStatic var name = ""
@@ -68,14 +62,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var mLastLocation: Location? = null
     internal var mCurrLocationMarker: Marker? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-    lateinit var liveKmlFileString: String
+    private lateinit var liveKmlFileString: String
     private var TAG: String = MapsActivity::class.java.simpleName
-
     private var channelID = "Notification_Channel"
     private val notificationID = 101
+    private var activityVisible: Boolean = true
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
+        @SuppressLint("SetTextI18n")
         override fun onLocationResult(locationResult: LocationResult) {
             val locationList = locationResult.locations
             if (locationList.isNotEmpty()) {
@@ -86,119 +81,79 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker?.remove()
                 }
-
-                //Search elements
-
-
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 10.0F))
-
                 // adding KML layer to map
                 val layer = loadMapFile(MapSource.LOCAL)
                 layer.addLayerToMap()
+                // Update Current Location Header
+                val camPos = mMap.cameraPosition.target
+                val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
+                val checkedCamPos = currentRegion(camPos, layer)
+                if (checkedCamPos != null) {
+                    mapHeaderTextView.text = checkedCamPos
+                }
 
-                val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
-                val aSuperPolygon: MutableList<LatLng> = mutableListOf()
-                if (kmlContainerList != null) {
-                    for (aKmlContainer in kmlContainerList) {
-                        for (eachContainer in aKmlContainer.containers)
-                        {
-                            for (eachPlacemark in eachContainer.placemarks)
-                            {
-                                if (eachPlacemark.geometry is KmlPolygon)
-                                {
-                                    //When a Polygon
-                                    val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                val checkedUserLocation = currentRegion(userLocation, layer)
+                if (checkedUserLocation != null) {
+                    val checkedRegion : String = checkedUserLocation
+                    //pull acknowledgement from database
+                    val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
+                    val docRef = FirebaseFirestore.getInstance().collection(
+                        "zones"
+                    ).document(checkedRegion)
 
-                                    //make a super polygon to reduce computation time for user location
-                                    aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
-                                    if (PolyUtil.containsLocation(userLocation, aSuperPolygon, true))
-                                    {
-
-                                        if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
-                                        {
-                                            val locName = eachPlacemark.getProperty("name")
-                                            // toast is just for testing purposes
-                                            val t = Toast.makeText(this@MapsActivity,"You are in $locName", Toast.LENGTH_LONG)
-                                            t.show()
-
-                                            sendNotification(locName)
-                                        }
-
-
-                                        //Map header
-                                        //IMPORTANT - this if statement is where we can tell exactly which region the user is in
-                                        if (PolyUtil.containsLocation(userLocation, aPolygon.outerBoundaryCoordinates, true))
-                                        {
-
-                                            //create val reference to xml textView
-                                            val mapHeaderTextView: TextView = findViewById<TextView>(R.id.textViewMapHeader)
-                                            //assign
-                                            val mapHeaderText : String = eachPlacemark.getProperty("name")
-                                            //set header text as mapHeaderText var value
-                                            mapHeaderTextView.text = mapHeaderText
-
-                                            //pull acknowledgement from database
-                                            var mapAckText : String = "[Acknowledgement of traditional owners here]"
-                                            val mapAckTextView: TextView = findViewById<TextView>(R.id.textViewMapAck)
-                                            val docRef = FirebaseFirestore.getInstance().collection("zones").document(mapHeaderText)
-
-                                            GlobalScope.launch(Dispatchers.Main) {
-                                                delay(1000L)
-                                                val region = docRef.get().await()
-                                                if (region.getString("Acknowledgements") != "") {
-                                                    mapAckTextView.text = "Acknowledgments: " + region.getString("Acknowledgements")
-                                                } else {
-                                                    mapAckTextView.text = "Acknowledgements Unavailable"
-                                                }
-                                            }
-
-                                            //if header location is clicked, acknowledgement TextView appears/disappears
-                                            mapHeaderTextView.setOnClickListener {
-                                                if(mapAckTextView.visibility == View.GONE){
-                                                    mapAckTextView.visibility = View.VISIBLE
-                                                }
-                                                else{
-                                                    mapAckTextView.visibility = View.GONE
-                                                }
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(1000L)
+                        val region = docRef.get().await()
+                        if (region.getString("Acknowledgements") != "") {
+                            mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                "Acknowledgements"
+                            )
+                        } else {
+                            mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
+                    //if header location is clicked, acknowledgement TextView appears/disappears
+                    mapHeaderTextView.setOnClickListener {
+                        if(mapAckTextView.visibility == View.GONE){
+                            mapAckTextView.visibility = View.VISIBLE
+                        }
+                        else{
+                            mapAckTextView.visibility = View.GONE
+                        }
+                    }
+
+                    if (!activityVisible) {
+                        sendNotification(checkedRegion)
+                    }
                 }
-                // we add and remove the layer from the map
-                // this is because the layer needs to be added to the map in this function
-                // so that the data within the layer can be used.
-                // the removal is so that new polygons don't continuously get drawn whenever
-                // the location is retrieved
+                //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
                 layer.removeLayerFromMap()
+
+
             }
         }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-
         supportActionBar?.title = "Map Location Activity"
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // map ui element
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag?.getMapAsync(this)
-
         createNotificationChannel()
+
         // Initialize the AutocompleteSupportFragment and Places
         Places.initialize(applicationContext, getString(R.string.google_maps_auto_complete_key))
-        //val pC: PlacesClient = Places.createClient(applicationContext)
 
+        //val pC: PlacesClient = Places.createClient(applicationContext)
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
 
         // Specify the types of place data to return.
@@ -209,45 +164,62 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onPlaceSelected(place: Place) {
                 val newLocation = place.latLng
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 10.0F))
+                mMap.addMarker(
+                    newLocation?.let {
+                        MarkerOptions()
+                            .position(it)
+                    }
+                )
             }
-
             override fun onError(p0: Status) {
                 Log.i(TAG, "An error occurred: $p0")
             }
         })
+
+        //allow user to hide tooltip
+        val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        toolTip.setOnClickListener {
+            if(toolTip.visibility == View.VISIBLE) {
+                toolTip.visibility = View.GONE
+            }
+        }
     }
 
     public override fun onPause() {
         super.onPause()
+        activityVisible = false
+    }
 
-        //Stop location updates when Activity is no longer active
-        //mFusedLocationClient?.removeLocationUpdates(mLocationCallback)
+    public override fun onResume() {
+        super.onResume()
+        activityVisible = true
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         // sets map variable
         mMap = googleMap
-        // sets map type to HYBRID, i.e. satellite view with road overlay
-        //mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-
         // applies custom map style json
         try {
-            val success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style_standard))
-
+            val success = mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this, R.raw.map_style_standard
+                )
+            )
             if (!success) {
                 Log.e(TAG, "Style parsing failed.")
             }
         } catch (e: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", e)
         }
+        // Set map bounds to australia and show aus map
+        val australiaBounds = LatLngBounds(
+            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
 
-        // set kml layer
+        // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
-        // add layer overlay to map
         layer.addLayerToMap()
-
-
-        //Set map settings
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
@@ -255,11 +227,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             this.isZoomGesturesEnabled = true
         }
 
-        // pings user location
 	    mLocationRequest = LocationRequest()
-        // In Milliseconds || 30 secs
-        mLocationRequest.interval = 10000
-        mLocationRequest.fastestInterval = 10000
+        // In Milliseconds
+        mLocationRequest.interval = 2000
+        mLocationRequest.fastestInterval = 2000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
 
         // check/request app permissions
@@ -270,24 +241,32 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 //Location Permission already granted
-                mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+                mFusedLocationClient?.requestLocationUpdates(
+                    mLocationRequest,
+                    mLocationCallback,
+                    Looper.myLooper()
+                )
                 mMap.isMyLocationEnabled = true
+                mMap.setOnMyLocationButtonClickListener(this)
             } else {
                 //Request Location Permission
                 checkLocationPermission()
             }
         } else {
-            mFusedLocationClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+            mFusedLocationClient?.requestLocationUpdates(
+                mLocationRequest,
+                mLocationCallback,
+                Looper.myLooper()
+            )
             mMap.isMyLocationEnabled = true
+            mMap.setOnMyLocationButtonClickListener(this)
         }
-
-        // this listen will be changed to send the user
-        // to the Nation info activity
+        // sends user to nation information page
 	    layer.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
             val locName = it.getProperty("name")
             nation.name = locName
-            val t = Toast.makeText(this@MapsActivity,"this is $locName", Toast.LENGTH_SHORT)
+            val t = Toast.makeText(this@MapsActivity, "this is $locName", Toast.LENGTH_SHORT)
             t.show()
             startActivity(intent)
         }
@@ -299,15 +278,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
+                // Show an explanation to the user *asynchronously* After the user sees the explanation, try again to request the permission.
                 AlertDialog.Builder(this)
                     .setTitle("Location Permission Needed")
                     .setMessage("This app needs the Location permission, please accept to use location functionality")
@@ -323,10 +299,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                     .create()
                     .show()
-
-
             } else {
-                // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
@@ -344,38 +317,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             MY_PERMISSIONS_REQUEST_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
+                    // Location permissions enabled.
                     if (ContextCompat.checkSelfPermission(
                             this,
                             android.Manifest.permission.ACCESS_FINE_LOCATION
                         ) == PackageManager.PERMISSION_GRANTED
                     ) {
-
                         mFusedLocationClient?.requestLocationUpdates(
                             mLocationRequest,
                             mLocationCallback,
                             Looper.myLooper()
                         )
-                        mMap.isMyLocationEnabled = true
                     }
-
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // disables location functionality
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
                 }
                 return
             }
-        }// other 'case' lines to check for other
-        // permissions this app might request
+        }
     }
 
     fun loadMapFile(mapSource: MapSource): KmlLayer {
         if(mapSource == MapSource.ONLINE){
-            var fileString:String = ""
+            var fileString = ""
             val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
             val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
             while(linesOfFileIterator.hasNext()){
@@ -384,12 +349,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val liveKmlUrl:String = fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
             val inputStreamReader = URL(liveKmlUrl).openConnection() as HttpURLConnection
             val thread = Thread(Runnable {
-                liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(BufferedReader::readText)
+                liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(
+                    BufferedReader::readText
+                )
             })
-
             thread.start()
             thread.join()
-            return KmlLayer(mMap, ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)), applicationContext)
+            return KmlLayer(
+                mMap,
+                ByteArrayInputStream(liveKmlFileString.toByteArray(Charsets.UTF_8)),
+                applicationContext
+            )
         }
         return KmlLayer(mMap, R.raw.proto, applicationContext)
     }
@@ -408,20 +378,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun sendNotification(locName: String) {
-        if((this.application as DoAHAApplication).getIsNotificationEnabled(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE))) {
-            val place = locName
+//        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
+//                getSharedPreferences(
+//                    getString(R.string.preference_file_key),
+//                    Context.MODE_PRIVATE
+//                )
+//            )
+//        ) {
             val intent = Intent(this, MapsActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-
             val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-
             // set notification content
-            // placeholder content
             val builder = NotificationCompat.Builder(this, channelID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Test Notification")
-                .setContentText("You are in $place")
+                .setContentText("You are in $locName")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 // Set the intent that will fire when the user taps the notification
                 .setContentIntent(pendingIntent)
@@ -430,7 +402,48 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             with(NotificationManagerCompat.from(this)) {
                 notify(notificationID, builder.build())
             }
+        //}
+    }
+
+    private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
+        val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
+        val aSuperPolygon: MutableList<LatLng> = mutableListOf()
+        if (kmlContainerList != null) {
+            for (aKmlContainer in kmlContainerList) {
+                for (eachContainer in aKmlContainer.containers) {
+                    for (eachPlacemark in eachContainer.placemarks) {
+                        if (eachPlacemark.geometry is KmlPolygon) {
+                            //When a Polygon
+                            val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                            //make a super polygon to reduce computation time for user location
+                            aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
+                            if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
+                                if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
+                                    return eachPlacemark.getProperty("name")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
+        return null
+    }
+
+    override fun onMyLocationButtonClick(): Boolean {
+        //Do nothing if location is not currently set
+        if(mLastLocation == null){
+            Toast.makeText(this@MapsActivity, "Your current location hasn't loaded just yet, please try again in a moment", Toast.LENGTH_SHORT).show()
+            return true
+        }
+
+        //Set custom zoom distance for current location button
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude),
+            8F
+        ))
+
+        //If set to true default method invocation will trigger
+        return true
     }
 
     companion object {
