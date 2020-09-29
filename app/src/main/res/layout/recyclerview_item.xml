@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/toprecycler">
+        android:background="@drawable/toprecycler2">
 
         <TextView
             android:id="@+id/mainTitle"
@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:fontFamily="@font/convergence"
-            android:gravity="end"
-            android:padding="10dp"
+            android:gravity="start"
+            android:padding="15dp"
             android:textColor="@color/colorText"
             android:textSize="20sp" />
 
