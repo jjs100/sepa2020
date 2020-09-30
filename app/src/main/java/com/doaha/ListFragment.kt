@@ -1,8 +1,6 @@
 package com.doaha
 
-
 import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.common.collect.Maps
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -37,8 +34,10 @@ class ListFragment : Fragment() {
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
             //get name from maps activity
-            var name = MapsActivity.nation.name
-            val nationData = getDocuments(name) //Gets data for list adaptor
+            val name = MapsActivity.nation.name
+            val nationData = getDocuments(name)
+            nation_name.text = name
+            //Gets data for list adaptor
             adapter = ListAdapter(nationData)
             this.setHasFixedSize(true)
         }
@@ -52,12 +51,13 @@ class ListFragment : Fragment() {
     private fun getDocuments(nation : String) : MutableList<Nation> {
         val tempOut = mutableListOf<Nation>()
         val db = FirebaseFirestore.getInstance()
-        db.collection("zones").document(nation) //gets specific region from database
+        db.collection("zones").document(nation)
+            //gets specific region from database
             .get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
-                    //Puts data from database into NationData list
+                    //Puts data from database into NationData list and name section
                     tempOut.add(Nation("Welcome", document.getString("Welcome")))
                     tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
                     tempOut.add(Nation("Information", document.getString("Info")))

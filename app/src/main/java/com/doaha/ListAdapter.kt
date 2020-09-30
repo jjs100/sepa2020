@@ -11,6 +11,7 @@ class ListAdapter(private val list: List<Nation>) : RecyclerView.Adapter<ListAda
 
     private val expandedPositionSet: HashSet<Int> = HashSet()
     private lateinit var context: Context
+    var expandedByDefault = true
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -29,10 +30,8 @@ class ListAdapter(private val list: List<Nation>) : RecyclerView.Adapter<ListAda
         //add data to the cells
         holder.itemView.mainTitle.text = list[position].title
         holder.itemView.subItem.text = list[position].info
-
         //expand when you click on a cell
-        holder.itemView.expand_layout.setOnExpandListener(object :
-            ExpandableLayout.OnExpandListener {
+        holder.itemView.expand_layout.setOnExpandListener(object : ExpandableLayout.OnExpandListener {
             override fun onExpand(expanded: Boolean) {
                 if (expandedPositionSet.contains(position)) {
                     expandedPositionSet.remove(position)
@@ -41,6 +40,23 @@ class ListAdapter(private val list: List<Nation>) : RecyclerView.Adapter<ListAda
                 }
             }
         })
-        holder.itemView.expand_layout.setExpand(expandedPositionSet.contains(position))
+        if (position != 0) {
+            holder.itemView.expand_layout.setExpand(expandedPositionSet.contains(position))
+        }
+    setFirstCellExpanded(holder, position)
+    }
+
+    private fun setFirstCellExpanded(holder: ViewHolder, position: Int) {
+        if (position == 0) {
+            if (expandedByDefault) {
+                holder.itemView.post {
+                    holder.itemView.expand_layout.setExpand(true)
+                }
+            } else {
+                holder.itemView.post {
+                    holder.itemView.expand_layout.setExpand(false)
+                }
+            }
+        }
     }
 }
