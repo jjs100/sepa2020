@@ -3,10 +3,12 @@ package com.doaha.application
 import android.app.Application
 import android.content.SharedPreferences
 import com.doaha.R
+import com.doaha.model.enum.MapSource
 
 class DoAHAApplication : Application() {
     private var isNotificationEnabled: Boolean = false
     private var theRegionUserWasPreviouslyIn: String = ""
+    private var xmlImportType: MapSource = MapSource.LOCAL
 
     fun getIsNotificationEnabled(sharedPref: SharedPreferences): Boolean {
         //Get saved value, and set to isNotificationEnabled if not found
@@ -31,6 +33,27 @@ class DoAHAApplication : Application() {
     fun setTheRegionUserWasPreviouslyIn(sharedPref: SharedPreferences, value: String) {
         saveStringValue(sharedPref, value.toString(), R.string.theRegionUserWasPreviouslyIn_key)
         this.theRegionUserWasPreviouslyIn = value
+    }
+
+    fun getXmlImportType(sharedPref: SharedPreferences):MapSource {
+        val value: String? = getStringValue(sharedPref, R.string.XmlImportType)
+
+        return if (value == null) {
+            setXmlImportType(sharedPref, xmlImportType)
+            xmlImportType
+        } else if (value == MapSource.LOCAL.toString()) {
+            MapSource.LOCAL
+        } else if (value == MapSource.ONLINE.toString()) {
+            MapSource.ONLINE
+        } else {
+            //Do nothing
+            xmlImportType
+        }
+    }
+
+    fun setXmlImportType(sharedPref: SharedPreferences, value: MapSource) {
+        saveStringValue(sharedPref, value.toString(), R.string.XmlImportType)
+        this.xmlImportType = value
     }
 
     private fun getStringValue(sharedPref: SharedPreferences, key: Int): String? {
