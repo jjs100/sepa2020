@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    app:cardBackgroundColor="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textIDTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="ID: "
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorText" />
+
+
+        <TextView
+            android:id="@+id/textID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/textIDTitle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textWelcomeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textID"
+            android:layout_alignParentStart="true"
+            android:text="Welcome: "
+            android:textColor="@color/colorText" />
+
+        <TextView
+            android:id="@+id/textWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/textWelcomeTitle"
+            android:layout_toEndOf="@id/textWelcomeTitle"
+
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textAckTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textWelcome"
+            android:layout_alignParentStart="true"
+            android:text="Acknowledgements: "
+            android:textColor="@color/colorText" />
+
+        <TextView
+            android:id="@+id/textAck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textAckTitle"
+            android:layout_alignParentStart="true"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textInfoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textAck"
+            android:layout_alignParentStart="true"
+            android:text="Information: "
+            android:textColor="@color/colorText" />
+
+        <TextView
+            android:id="@+id/textInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textInfoTitle"
+            android:layout_alignParentStart="true"
+            android:textColor="#FFFFFF" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

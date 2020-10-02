@@ -1,13 +1,17 @@
 package com.doaha
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import com.doaha.application.DoAHAApplication
 
-class AdminPage : AppCompatActivity() {
+
+class AdminPage : AppCompatActivity(){
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,6 +19,12 @@ class AdminPage : AppCompatActivity() {
 
         //Create Notification Button Switch
         loadButtonConfig(findViewById<Switch>(R.id.notifications_toggle))
+
+        //Creating variable for floating button to add new documents
+        val buttonRecycler = findViewById<Button>(R.id.docButton)
+        buttonRecycler.setOnClickListener{
+            startActivity(Intent(this, AdminRecycler::class.java))
+        }
     }
 
     private fun loadButtonConfig(notificationButton: Switch) {
