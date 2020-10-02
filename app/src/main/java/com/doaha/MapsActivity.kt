@@ -83,7 +83,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
                 // adding KML layer to map
-                val layer = loadMapFile(MapSource.LOCAL)
+                val layer = loadMapFile()
                 layer.addLayerToMap()
                 // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
@@ -329,15 +329,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         }
     }
 
-    fun loadMapFile(mapSource: MapSource): KmlLayer {
-        if(mapSource == MapSource.ONLINE){
+    fun loadMapFile(): KmlLayer {
+        if ((this.application as DoAHAApplication).getXmlImportType(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) == MapSource.ONLINE
+        ) {
             var fileString = ""
-            val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
-            val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
-            while(linesOfFileIterator.hasNext()){
+            val inputStream: InputStream =
+                applicationContext.resources.openRawResource(R.raw.online)
+            val linesOfFileIterator: Iterator<String> =
+                inputStream.bufferedReader().lineSequence().iterator()
+            while (linesOfFileIterator.hasNext()) {
                 fileString += linesOfFileIterator.next()
             }
-            val liveKmlUrl:String = fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
+            val liveKmlUrl: String =
+                fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
             val inputStreamReader = URL(liveKmlUrl).openConnection() as HttpURLConnection
             val thread = Thread(Runnable {
                 liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(
