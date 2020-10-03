@@ -25,6 +25,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
+import com.doaha.model.enum.MapStyle
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -202,7 +203,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         try {
             val success = mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    this, R.raw.map_style_standard
+                    this, getResourceIdForMapStyle((this.application as DoAHAApplication).getMapStyle(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)))
                 )
             )
             if (!success) {
@@ -464,6 +465,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
         //If set to true default method invocation will trigger
         return true
+    }
+
+    private fun getResourceIdForMapStyle(value : MapStyle) : Int {
+        return when(value){
+            MapStyle.SILVER -> R.raw.map_style_silver
+            MapStyle.RETRO -> R.raw.map_style_retro
+            else -> R.raw.map_style_standard
+        }
     }
 
     companion object {
