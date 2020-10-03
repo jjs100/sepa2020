@@ -25,6 +25,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
+import com.doaha.model.enum.MapStyle
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -84,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
                 // adding KML layer to map
-                val layer = loadMapFile(MapSource.LOCAL)
+                val layer = loadMapFile()
                 layer.addLayerToMap()
                 // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
@@ -202,7 +203,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         try {
             val success = mMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                    this, R.raw.map_style_standard
+                    this, getResourceIdForMapStyle((this.application as DoAHAApplication).getMapStyle(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)))
                 )
             )
             if (!success) {
@@ -338,15 +339,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         }
     }
 
-    fun loadMapFile(mapSource: MapSource): KmlLayer {
-        if(mapSource == MapSource.ONLINE){
+    fun loadMapFile(): KmlLayer {
+        if ((this.application as DoAHAApplication).getXmlImportType(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) == MapSource.ONLINE
+        ) {
             var fileString = ""
-            val inputStream: InputStream = applicationContext.resources.openRawResource(R.raw.online)
-            val linesOfFileIterator:Iterator<String> = inputStream.bufferedReader().lineSequence().iterator()
-            while(linesOfFileIterator.hasNext()){
+            val inputStream: InputStream =
+                applicationContext.resources.openRawResource(R.raw.online)
+            val linesOfFileIterator: Iterator<String> =
+                inputStream.bufferedReader().lineSequence().iterator()
+            while (linesOfFileIterator.hasNext()) {
                 fileString += linesOfFileIterator.next()
             }
-            val liveKmlUrl:String = fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
+            val liveKmlUrl: String =
+                fileString.substringAfter("<href><![CDATA[").substringBefore("]]></href>")
             val inputStreamReader = URL(liveKmlUrl).openConnection() as HttpURLConnection
             val thread = Thread(Runnable {
                 liveKmlFileString = inputStreamReader.inputStream.bufferedReader().use(
@@ -378,13 +388,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
     }
 
     private fun sendNotification(locName: String) {
-//        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
-//                getSharedPreferences(
-//                    getString(R.string.preference_file_key),
-//                    Context.MODE_PRIVATE
-//                )
-//            )
-//        ) {
+        if ((this.application as DoAHAApplication).getIsNotificationEnabled(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) && (this.application as DoAHAApplication).getTheRegionUserWasPreviouslyIn(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
+            ) != locName
+        ) {
+            (this.application as DoAHAApplication).setTheRegionUserWasPreviouslyIn(
+                getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                ), locName
+            )
             val intent = Intent(this, MapsActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
@@ -402,7 +423,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             with(NotificationManagerCompat.from(this)) {
                 notify(notificationID, builder.build())
             }
-        //}
+        }
     }
 
     private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
@@ -444,6 +465,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
         //If set to true default method invocation will trigger
         return true
+    }
+
+    private fun getResourceIdForMapStyle(value : MapStyle) : Int {
+        return when(value){
+            MapStyle.SILVER -> R.raw.map_style_silver
+            MapStyle.RETRO -> R.raw.map_style_retro
+            else -> R.raw.map_style_standard
+        }
     }
 
     companion object {

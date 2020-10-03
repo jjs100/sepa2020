@@ -21,4 +21,34 @@
         android:layout_gravity="center_horizontal"
         android:text="To Firestore Documents" />
 
+    <Switch
+        android:id="@+id/xmlLiveImportToggle"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:text="XML Live File Toggle" />
+
+    <RadioGroup
+        android:id="@+id/mapStyleSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/standard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Standard Style POI" />
+
+        <RadioButton
+            android:id="@+id/retro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retro Style POI" />
+
+        <RadioButton
+            android:id="@+id/silver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Silver Style POI" />
+    </RadioGroup>
+
 </LinearLayout>

@@ -19,6 +19,9 @@
 
     <string name="preference_file_key">com.doaha.application.aPreferenceFile</string>
     <string name="notification_key">notificationsEnabled</string>
+    <string name="theRegionUserWasPreviouslyIn_key">theRegionUserWasPreviouslyIn</string>
+    <string name="XmlImportType">XmlImportType</string>
+    <string name="mapStyle">mapStyle</string>
     <string name = "id_hint">ID</string>
     <string name = "welcome_hint">Welcome</string>
     <string name = "ack_hint">Acknowledgements</string>
