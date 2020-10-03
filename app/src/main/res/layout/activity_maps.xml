@@ -11,12 +11,11 @@
         android:layout_height="45dp">
 
         <ImageView
-            android:layout_width="450dp"
+            android:layout_width="500dp"
             android:layout_height="60dp"
             android:background="@color/colorPrimary"
-            android:paddingRight="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/toprecycler" />
+            android:src="@drawable/toprecycler2" />
 
         <TextView
             android:id="@+id/textViewCurrentLoc"
@@ -59,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:src="@drawable/divider"
-        android:scaleType="center"
+        android:scaleType="fitXY"
         />
 
     <fragment
@@ -81,6 +80,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".MapsActivity" />
+
+        <Button
+            android:id="@+id/ttButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/infobutton"
+            android:layout_alignEnd="@id/map"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="70dp"/>
 
         <!-- The tooltip, made of resource components & textviews so it can be adapted if necessary -->
         <LinearLayout

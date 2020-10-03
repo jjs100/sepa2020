@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -181,6 +182,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         toolTip.setOnClickListener {
             if(toolTip.visibility == View.VISIBLE) {
                 toolTip.visibility = View.GONE
+            }
+        }
+
+        //tooltip button toggle
+        val ttButton : Button = findViewById(R.id.ttButton)
+        ttButton.setOnClickListener{
+            if(toolTip.visibility == View.VISIBLE) {
+                toolTip.visibility = View.GONE
+            }
+            else{
+                toolTip.visibility = View.VISIBLE
             }
         }
     }
