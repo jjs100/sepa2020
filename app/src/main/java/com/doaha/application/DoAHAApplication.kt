@@ -1,6 +1,7 @@
 package com.doaha.application
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import com.doaha.R
 import com.doaha.model.enum.MapSource
@@ -92,6 +93,19 @@ class DoAHAApplication : Application() {
         with(sharedPref.edit()) {
             putString(getString(key), value)
             commit()
+        }
+    }
+
+    fun checkStatefulToolTip(sharedPref : SharedPreferences) : Boolean{
+        //get string value
+        val checkString = getStringValue(sharedPref, R.string.toolTip_used)
+        //if string not used
+        return if (checkString.equals("unused")){
+            //set string, return true
+            saveStringValue(sharedPref, "used", R.string.toolTip_used)
+            true
+        } else{
+            false
         }
     }
 }

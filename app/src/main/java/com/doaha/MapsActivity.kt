@@ -20,6 +20,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -98,7 +99,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
                 val checkedUserLocation = currentRegion(userLocation, layer)
                 if (checkedUserLocation != null) {
-                    val checkedRegion : String = checkedUserLocation
+                    //val checkedRegion : String = checkedUserLocation
+                    //-------------------------------------------------------TODO Refresh rate of viewed region and firebase data grab(?) not compatible
+                    val checkedRegion : String = checkedCamPos.toString()
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
@@ -178,8 +181,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             }
         })
 
-        //allow user to hide tooltip
+        //determine if user has seen tooltip before, show if untrue
         val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        val check : Boolean = (this.application as DoAHAApplication).checkStatefulToolTip(
+            getSharedPreferences(getString(R.string.toolTip_used), Context.MODE_PRIVATE)
+        )
+        if (check){
+            toolTip.visibility = View.VISIBLE
+        }
+        //default visibility is gone in xml, no else needed
+
+        //allow user to hide tooltip
         toolTip.setOnClickListener {
             if(toolTip.visibility == View.VISIBLE) {
                 toolTip.visibility = View.GONE
@@ -197,6 +209,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             }
         }
     }
+
+
 
     public override fun onPause() {
         super.onPause()
