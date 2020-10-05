@@ -68,6 +68,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
     private var channelID = "Notification_Channel"
     private val notificationID = 101
     private var activityVisible: Boolean = true
+    private var firstLocationResult: Boolean = false
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -84,6 +85,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 }
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
+                if (firstLocationResult == false) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 8F))
+                    firstLocationResult = true
+                }
+
                 // adding KML layer to map
                 val layer = loadMapFile()
                 layer.addLayerToMap()
