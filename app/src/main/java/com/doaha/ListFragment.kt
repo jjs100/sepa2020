@@ -61,6 +61,7 @@ class ListFragment : Fragment() {
                     tempOut.add(Nation("Welcome", document.getString("Welcome")))
                     tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
                     tempOut.add(Nation("Information", document.getString("Info")))
+                    tempOut.add(Nation("Images", document.getString("img1")))
                     //Refreshes recycler view
                     list_recycler_view.adapter?.notifyDataSetChanged()
                 } else {
