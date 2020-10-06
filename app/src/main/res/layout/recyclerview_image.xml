@@ -1,0 +1,52 @@
+<com.doaha.ExpandableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/expand_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
+    android:paddingTop="2dp">
+
+    <RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/toprecycler2">
+
+        <TextView
+            android:id="@+id/mainTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/convergence"
+            android:gravity="start"
+            android:padding="15dp"
+            android:textColor="@color/colorText"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/subItemLayout"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_below="@id/titleLayout"
+        android:background="@color/colorExpandableBox"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="90dp"
+            android:contentDescription="@string/welcome_hint"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+</com.doaha.ExpandableLayout>

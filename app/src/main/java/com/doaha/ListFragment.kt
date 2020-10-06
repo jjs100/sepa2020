@@ -58,10 +58,10 @@ class ListFragment : Fragment() {
                 if (document != null) {
                     Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
                     //Puts data from database into NationData list and name section
-                    tempOut.add(Nation("Welcome", document.getString("Welcome")))
-                    tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
-                    tempOut.add(Nation("Information", document.getString("Info")))
-                    tempOut.add(Nation("Images", document.getString("img1")))
+                    tempOut.add(Nation("Welcome", document.getString("Welcome"), 0))
+                    tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements"), 0))
+                    tempOut.add(Nation("Information", document.getString("Info"), 0))
+                    tempOut.add(Nation("Images", document.getString("img1"), 1))
                     //Refreshes recycler view
                     list_recycler_view.adapter?.notifyDataSetChanged()
                 } else {
