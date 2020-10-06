@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/splashMessage"
+        android:layout_width="152dp"
+        android:layout_height="258dp"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="@font/source_code_pro_medium"
+        android:text="@string/splash_disclaimer_deceased"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorText"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="177dp"
+        android:layout_height="258dp"
+        android:background="@drawable/rounded_border"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/splashDisclaimerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/source_code_pro_medium"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="8dp"
+            android:text="@string/title_disclaimer"
+            android:textColor="@color/colorText"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/splashDisclaimerBorders"
+            android:layout_width="match_parent"
+            android:layout_height="262dp"
+            android:fontFamily="@font/source_code_pro_medium"
+            android:paddingHorizontal="12dp"
+            android:paddingBottom="8dp"
+            android:text="@string/splash_disclaimer_borders"
+            android:textColor="@color/colorTextAddit"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="352dp"
+        android:layout_height="259dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="30dp"
+        android:layout_toStartOf="@+id/splashMessage"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/buffer_text"
+        android:src="@drawable/map" />
+
+    <Button
+        android:id="@+id/StartButton"
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="197dp"
+        android:layout_marginEnd="180dp"
+        android:layout_marginBottom="-48dp"
+        android:background="@color/colorText"
+        android:text="@string/button_start" />
+
+
+</RelativeLayout>
