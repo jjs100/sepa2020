@@ -441,13 +441,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     for (eachPlacemark in eachContainer.placemarks) {
                         if (eachPlacemark.geometry is KmlPolygon) {
                             //When a Polygon
-                            val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                            val aPolygon: KmlPolygon = eachPlacemark.geometry as KmlPolygon
                             //make a super polygon to reduce computation time for user location
                             aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
-                            if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
-                                if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
-                                    return eachPlacemark.getProperty("name")
-                                }
+                            if (PolyUtil.containsLocation(location, aSuperPolygon,true) && PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
+                                return eachPlacemark.getProperty("name")
                             }
                         }
                     }
