@@ -8,21 +8,23 @@
     <!-- Header title is styled in a relative layout so the text can sit over the expandable box image -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="27dp">
 
         <ImageView
-            android:layout_width="450dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
             android:background="@color/colorPrimary"
-            android:paddingRight="30dp"
             android:scaleType="fitXY"
-            android:src="@drawable/toprecycler2" />
+            android:src="@drawable/toprecyclerlandscape" />
 
         <TextView
             android:id="@+id/textViewCurrentLoc"
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
-            android:gravity="center"
+            android:layout_width="295dp"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:paddingTop="5dp"
             android:text="@string/title_current_location"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorText"
@@ -30,15 +32,14 @@
 
         <TextView
             android:id="@+id/textViewMapHeader"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
+            android:layout_width="281dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="293dp"
+            android:paddingTop="5dp"
             android:scaleType="fitStart"
-            android:text="@string/buffer_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorTextAccent"
-            android:textStyle="bold"
-            android:paddingTop="8dp"/>
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView
@@ -58,17 +59,16 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:src="@drawable/dividermaps"
+        android:src="@drawable/landscapedivider"
         android:scaleType="center"
         />
 
     <fragment
         android:id="@+id/autocomplete_fragment"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        tools:context=".MapsActivity" />
 
     <!-- Map activity and tooltip are in a relative layout so the tooltip can appear in the middle of the activity -->
     <RelativeLayout
@@ -85,8 +85,8 @@
         <!-- The tooltip, made of resource components & textviews so it can be adapted if necessary -->
         <LinearLayout
             android:id="@+id/toolTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="351dp"
+            android:layout_height="150dp"
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_border_yellow"
             android:orientation="horizontal"
@@ -96,8 +96,8 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/source_code_pro_medium"
-                android:paddingVertical="10dp"
                 android:gravity="center_vertical"
+                android:paddingVertical="10dp"
                 android:paddingStart="12dp"
                 android:text="@string/tool_tip"
                 android:textColor="@color/colorText"
