@@ -70,6 +70,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
     private var channelID = "Notification_Channel"
     private val notificationID = 101
     private var activityVisible: Boolean = true
+    private var firstLocationResult: Boolean = false
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -86,6 +87,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 }
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
+                if (firstLocationResult == false) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 8F))
+                    firstLocationResult = true
+                }
+
                 // adding KML layer to map
                 val layer = loadMapFile()
                 layer.addLayerToMap()
@@ -468,13 +474,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     for (eachPlacemark in eachContainer.placemarks) {
                         if (eachPlacemark.geometry is KmlPolygon) {
                             //When a Polygon
-                            val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                            val aPolygon: KmlPolygon = eachPlacemark.geometry as KmlPolygon
                             //make a super polygon to reduce computation time for user location
                             aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
-                            if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
-                                if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
-                                    return eachPlacemark.getProperty("name")
-                                }
+                            if (PolyUtil.containsLocation(location, aSuperPolygon,true) && PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
+                                return eachPlacemark.getProperty("name")
                             }
                         }
                     }

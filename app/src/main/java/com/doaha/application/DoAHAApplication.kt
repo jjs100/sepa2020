@@ -40,8 +40,6 @@ class DoAHAApplication : Application() {
     }
 
     fun getXmlImportType(sharedPref: SharedPreferences): MapSource {
-        val value: String? = getStringValue(sharedPref, R.string.XmlImportType)
-
         return when (getStringValue(sharedPref, R.string.XmlImportType)) {
             MapSource.LOCAL.toString() -> {
                 MapSource.LOCAL
