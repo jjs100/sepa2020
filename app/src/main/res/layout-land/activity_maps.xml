@@ -37,7 +37,6 @@
             android:layout_marginStart="293dp"
             android:paddingTop="5dp"
             android:scaleType="fitStart"
-            android:text="@string/buffer_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorTextAccent"
             android:textStyle="bold" />
