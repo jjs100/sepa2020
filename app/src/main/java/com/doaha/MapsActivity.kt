@@ -99,8 +99,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
                 val checkedUserLocation = currentRegion(userLocation, layer)
                 if (checkedUserLocation != null) {
+                    //to use user's current location rather than the viewed location
                     //val checkedRegion : String = checkedUserLocation
-                    //-------------------------------------------------------TODO Refresh rate of viewed region and firebase data grab(?) not compatible
                     val checkedRegion : String = checkedCamPos.toString()
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
@@ -109,12 +109,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     ).document(checkedRegion)
 
                     GlobalScope.launch(Dispatchers.Main) {
-                        delay(1000L)
+                        //delay(1000L)
                         val region = docRef.get().await()
                         if (region.getString("Acknowledgements") != "") {
-                            mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                "Acknowledgements"
-                            )
+                            if(region.getString("Acknowledgements") != null) {
+                                mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                    "Acknowledgements"
+                                )
+                            }
+                            //no else here as the second if is a catch for slow-updating from firebase.
+                            //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
                         } else {
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
@@ -187,7 +191,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             getSharedPreferences(getString(R.string.toolTip_used), Context.MODE_PRIVATE)
         )
         if (check){
+            toolTip.background.alpha = 180
             toolTip.visibility = View.VISIBLE
+
         }
         //default visibility is gone in xml, no else needed
 
@@ -206,6 +212,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             }
             else{
                 toolTip.visibility = View.VISIBLE
+                toolTip.background.alpha = 180
             }
         }
     }

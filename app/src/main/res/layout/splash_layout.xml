@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resource_credits"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorText"
             android:fontFamily="@font/source_code_pro_medium"
             android:layout_alignBottom="@id/imageView"
             android:padding="15dp"

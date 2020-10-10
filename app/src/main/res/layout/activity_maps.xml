@@ -101,7 +101,7 @@
             android:visibility="gone">
 
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/source_code_pro_medium"
                 android:paddingVertical="10dp"
@@ -109,12 +109,12 @@
                 android:paddingStart="12dp"
                 android:text="@string/tool_tip"
                 android:textColor="@color/colorText"
-                android:textSize="26sp" />
+                android:textSize="13sp" />
 
             <ImageView
                 android:id="@+id/imageDblTap"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/buffer_text"
                 android:padding="10dp"
