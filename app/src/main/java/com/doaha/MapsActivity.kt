@@ -14,13 +14,10 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.content.SharedPreferences
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -129,8 +126,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
-                    //if header location is clicked, acknowledgement TextView appears/disappears
-                    mapHeaderTextView.setOnClickListener {
+
+                    //if header is clicked, acknowledgement TextView appears/disappears
+                    val headerObject : RelativeLayout = findViewById(R.id.mapHeaderRel)
+                    headerObject.setOnClickListener {
                         if(mapAckTextView.visibility == View.GONE){
                             mapAckTextView.visibility = View.VISIBLE
                         }

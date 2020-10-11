@@ -7,6 +7,7 @@
 
     <!-- Header title is styled in a relative layout so the text can sit over the expandable box image -->
     <RelativeLayout
+        android:id="@+id/mapHeaderRel"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
