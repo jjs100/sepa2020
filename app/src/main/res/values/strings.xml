@@ -32,4 +32,8 @@
     <string name="standard_style_poi">Standard Style POI</string>
     <string name="retro_style_poi">Retro Style POI</string>
     <string name="silver_style_poi">Silver Style POI</string>
+    <string name="edit_id">ID:</string>
+    <string name="edit_welcome_message">Welcome Message:</string>
+    <string name="edit_acknowledgments">Acknowledgments:</string>
+    <string name="edit_nation_information">Nation Information:</string>
 </resources>
