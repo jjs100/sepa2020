@@ -222,7 +222,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         val australiaBounds = LatLngBounds(
             LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
         )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 1))
 
         // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
