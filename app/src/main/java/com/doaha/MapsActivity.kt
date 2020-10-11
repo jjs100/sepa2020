@@ -14,11 +14,10 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -103,7 +102,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
                 val checkedUserLocation = currentRegion(userLocation, layer)
                 if (checkedUserLocation != null) {
-                    val checkedRegion : String = checkedUserLocation
+                    //to use user's current location rather than the viewed location
+                    //val checkedRegion : String = checkedUserLocation
+                    val checkedRegion : String = checkedCamPos.toString()
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
@@ -111,18 +112,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     ).document(checkedRegion)
 
                     GlobalScope.launch(Dispatchers.Main) {
-                        delay(1000L)
+                        //delay(1000L)
                         val region = docRef.get().await()
                         if (region.getString("Acknowledgements") != "") {
-                            mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                "Acknowledgements"
-                            )
+                            if(region.getString("Acknowledgements") != null) {
+                                mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                    "Acknowledgements"
+                                )
+                            }
+                            //no else here as the second if is a catch for slow-updating from firebase.
+                            //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
                         } else {
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
-                    //if header location is clicked, acknowledgement TextView appears/disappears
-                    mapHeaderTextView.setOnClickListener {
+
+                    //if header is clicked, acknowledgement TextView appears/disappears
+                    val headerObject : RelativeLayout = findViewById(R.id.mapHeaderRel)
+                    headerObject.setOnClickListener {
                         if(mapAckTextView.visibility == View.GONE){
                             mapAckTextView.visibility = View.VISIBLE
                         }
@@ -183,14 +190,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             }
         })
 
-        //allow user to hide tooltip
+        //determine if user has seen tooltip before, show if untrue
         val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        val check : Boolean = (this.application as DoAHAApplication).checkStatefulToolTip(
+            getSharedPreferences(getString(R.string.toolTip_used), Context.MODE_PRIVATE)
+        )
+        if (check){
+            toolTip.background.alpha = 180
+            toolTip.visibility = View.VISIBLE
+
+        }
+        //default visibility is gone in xml, no else needed
+
+        //allow user to hide tooltip
         toolTip.setOnClickListener {
             if(toolTip.visibility == View.VISIBLE) {
                 toolTip.visibility = View.GONE
             }
         }
+
+        //tooltip button toggle
+        val ttButton : Button = findViewById(R.id.ttButton)
+        ttButton.setOnClickListener{
+            if(toolTip.visibility == View.VISIBLE) {
+                toolTip.visibility = View.GONE
+            }
+            else{
+                toolTip.visibility = View.VISIBLE
+                toolTip.background.alpha = 180
+            }
+        }
     }
+
+
 
     public override fun onPause() {
         super.onPause()

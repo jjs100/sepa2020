@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.splash_layout.*
 import android.content.Intent
+import android.view.View
+import android.opengl.Visibility
 import android.text.Html
 import android.widget.TextView
 import kotlinx.android.synthetic.*
@@ -23,5 +25,24 @@ class SplashScreen : AppCompatActivity() {
             //admin login didn't work correctly
             startActivity(Intent(this, AdminLogin::class.java))
         }
+
+        val resCredButton: TextView = findViewById(R.id.randc)
+        val resCredContent: TextView = findViewById(R.id.randccontent)
+        resCredButton.setOnClickListener{
+            if (resCredContent.visibility == View.GONE){
+                resCredButton.visibility = View.GONE
+                resCredContent.visibility = View.VISIBLE
+                resCredContent.background.alpha = 145
+            }
+        }
+
+        resCredContent.setOnClickListener{
+            if (resCredContent.visibility == View.VISIBLE){
+                resCredContent.visibility = View.GONE
+                resCredButton.visibility = View.VISIBLE
+            }
+        }
+
+
     }
 }

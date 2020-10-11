@@ -7,14 +7,14 @@
 
     <!-- Header title is styled in a relative layout so the text can sit over the expandable box image -->
     <RelativeLayout
+        android:id="@+id/mapHeaderRel"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
         <ImageView
-            android:layout_width="450dp"
+            android:layout_width="500dp"
             android:layout_height="60dp"
             android:background="@color/colorPrimary"
-            android:paddingRight="30dp"
             android:scaleType="fitXY"
             android:src="@drawable/toprecycler2" />
 
@@ -58,8 +58,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:src="@drawable/dividermaps"
-        android:scaleType="center"
+        android:src="@drawable/divider"
+        android:scaleType="fitXY"
         />
 
     <fragment
@@ -82,6 +82,15 @@
             android:layout_height="match_parent"
             tools:context=".MapsActivity" />
 
+        <Button
+            android:id="@+id/ttButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/infobutton"
+            android:layout_alignEnd="@id/map"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="70dp"/>
+
         <!-- The tooltip, made of resource components & textviews so it can be adapted if necessary -->
         <LinearLayout
             android:id="@+id/toolTip"
@@ -90,10 +99,10 @@
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_border_yellow"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/source_code_pro_medium"
                 android:paddingVertical="10dp"
@@ -101,12 +110,12 @@
                 android:paddingStart="12dp"
                 android:text="@string/tool_tip"
                 android:textColor="@color/colorText"
-                android:textSize="26sp" />
+                android:textSize="13sp" />
 
             <ImageView
                 android:id="@+id/imageDblTap"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/buffer_text"
                 android:padding="10dp"
