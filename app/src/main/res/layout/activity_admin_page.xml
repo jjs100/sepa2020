@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="To Firestore Documents" />
+        android:text="@string/button_edit_db" />
 
     <Switch
         android:id="@+id/xmlLiveImportToggle"
@@ -36,19 +36,19 @@
             android:id="@+id/standard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Standard Style POI" />
+            android:text="@string/standard_style_poi" />
 
         <RadioButton
             android:id="@+id/retro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Retro Style POI" />
+            android:text="@string/retro_style_poi" />
 
         <RadioButton
             android:id="@+id/silver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Silver Style POI" />
+            android:text="@string/silver_style_poi" />
     </RadioGroup>
 
 </LinearLayout>

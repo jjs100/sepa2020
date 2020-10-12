@@ -14,6 +14,17 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_id"
+                android:fontFamily="@font/convergence"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"/>
+
             <EditText
                 android:id="@+id/editID"
                 android:layout_width="match_parent"
@@ -23,6 +34,17 @@
                 android:textColor="#FFFFFF"
                 android:textColorHint="#8C8266"
                 app:backgroundTint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_welcome_message"
+                android:fontFamily="@font/convergence"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"/>
 
             <EditText
                 android:id="@+id/editWelcome"
@@ -34,6 +56,17 @@
                 android:textColorHint="#8C8266"
                 app:backgroundTint="@color/colorAccent" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_acknowledgments"
+                android:fontFamily="@font/convergence"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"/>
+
             <EditText
                 android:id="@+id/editAck"
                 android:layout_width="match_parent"
@@ -43,6 +76,17 @@
                 android:textColor="#FFFFFF"
                 android:textColorHint="#8C8266"
                 app:backgroundTint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_nation_information"
+                android:fontFamily="@font/convergence"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"/>
 
             <EditText
                 android:id="@+id/editInfo"
