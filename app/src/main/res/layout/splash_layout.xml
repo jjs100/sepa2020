@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/splashMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/source_code_pro_medium"
+        android:paddingTop="50dp"
         android:text="@string/splash_disclaimer_deceased"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText"
         android:textSize="16sp" />
@@ -21,30 +24,30 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border"
         android:layout_marginHorizontal="8dp"
+        android:background="@drawable/rounded_border"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/splashDisclaimerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_disclaimer"
             android:fontFamily="@font/source_code_pro_medium"
-            android:textSize="12sp"
-            android:textColor="@color/colorText"
             android:paddingHorizontal="12dp"
-            android:paddingTop="8dp"/>
+            android:paddingTop="8dp"
+            android:text="@string/title_disclaimer"
+            android:textColor="@color/colorText"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/splashDisclaimerBorders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/source_code_pro_medium"
-            android:text="@string/splash_disclaimer_borders"
-            android:textColor="@color/colorTextAddit"
             android:paddingHorizontal="12dp"
             android:paddingBottom="8dp"
+            android:text="@string/splash_disclaimer_borders"
+            android:textColor="@color/colorTextAddit"
             android:textSize="12sp" />
     </LinearLayout>
 

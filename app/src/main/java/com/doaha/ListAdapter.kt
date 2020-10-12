@@ -1,10 +1,12 @@
 package com.doaha
 
 import android.content.Context
+import android.content.ReceiverCallNotAllowedException
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewManager
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -18,17 +20,26 @@ private const val LIST_TYPE_DATA: Int = 0
 
 class ListAdapter(private var list: List<Nation>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var context: Context
-    lateinit var tempView : ImageView
 
     //image viewholder
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(nat: Nation) {
+            //all documents should have at least one image
             itemView.mainTitle.text = nat.title
-            Log.d("BIGBOI", "nation is ${nat.title} amd ${nat.info} and ${nat.image}")
             Picasso.get()
                 .load(nat.info)
-                .fit()
                 .into(itemView.image)
+            //these statements check if a second and third image exist
+            if (nat.image2 != null){
+                Picasso.get()
+                    .load(nat.image2)
+                    .into(itemView.image2)
+            }
+            if (nat.image3 != null){
+                Picasso.get()
+                    .load(nat.image3)
+                    .into(itemView.image3)
+            }
         }
     }
 
@@ -72,12 +83,14 @@ class ListAdapter(private var list: List<Nation>) : RecyclerView.Adapter<Recycle
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
-        if (viewType == LIST_TYPE_DATA) {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false)
-            return DataViewHolder(v)
+        return if (viewType == LIST_TYPE_DATA) {
+            val v = LayoutInflater.from(parent.context)
+                .inflate(R.layout.recyclerview_item, parent, false)
+            DataViewHolder(v)
         } else {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_image, parent, false)
-            return ImageViewHolder(v)
+            val v = LayoutInflater.from(parent.context)
+                .inflate(R.layout.recyclerview_image, parent, false)
+            ImageViewHolder(v)
         }
     }
 

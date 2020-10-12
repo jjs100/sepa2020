@@ -4,24 +4,49 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.splash_layout.*
 import android.content.Intent
-import android.text.Html
-import android.widget.TextView
-import kotlinx.android.synthetic.*
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.widget.LinearLayout
 
 class SplashScreen : AppCompatActivity() {
 
+    private var actionValue: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_layout)
 
+        //Making LinearLayout able to register touch, executing action on touch
+        val touchLayout: LinearLayout = findViewById(R.id.splash)
+        touchLayout.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View, m: MotionEvent): Boolean {
+                handleTouch(m)
+                return true
+            }
+        })
         StartButton.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
+    }
 
-        splashMessage.setOnClickListener {
-            //admin login didn't work correctly
+    //this function iterates ActionValue everytime the user swipes down, 20 swipes results in the admin page loading
+    private fun handleTouch(m: MotionEvent) {
+        val pointerCount = m.pointerCount
+
+        for (i in 0 until pointerCount) {
+            val action = m.actionMasked
+            when (action) {
+                MotionEvent.ACTION_DOWN -> actionValue++
+            }
+            Log.d("Action Value: ", "$actionValue")
+        if (actionValue == 20){
+            actionValue=0
             startActivity(Intent(this, AdminLogin::class.java))
+        }
         }
     }
 }
+
+
+
