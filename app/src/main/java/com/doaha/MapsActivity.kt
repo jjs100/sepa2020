@@ -252,6 +252,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             Log.e(TAG, "Can't find style. Error: ", e)
         }
 
+        // Set map bounds to australia and show aus map
+        val australiaBounds = LatLngBounds(
+            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 1))
+
         // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
         layer.addLayerToMap()
