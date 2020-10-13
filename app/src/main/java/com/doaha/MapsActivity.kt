@@ -14,10 +14,11 @@ import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.content.SharedPreferences
-import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -50,7 +51,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnMyLocationButtonClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
     object nation {
         @JvmStatic var name = ""
@@ -67,7 +68,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
     private var channelID = "Notification_Channel"
     private val notificationID = 101
     private var activityVisible: Boolean = true
-    private var firstLocationResult: Boolean = false
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -84,11 +84,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                 }
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
-                if (firstLocationResult == false) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 8F))
-                    firstLocationResult = true
-                }
-
                 // adding KML layer to map
                 val layer = loadMapFile()
                 layer.addLayerToMap()
@@ -102,9 +97,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
                 val checkedUserLocation = currentRegion(userLocation, layer)
                 if (checkedUserLocation != null) {
-                    //to use user's current location rather than the viewed location
-                    //val checkedRegion : String = checkedUserLocation
-                    val checkedRegion : String = checkedCamPos.toString()
+                    val checkedRegion : String = checkedUserLocation
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
@@ -112,24 +105,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                     ).document(checkedRegion)
 
                     GlobalScope.launch(Dispatchers.Main) {
-                        //delay(1000L)
+                        delay(1000L)
                         val region = docRef.get().await()
                         if (region.getString("Acknowledgements") != "") {
-                            if(region.getString("Acknowledgements") != null) {
-                                mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                    "Acknowledgements"
-                                )
-                            }
-                            //no else here as the second if is a catch for slow-updating from firebase.
-                            //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
+                            mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                "Acknowledgements"
+                            )
                         } else {
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
-
-                    //if header is clicked, acknowledgement TextView appears/disappears
-                    val headerObject : RelativeLayout = findViewById(R.id.mapHeaderRel)
-                    headerObject.setOnClickListener {
+                    //if header location is clicked, acknowledgement TextView appears/disappears
+                    mapHeaderTextView.setOnClickListener {
                         if(mapAckTextView.visibility == View.GONE){
                             mapAckTextView.visibility = View.VISIBLE
                         }
@@ -190,39 +177,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             }
         })
 
-        //determine if user has seen tooltip before, show if untrue
-        val toolTip : LinearLayout = findViewById(R.id.toolTip)
-        val check : Boolean = (this.application as DoAHAApplication).checkStatefulToolTip(
-            getSharedPreferences(getString(R.string.toolTip_used), Context.MODE_PRIVATE)
-        )
-        if (check){
-            toolTip.background.alpha = 180
-            toolTip.visibility = View.VISIBLE
-
-        }
-        //default visibility is gone in xml, no else needed
-
         //allow user to hide tooltip
+        val toolTip : LinearLayout = findViewById(R.id.toolTip)
         toolTip.setOnClickListener {
             if(toolTip.visibility == View.VISIBLE) {
                 toolTip.visibility = View.GONE
             }
         }
-
-        //tooltip button toggle
-        val ttButton : Button = findViewById(R.id.ttButton)
-        ttButton.setOnClickListener{
-            if(toolTip.visibility == View.VISIBLE) {
-                toolTip.visibility = View.GONE
-            }
-            else{
-                toolTip.visibility = View.VISIBLE
-                toolTip.background.alpha = 180
-            }
-        }
     }
-
-
 
     public override fun onPause() {
         super.onPause()
@@ -237,7 +199,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
     override fun onMapReady(googleMap: GoogleMap) {
         // sets map variable
         mMap = googleMap
-        mMap.setOnMapLoadedCallback(this)
         // applies custom map style json
         try {
             val success = mMap.setMapStyle(
@@ -251,12 +212,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         } catch (e: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", e)
         }
-
         // Set map bounds to australia and show aus map
         val australiaBounds = LatLngBounds(
             LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
         )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 1))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
 
         // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
@@ -475,11 +435,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                     for (eachPlacemark in eachContainer.placemarks) {
                         if (eachPlacemark.geometry is KmlPolygon) {
                             //When a Polygon
-                            val aPolygon: KmlPolygon = eachPlacemark.geometry as KmlPolygon
+                            val aPolygon : KmlPolygon = eachPlacemark.geometry as KmlPolygon
                             //make a super polygon to reduce computation time for user location
                             aSuperPolygon.addAll(aPolygon.outerBoundaryCoordinates)
-                            if (PolyUtil.containsLocation(location, aSuperPolygon,true) && PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
-                                return eachPlacemark.getProperty("name")
+                            if (PolyUtil.containsLocation(location, aSuperPolygon, true)) {
+                                if (PolyUtil.containsLocation(location, aPolygon.outerBoundaryCoordinates, true)) {
+                                    return eachPlacemark.getProperty("name")
+                                }
                             }
                         }
                     }
@@ -515,13 +477,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
-    }
-
-    override fun onMapLoaded() {
-        // Set map bounds to australia and show aus map
-        val australiaBounds = LatLngBounds(
-            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
-        )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
     }
 }

@@ -8,10 +8,6 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
-import android.opengl.Visibility
-import android.text.Html
-import android.widget.TextView
-import kotlinx.android.synthetic.*
 
 class SplashScreen : AppCompatActivity() {
 
@@ -48,23 +44,6 @@ class SplashScreen : AppCompatActivity() {
             actionValue=0
             startActivity(Intent(this, AdminLogin::class.java))
         }
-        }
-
-        val resCredButton: TextView = findViewById(R.id.randc)
-        val resCredContent: TextView = findViewById(R.id.randccontent)
-        resCredButton.setOnClickListener{
-            if (resCredContent.visibility == View.GONE){
-                resCredButton.visibility = View.GONE
-                resCredContent.visibility = View.VISIBLE
-                resCredContent.background.alpha = 145
-            }
-        }
-
-        resCredContent.setOnClickListener{
-            if (resCredContent.visibility == View.VISIBLE){
-                resCredContent.visibility = View.GONE
-                resCredButton.visibility = View.VISIBLE
-            }
         }
     }
 }
