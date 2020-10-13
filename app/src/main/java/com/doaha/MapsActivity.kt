@@ -38,11 +38,13 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.PolyUtil
+import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
 import java.io.InputStream
@@ -254,13 +256,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
         // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
-        layer.addLayerToMap()
+        //layer.addLayerToMap()
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
             //Enable gesture zoom controls
             this.isZoomGesturesEnabled = true
         }
+
+
+        val layer2 = GeoJsonLayer(mMap, R.raw.google, applicationContext)
+        layer2.addLayerToMap()
 
 	    mLocationRequest = LocationRequest()
         // In Milliseconds
