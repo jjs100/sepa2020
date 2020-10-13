@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
+
 
 class SplashScreen : AppCompatActivity() {
 
@@ -28,6 +30,23 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
+
+        val resCredButton: TextView = findViewById(R.id.randc)
+        val resCredContent: TextView = findViewById(R.id.randccontent)
+        resCredButton.setOnClickListener {
+            if (resCredContent.visibility == View.GONE) {
+                resCredButton.visibility = View.GONE
+                resCredContent.visibility = View.VISIBLE
+                resCredContent.background.alpha = 145
+            }
+        }
+
+        resCredContent.setOnClickListener {
+            if (resCredContent.visibility == View.VISIBLE) {
+                resCredContent.visibility = View.GONE
+                resCredButton.visibility = View.VISIBLE
+            }
+        }
     }
 
     //this function iterates ActionValue everytime the user swipes down, 20 swipes results in the admin page loading
@@ -40,10 +59,10 @@ class SplashScreen : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> actionValue++
             }
             Log.d("Action Value: ", "$actionValue")
-        if (actionValue == 20){
-            actionValue=0
-            startActivity(Intent(this, AdminLogin::class.java))
-        }
+            if (actionValue == 20) {
+                actionValue = 0
+                startActivity(Intent(this, AdminLogin::class.java))
+            }
         }
     }
 }

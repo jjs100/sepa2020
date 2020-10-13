@@ -58,10 +58,40 @@ class ListFragment : Fragment() {
                 if (document != null) {
                     Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
                     //Puts data from database into NationData list and name section
-                    tempOut.add(Nation("Welcome", document.getString("Welcome"), "", "", 0))
-                    tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements"), "", "", 0))
-                    tempOut.add(Nation("Information", document.getString("Info"), "", "", 0))
                     tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
+                    var welcomeAvailability = false
+                    var ackAvailability = false
+                    var infoAvailability = false
+                    val welcomeText = document.getString("Welcome")
+                    if (welcomeText != null) {
+                        if (!welcomeText.isEmpty()) {
+                            tempOut.add(Nation("Welcome", document.getString("Welcome")))
+                            welcomeAvailability = true
+                        } else {
+                            welcomeAvailability = false
+                        }
+                    }
+                    val ackText = document.getString("Acknowledgements")
+                    if (ackText != null) {
+                        if (!ackText.isEmpty()) {
+                            tempOut.add(Nation("Acknowledgements", document.getString("Acknowledgements")))
+                            ackAvailability = true
+                        } else {
+                            ackAvailability = false
+                        }
+                    }
+                    val infoText = document.getString("Info")
+                    if (infoText != null) {
+                        if (!infoText.isEmpty()) {
+                            tempOut.add(Nation("Information", document.getString("Info")))
+                            infoAvailability = true
+                        } else {
+                            infoAvailability = false
+                        }
+                    }
+                    if (!welcomeAvailability && !ackAvailability && !infoAvailability) {
+                        tempOut.add(Nation("", "No data available for this region"))
+                    }
                     //Refreshes recycler view
                     list_recycler_view.adapter?.notifyDataSetChanged()
                 } else {
