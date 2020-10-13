@@ -58,7 +58,6 @@ class ListFragment : Fragment() {
                 if (document != null) {
                     Log.d(ContentValues.TAG, "DocumentSnapshot data: ${document.data}")
                     //Puts data from database into NationData list and name section
-                    tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
                     var welcomeAvailability = false
                     var ackAvailability = false
                     var infoAvailability = false
@@ -89,6 +88,7 @@ class ListFragment : Fragment() {
                             infoAvailability = false
                         }
                     }
+                    tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
                     if (!welcomeAvailability && !ackAvailability && !infoAvailability) {
                         tempOut.add(Nation("", "No data available for this region"))
                     }

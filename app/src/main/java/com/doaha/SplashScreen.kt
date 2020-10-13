@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 
 
 class SplashScreen : AppCompatActivity() {
@@ -19,7 +20,7 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.splash_layout)
 
         //Making LinearLayout able to register touch, executing action on touch
-        val touchLayout: LinearLayout = findViewById(R.id.splash)
+        val touchLayout: ConstraintLayout = findViewById(R.id.splash)
         touchLayout.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View, m: MotionEvent): Boolean {
                 handleTouch(m)
