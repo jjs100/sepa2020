@@ -46,9 +46,11 @@
         </activity>
         <activity
         android:name=".EditDocActivity"
+            android:theme="@style/AdminTheme"
         android:parentActivityName=".AdminRecycler" />
         <activity
             android:name=".NewDocActivity"
+            android:theme="@style/AdminTheme"
             android:parentActivityName=".AdminRecycler" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".MainListActivity" />
