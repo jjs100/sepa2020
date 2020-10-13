@@ -9,20 +9,26 @@
     <RelativeLayout
         android:id="@+id/mapHeaderRel"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="35dp">
 
         <ImageView
-            android:layout_width="500dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:background="@color/colorPrimary"
             android:scaleType="fitXY"
-            android:src="@drawable/toprecycler2" />
+            android:src="@drawable/toprecyclerlandscape" />
+
 
         <TextView
             android:id="@+id/textViewCurrentLoc"
-            android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@id/textViewMapHeader"
+            android:layout_marginEnd="100dp"
             android:gravity="center"
+            android:layout_centerInParent="true"
+            android:paddingTop="5dp"
             android:text="@string/title_current_location"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorText"
@@ -30,15 +36,18 @@
 
         <TextView
             android:id="@+id/textViewMapHeader"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_centerInParent="true"
+            android:text="EXAMPLE"
+            android:paddingTop="5dp"
+            android:paddingStart="160dp"
             android:scaleType="fitStart"
-            android:text="@string/buffer_text"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorTextAccent"
-            android:textStyle="bold"
-            android:paddingTop="8dp"/>
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <TextView
@@ -58,17 +67,16 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:src="@drawable/divider"
-        android:scaleType="fitXY"
+        android:src="@drawable/landscapedivider"
+        android:scaleType="center"
         />
 
     <fragment
         android:id="@+id/autocomplete_fragment"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        tools:context=".MapsActivity" />
 
     <!-- Map activity and tooltip are in a relative layout so the tooltip can appear in the middle of the activity -->
     <RelativeLayout
