@@ -12,7 +12,6 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.HandlerThread
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
@@ -54,7 +53,7 @@ import java.net.URL
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
-    object nation {
+    object Nation {
         @JvmStatic var name = ""
     }
 
@@ -91,10 +90,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     firstLocationResult = true
                 }
 
-                // adding KML layer to map
-                //val layer = loadMapFile()
-                //layer.addLayerToMap()
-                // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
                 val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
                 val checkedCamPos = currentRegion(camPos, layer)
@@ -128,13 +123,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                         sendNotification(checkedCamPos)
                     }
                 }
-                //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
-                //layer.removeLayerFromMap()
             }
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
@@ -256,7 +247,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 	    layer!!.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
             val locName = it.getProperty("name")
-            nation.name = locName
+            Nation.name = locName
             startActivity(intent)
         }
     }
