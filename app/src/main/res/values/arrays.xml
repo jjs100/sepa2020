@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="auto_size_text_sizes">
+        <item>5sp</item>
+        <item>8.5sp</item>
+        <item>10sp</item>
+        <item>12sp</item>
+        <item>14sp</item>
+    </array>
+    <array name="auto_size_text_alternate_1">
+        <item>4sp</item>
+        <item>8sp</item>
+        <item>18sp</item>
+        <item>24sp</item>
+    </array>
+</resources>
