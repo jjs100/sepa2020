@@ -11,6 +11,7 @@ import android.content.res.Resources
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.os.HandlerThread
 import android.os.Looper
 import android.util.Log
 import android.view.View
@@ -78,14 +79,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             if (locationList.isNotEmpty()) {
                 //The last location in the list is the newest
                 val location = locationList.last()
-                Log.i("MapsActivity", "Location: " + location.latitude + " " + location.longitude)
                 mLastLocation = location
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker?.remove()
                 }
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
-                if (firstLocationResult == false) {
+                if (!firstLocationResult) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 8F))
                     firstLocationResult = true
                 }
@@ -99,19 +99,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 val checkedCamPos = currentRegion(camPos, layer)
                 if (checkedCamPos != null) {
                     mapHeaderTextView.text = checkedCamPos
-                }
-
-                val checkedUserLocation = currentRegion(userLocation, layer)
-                if (checkedUserLocation != null) {
-                    val checkedRegion : String = checkedUserLocation
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
                         "zones"
-                    ).document(checkedRegion)
+                    ).document(checkedCamPos)
 
-                    GlobalScope.launch(Dispatchers.Main) {
-                        delay(1000L)
+                    GlobalScope.launch(Dispatchers.IO) {
                         val region = docRef.get().await()
                         if (region.getString("Acknowledgements") != "") {
                             mapAckTextView.text = "Acknowledgments: " + region.getString(
@@ -121,24 +115,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
-                    //if header location is clicked, acknowledgement TextView appears/disappears
                     mapHeaderTextView.setOnClickListener {
-                        if(mapAckTextView.visibility == View.GONE){
+                        if (mapAckTextView.visibility == View.GONE) {
                             mapAckTextView.visibility = View.VISIBLE
-                        }
-                        else{
+                        } else {
                             mapAckTextView.visibility = View.GONE
                         }
                     }
 
                     if (!activityVisible) {
-                        sendNotification(checkedRegion)
+                        sendNotification(checkedCamPos)
                     }
                 }
                 //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
                 layer.removeLayerFromMap()
-
-
             }
         }
     }
@@ -159,10 +149,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
         // Initialize the AutocompleteSupportFragment and Places
         Places.initialize(applicationContext, getString(R.string.google_maps_auto_complete_key))
-
         //val pC: PlacesClient = Places.createClient(applicationContext)
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
-
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(listOf(Place.Field.NAME, Place.Field.LAT_LNG))
 
@@ -218,11 +206,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         } catch (e: Resources.NotFoundException) {
             Log.e(TAG, "Can't find style. Error: ", e)
         }
-        // Set map bounds to australia and show aus map
-        val australiaBounds = LatLngBounds(
-            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
-        )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
 
         // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
@@ -233,12 +216,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             //Enable gesture zoom controls
             this.isZoomGesturesEnabled = true
         }
-
+        //start a handler thread for looper
+        HandlerThread("Location").start()
 	    mLocationRequest = LocationRequest()
         // In Milliseconds
-        mLocationRequest.interval = 2000
-        mLocationRequest.fastestInterval = 2000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        mLocationRequest.interval = 5000
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
         // check/request app permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -251,7 +234,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 mFusedLocationClient?.requestLocationUpdates(
                     mLocationRequest,
                     mLocationCallback,
-                    Looper.myLooper()
+                    HandlerThread("Location").looper
                 )
                 mMap.isMyLocationEnabled = true
                 mMap.setOnMyLocationButtonClickListener(this)
@@ -263,7 +246,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             mFusedLocationClient?.requestLocationUpdates(
                 mLocationRequest,
                 mLocationCallback,
-                Looper.myLooper()
+                HandlerThread("Location").looper
             )
             mMap.isMyLocationEnabled = true
             mMap.setOnMyLocationButtonClickListener(this)
@@ -273,8 +256,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             val intent = Intent(this, MainListActivity::class.java)
             val locName = it.getProperty("name")
             nation.name = locName
-            val t = Toast.makeText(this@MapsActivity, "this is $locName", Toast.LENGTH_SHORT)
-            t.show()
             startActivity(intent)
         }
     }
@@ -333,7 +314,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                         mFusedLocationClient?.requestLocationUpdates(
                             mLocationRequest,
                             mLocationCallback,
-                            Looper.myLooper()
+                            HandlerThread("Location").looper
                         )
                     }
                 } else {
