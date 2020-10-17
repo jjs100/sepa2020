@@ -265,10 +265,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             this.isZoomGesturesEnabled = true
         }
 
-        // Create polygon layer
-        val geoJsonData:JSONObject = GeoJSONClassGenerator.create(layer)
-        val layer2 = GeoJsonLayer(mMap, geoJsonData)
-        //val layer3 = GeoJsonLayer(mMap, R.raw.google, applicationContext)
+        // Create nation name polygon layer
+        val layer2 = GeoJsonLayer(mMap, GeoJSONClassGenerator.create(layer))
         layer2.addLayerToMap()
 
 	    mLocationRequest = LocationRequest()
