@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
 import com.doaha.model.enum.MapStyle
+import com.doaha.model.generator.GeoJSONClassGenerator
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -256,7 +257,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
         // set kml layer and map settings
         val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
-        //layer.addLayerToMap()
+        layer.addLayerToMap()
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
@@ -264,8 +265,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             this.isZoomGesturesEnabled = true
         }
 
-
-        val layer2 = GeoJsonLayer(mMap, R.raw.google, applicationContext)
+        // Create polygon layer
+        val geoJsonData:JSONObject = GeoJSONClassGenerator.create(layer)
+        val layer2 = GeoJsonLayer(mMap, geoJsonData)
+        //val layer3 = GeoJsonLayer(mMap, R.raw.google, applicationContext)
         layer2.addLayerToMap()
 
 	    mLocationRequest = LocationRequest()
