@@ -70,6 +70,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
     private val notificationID = 101
     private var activityVisible: Boolean = true
     private var firstLocationResult: Boolean = false
+    var layer: KmlLayer? = null
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -91,8 +92,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                 }
 
                 // adding KML layer to map
-                val layer = loadMapFile()
-                layer.addLayerToMap()
+                //val layer = loadMapFile()
+                //layer.addLayerToMap()
                 // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
                 val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
@@ -128,7 +129,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     }
                 }
                 //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
-                layer.removeLayerFromMap()
+                //layer.removeLayerFromMap()
             }
         }
     }
@@ -208,8 +209,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         }
 
         // set kml layer and map settings
-        val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
-        layer.addLayerToMap()
+        layer = loadMapFile()
+        layer!!.addLayerToMap()
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
@@ -252,7 +253,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             mMap.setOnMyLocationButtonClickListener(this)
         }
         // sends user to nation information page
-	    layer.setOnFeatureClickListener {
+	    layer!!.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
             val locName = it.getProperty("name")
             nation.name = locName
@@ -326,7 +327,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         }
     }
 
-    fun loadMapFile(): KmlLayer {
+    private fun loadMapFile(): KmlLayer {
         if ((this.application as DoAHAApplication).getXmlImportType(
                 getSharedPreferences(
                     getString(R.string.preference_file_key),
@@ -413,8 +414,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         }
     }
 
-    private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
-        val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
+    private fun currentRegion(location: LatLng, layer: KmlLayer?): String? {
+        val kmlContainerList: MutableIterable<KmlContainer>? = layer?.containers
         val aSuperPolygon: MutableList<LatLng> = mutableListOf()
         if (kmlContainerList != null) {
             for (aKmlContainer in kmlContainerList) {
