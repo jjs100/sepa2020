@@ -14,13 +14,12 @@ class GeoJSONClassGenerator {
         fun create(layer: KmlLayer): JSONObject {
             var geoJsonObject: JSONObject = JSONObject()
             geoJsonObject.put("type", "FeatureCollection")
-            geoJsonObject.put("features", createGeoJSONLayerForEachNation(layer, geoJsonObject))
+            geoJsonObject.put("features", createGeoJSONLayerForEachNation(layer))
             return geoJsonObject
         }
 
         private fun createGeoJSONLayerForEachNation(
-            layer: KmlLayer,
-            geoJsonObject: JSONObject
+            layer: KmlLayer
         ): JSONArray {
             var jsonArray: JSONArray = JSONArray()
             for (aKmlContainerList in layer.containers) {
@@ -67,12 +66,14 @@ class GeoJSONClassGenerator {
             centerPoint: LatLng
         ): JSONObject {
             var jsonObject: JSONObject = JSONObject()
-            if(" ".single() != letter) {
-                jsonObject.put("type", "Polygon")
-                jsonObject.put(
-                    "coordinates",
-                    createJSONCoordinatesObject(centerPoint, letter, letterPosition)
-                )
+            if (" ".single() != letter) {
+                if (nationName == "Tommeginne") {
+                    jsonObject.put("type", "Polygon")
+                    jsonObject.put(
+                        "coordinates",
+                        createJSONCoordinatesObject(centerPoint, letter, letterPosition)
+                    )
+                }
             }
             return jsonObject
         }
@@ -82,9 +83,6 @@ class GeoJSONClassGenerator {
             letter: Char,
             letterPosition: Int
         ): JSONArray {
-            //var jsonArray: JSONArray = JSONArray()
-            //jsonArray.put(createJSONArrayOfLatLngForALetter(centerPoint, letter, letterPosition))
-            //return jsonArray
             return createJSONArrayOfLatLngForALetter(centerPoint, letter, letterPosition)
         }
 
@@ -93,23 +91,76 @@ class GeoJSONClassGenerator {
             letter: Char,
             letterPosition: Int
         ): JSONArray {
-            var aCharacter: Character = when (letter) {
-//                "a".single() -> {
-//                    LetterA()
-//                }
-//                "A".single() -> {
-//                    LetterA()
-//                }
-
+            val aCharacter: Character = when (letter) {
                 "-".single() -> {
                     CharDash(centerPoint, letterPosition)
                 }
-//                " ".single() -> {
-//                    CharSpace()
-//                }
-//                "'".single() -> {
-//                    CharTalkingMark()
-//                }
+                "a".single() -> {
+                    LetterA(centerPoint, letterPosition)
+                }
+                "A".single() -> {
+                    LetterA(centerPoint, letterPosition)
+                }
+                "e".single() -> {
+                    LetterE(centerPoint, letterPosition)
+                }
+                "E".single() -> {
+                    LetterE(centerPoint, letterPosition)
+                }
+                "g".single() -> {
+                    LetterG(centerPoint, letterPosition)
+                }
+                "G".single() -> {
+                    LetterG(centerPoint, letterPosition)
+                }
+                "i".single() -> {
+                    LetterI(centerPoint, letterPosition)
+                }
+                "I".single() -> {
+                    LetterI(centerPoint, letterPosition)
+                }
+                "k".single() -> {
+                    LetterK(centerPoint, letterPosition)
+                }
+                "K".single() -> {
+                    LetterK(centerPoint, letterPosition)
+                }
+                "m".single() -> {
+                    LetterM(centerPoint, letterPosition)
+                }
+                "M".single() -> {
+                    LetterM(centerPoint, letterPosition)
+                }
+                "n".single() -> {
+                    LetterN(centerPoint, letterPosition)
+                }
+                "N".single() -> {
+                    LetterN(centerPoint, letterPosition)
+                }
+                "o".single() -> {
+                    LetterO(centerPoint, letterPosition)
+                }
+                "O".single() -> {
+                    LetterO(centerPoint, letterPosition)
+                }
+                "r".single() -> {
+                    LetterR(centerPoint, letterPosition)
+                }
+                "R".single() -> {
+                    LetterR(centerPoint, letterPosition)
+                }
+                "t".single() -> {
+                    LetterT(centerPoint, letterPosition)
+                }
+                "T".single() -> {
+                    LetterT(centerPoint, letterPosition)
+                }
+                "u".single() -> {
+                    LetterU(centerPoint, letterPosition)
+                }
+                "U".single() -> {
+                    LetterU(centerPoint, letterPosition)
+                }
                 else -> {
                     Unknown(centerPoint, letterPosition)
                 }

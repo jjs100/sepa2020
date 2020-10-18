@@ -92,6 +92,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                     firstLocationResult = true
                 }
 
+
+
                 // adding KML layer to map
                 val layer = loadMapFile()
                 layer.addLayerToMap()
@@ -496,7 +498,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             Toast.makeText(this@MapsActivity, "Your current location hasn't loaded just yet, please try again in a moment", Toast.LENGTH_SHORT).show()
             return true
         }
-
         //Set custom zoom distance for current location button
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude),
             8F

@@ -4,11 +4,13 @@ import com.google.android.gms.maps.model.LatLng
 import org.json.JSONArray
 
 abstract class Character(centerPoint: LatLng, offset: Int) {
+    //Each character is a longLine in length and 2*longLine in height
     private val spacing: Double = 0.06
     val shortLine: Double = 0.02
     val longLine: Double = 0.04
     var jsonArrayParent: JSONArray = JSONArray()
     var jsonArrayChild: JSONArray = JSONArray()
+    var jsonArrayChild2: JSONArray = JSONArray()
     val startPointLat: Double = centerPoint.latitude
     val startPointLong: Double = centerPoint.longitude + offset * spacing
 
