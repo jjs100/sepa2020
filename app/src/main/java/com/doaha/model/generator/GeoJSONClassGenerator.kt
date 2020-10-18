@@ -67,7 +67,7 @@ class GeoJSONClassGenerator {
         ): JSONObject {
             var jsonObject: JSONObject = JSONObject()
             if (" ".single() != letter) {
-                if (nationName == "Tommeginne") {
+                if (nationName == "Bidwell") {
                     jsonObject.put("type", "Polygon")
                     jsonObject.put(
                         "coordinates",
@@ -101,6 +101,18 @@ class GeoJSONClassGenerator {
                 "A".single() -> {
                     LetterA(centerPoint, letterPosition)
                 }
+                "b".single() -> {
+                    LetterB(centerPoint, letterPosition)
+                }
+                "B".single() -> {
+                    LetterB(centerPoint, letterPosition)
+                }
+                "d".single() -> {
+                    LetterD(centerPoint, letterPosition)
+                }
+                "D".single() -> {
+                    LetterD(centerPoint, letterPosition)
+                }
                 "e".single() -> {
                     LetterE(centerPoint, letterPosition)
                 }
@@ -125,6 +137,12 @@ class GeoJSONClassGenerator {
                 "K".single() -> {
                     LetterK(centerPoint, letterPosition)
                 }
+                "l".single() -> {
+                    LetterL(centerPoint, letterPosition)
+                }
+                "L".single() -> {
+                    LetterL(centerPoint, letterPosition)
+                }
                 "m".single() -> {
                     LetterM(centerPoint, letterPosition)
                 }
@@ -143,6 +161,12 @@ class GeoJSONClassGenerator {
                 "O".single() -> {
                     LetterO(centerPoint, letterPosition)
                 }
+                "p".single() -> {
+                    LetterP(centerPoint, letterPosition)
+                }
+                "P".single() -> {
+                    LetterP(centerPoint, letterPosition)
+                }
                 "r".single() -> {
                     LetterR(centerPoint, letterPosition)
                 }
@@ -160,6 +184,18 @@ class GeoJSONClassGenerator {
                 }
                 "U".single() -> {
                     LetterU(centerPoint, letterPosition)
+                }
+                "w".single() -> {
+                    LetterW(centerPoint, letterPosition)
+                }
+                "W".single() -> {
+                    LetterW(centerPoint, letterPosition)
+                }
+                "y".single() -> {
+                    LetterY(centerPoint, letterPosition)
+                }
+                "Y".single() -> {
+                    LetterY(centerPoint, letterPosition)
                 }
                 else -> {
                     Unknown(centerPoint, letterPosition)

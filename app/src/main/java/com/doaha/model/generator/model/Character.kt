@@ -11,6 +11,8 @@ abstract class Character(centerPoint: LatLng, offset: Int) {
     var jsonArrayParent: JSONArray = JSONArray()
     var jsonArrayChild: JSONArray = JSONArray()
     var jsonArrayChild2: JSONArray = JSONArray()
+    var jsonArrayChild3: JSONArray = JSONArray()
+    var jsonArrayChild4: JSONArray = JSONArray()
     val startPointLat: Double = centerPoint.latitude
     val startPointLong: Double = centerPoint.longitude + offset * spacing
 
