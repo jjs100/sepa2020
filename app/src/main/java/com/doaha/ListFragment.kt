@@ -34,7 +34,7 @@ class ListFragment : Fragment() {
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
             //get name from maps activity
-            val name = MapsActivity.nation.name
+            val name = MapsActivity.Nation.name
             val nationData = getDocuments(name)
             nation_name.text = name
             //Gets data for list adaptor
