@@ -6,12 +6,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.os.Looper
+import android.os.HandlerThread
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -25,6 +26,8 @@ import androidx.core.content.ContextCompat
 import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
 import com.doaha.model.enum.MapStyle
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,6 +35,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
@@ -52,7 +56,7 @@ import java.net.URL
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
-    object nation {
+    object Nation {
         @JvmStatic var name = ""
     }
 
@@ -68,6 +72,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
     private val notificationID = 101
     private var activityVisible: Boolean = true
     private var firstLocationResult: Boolean = false
+    var layer: KmlLayer? = null
 
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
@@ -77,42 +82,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             if (locationList.isNotEmpty()) {
                 //The last location in the list is the newest
                 val location = locationList.last()
-                Log.i("MapsActivity", "Location: " + location.latitude + " " + location.longitude)
                 mLastLocation = location
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker?.remove()
                 }
                 // move map camera
                 val userLocation = LatLng(location.latitude, location.longitude)
-                if (firstLocationResult == false) {
+                if (!firstLocationResult) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 8F))
                     firstLocationResult = true
                 }
 
-                // adding KML layer to map
-                val layer = loadMapFile()
-                layer.addLayerToMap()
-                // Update Current Location Header
                 val camPos = mMap.cameraPosition.target
                 val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
                 val checkedCamPos = currentRegion(camPos, layer)
                 if (checkedCamPos != null) {
                     mapHeaderTextView.text = checkedCamPos
-                }
-
-                val checkedUserLocation = currentRegion(userLocation, layer)
-                if (checkedUserLocation != null) {
-                    //to use user's current location rather than the viewed location
-                    //val checkedRegion : String = checkedUserLocation
-                    val checkedRegion : String = checkedCamPos.toString()
                     //pull acknowledgement from database
                     val mapAckTextView: TextView = findViewById(R.id.textViewMapAck)
                     val docRef = FirebaseFirestore.getInstance().collection(
                         "zones"
-                    ).document(checkedRegion)
+                    ).document(checkedCamPos)
 
-                    GlobalScope.launch(Dispatchers.Main) {
-                        //delay(1000L)
+                    GlobalScope.launch(Dispatchers.IO) {
                         val region = docRef.get().await()
                         if (region.getString("Acknowledgements") != "") {
                             if(region.getString("Acknowledgements") != null) {
@@ -126,31 +118,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
-
-                    //if header is clicked, acknowledgement TextView appears/disappears
-                    val headerObject : RelativeLayout = findViewById(R.id.mapHeaderRel)
-                    headerObject.setOnClickListener {
-                        if(mapAckTextView.visibility == View.GONE){
+                    mapHeaderTextView.setOnClickListener {
+                        if (mapAckTextView.visibility == View.GONE) {
                             mapAckTextView.visibility = View.VISIBLE
-                        }
-                        else{
+                        } else {
                             mapAckTextView.visibility = View.GONE
                         }
                     }
 
                     if (!activityVisible) {
-                        sendNotification(checkedRegion)
+                        sendNotification(checkedCamPos)
                     }
                 }
-                //we need to add and remove the layer for use in this function so polygons don't get drawn continuously
-                layer.removeLayerFromMap()
-
-
             }
         }
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // set up app view
@@ -166,10 +148,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
         // Initialize the AutocompleteSupportFragment and Places
         Places.initialize(applicationContext, getString(R.string.google_maps_auto_complete_key))
-
         //val pC: PlacesClient = Places.createClient(applicationContext)
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
-
         // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(listOf(Place.Field.NAME, Place.Field.LAT_LNG))
 
@@ -220,6 +200,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                 toolTip.background.alpha = 180
             }
         }
+
+        showLocationPrompt()
     }
 
 
@@ -252,27 +234,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             Log.e(TAG, "Can't find style. Error: ", e)
         }
 
-        // Set map bounds to australia and show aus map
-        val australiaBounds = LatLngBounds(
-            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
-        )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 1))
-
         // set kml layer and map settings
-        val layer = KmlLayer(mMap, R.raw.proto, applicationContext)
-        layer.addLayerToMap()
+        layer = loadMapFile()
+        layer!!.addLayerToMap()
         with(mMap.uiSettings){
             //Enable RHS zoom controls for debug
             this.isZoomControlsEnabled = true
             //Enable gesture zoom controls
             this.isZoomGesturesEnabled = true
         }
-
+        //start a handler thread for looper
+        HandlerThread("Location").start()
 	    mLocationRequest = LocationRequest()
         // In Milliseconds
-        mLocationRequest.interval = 2000
-        mLocationRequest.fastestInterval = 2000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
+        mLocationRequest.interval = 5000
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
         // check/request app permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -285,7 +261,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                 mFusedLocationClient?.requestLocationUpdates(
                     mLocationRequest,
                     mLocationCallback,
-                    Looper.myLooper()
+                    HandlerThread("Location").looper
                 )
                 mMap.isMyLocationEnabled = true
                 mMap.setOnMyLocationButtonClickListener(this)
@@ -297,18 +273,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             mFusedLocationClient?.requestLocationUpdates(
                 mLocationRequest,
                 mLocationCallback,
-                Looper.myLooper()
+                HandlerThread("Location").looper
             )
             mMap.isMyLocationEnabled = true
             mMap.setOnMyLocationButtonClickListener(this)
         }
         // sends user to nation information page
-	    layer.setOnFeatureClickListener {
+	    layer!!.setOnFeatureClickListener {
             val intent = Intent(this, MainListActivity::class.java)
             val locName = it.getProperty("name")
-            nation.name = locName
-            val t = Toast.makeText(this@MapsActivity, "this is $locName", Toast.LENGTH_SHORT)
-            t.show()
+            Nation.name = locName
             startActivity(intent)
         }
     }
@@ -367,7 +341,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                         mFusedLocationClient?.requestLocationUpdates(
                             mLocationRequest,
                             mLocationCallback,
-                            Looper.myLooper()
+                            HandlerThread("Location").looper
                         )
                     }
                 } else {
@@ -379,7 +353,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         }
     }
 
-    fun loadMapFile(): KmlLayer {
+    private fun loadMapFile(): KmlLayer {
         if ((this.application as DoAHAApplication).getXmlImportType(
                 getSharedPreferences(
                     getString(R.string.preference_file_key),
@@ -466,8 +440,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         }
     }
 
-    private fun currentRegion(location: LatLng, layer: KmlLayer): String? {
-        val kmlContainerList: MutableIterable<KmlContainer>? = layer.containers
+    private fun currentRegion(location: LatLng, layer: KmlLayer?): String? {
+        val kmlContainerList: MutableIterable<KmlContainer>? = layer?.containers
         val aSuperPolygon: MutableList<LatLng> = mutableListOf()
         if (kmlContainerList != null) {
             for (aKmlContainer in kmlContainerList) {
@@ -523,5 +497,47 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
+    }
+
+    private fun showLocationPrompt() {
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+
+        val client: SettingsClient = LocationServices.getSettingsClient(this)
+        val result: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
+
+        result.addOnCompleteListener { task ->
+            try {
+                val response = task.getResult(ApiException::class.java)
+                // All location settings are satisfied. The client can initialize location
+                // requests here.
+            } catch (exception: ApiException) {
+                when (exception.statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                        try {
+                            // Cast to a resolvable exception.
+                            val resolvable: ResolvableApiException = exception as ResolvableApiException
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            resolvable.startResolutionForResult(
+                                this@MapsActivity, LocationRequest.PRIORITY_HIGH_ACCURACY
+                            )
+                        } catch (e: IntentSender.SendIntentException) {
+                            // Ignore the error.
+                        } catch (e: ClassCastException) {
+                            // Ignore, should be an impossible error.
+                        }
+                    }
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                        // Location settings are not satisfied. But could be fixed by showing the
+                        // user a dialog.
+
+                        // Location settings are not satisfied. However, we have no way to fix the
+                        // settings so we won't show the dialog.
+                    }
+                }
+            }
+        }
     }
 }
