@@ -19,18 +19,12 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AdminLogin : AppCompatActivity(){
     private val RC_SIGN_IN = 9001
-    //private var mGoogleSignInClient: GoogleSignInClient? = null
 
     //Creation of Google sign-in object and add options
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_login)
         createSignIn()
-/*        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            //.requestIdToken(getString(R.string.google_maps_key))
-            .requestEmail()
-            .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);*/
     }
 
     private fun createSignIn(){
@@ -45,6 +39,7 @@ class AdminLogin : AppCompatActivity(){
                 .build(),
             RC_SIGN_IN
         )
+        println("TEST3")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
@@ -75,44 +70,4 @@ class AdminLogin : AppCompatActivity(){
             }
         }
     }
-
-    //Link sign-in object and create on-click listener, once clicked launching google sign-in flow
-    /*public override fun onStart() {
-        super.onStart()
-        val mGmailSignIn = findViewById<SignInButton>(R.id.sign_in_button)
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        mGmailSignIn.setOnClickListener {
-            signIn()
-        }
-    }
-
-    //Verification of authenticated user
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data))
-        }
-    }
-
-    //Verify user that is signed in
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        val t = Toast.makeText(this, "Log in failed: Permission Denied", Toast.LENGTH_LONG)
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            val idToken = account!!.idToken
-            if (completedTask.result!!.email == getString(R.string.admin_email)) {
-                // go to admin page
-                startActivity(Intent(this, AdminPage::class.java))
-            } else {
-                t.show()
-            }
-        } catch (e: ApiException) {
-            t.show()
-        }
-    }
-
-    //Google sign flow
-    private fun signIn() {
-        startActivityForResult(mGoogleSignInClient!!.signInIntent, RC_SIGN_IN)
-    }*/
 }
