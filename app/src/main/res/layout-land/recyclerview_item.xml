@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.doaha.ExpandableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/expand_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/toprecycler2">
+        android:background="@drawable/toprecyclerlandscape">
 
         <TextView
             android:id="@+id/mainTitle"
@@ -35,9 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/titleLayout"
         android:background="@color/colorExpandableBox"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:visibility="visible">
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/subItem"
             android:layout_width="match_parent"
@@ -46,7 +43,6 @@
             android:padding="5dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
-
 
     </LinearLayout>
 </com.doaha.ExpandableLayout>

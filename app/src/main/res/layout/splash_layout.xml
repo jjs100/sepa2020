@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorPrimaryDark"
@@ -10,57 +11,116 @@
 
     <TextView
         android:id="@+id/splashMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="391dp"
+        android:layout_height="82dp"
         android:fontFamily="@font/source_code_pro_medium"
         android:text="@string/splash_disclaimer_deceased"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/textbox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_border"
         android:layout_marginHorizontal="8dp"
-        android:orientation="vertical">
+        android:background="@drawable/rounded_border"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashMessage">
 
         <TextView
             android:id="@+id/splashDisclaimerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_disclaimer"
             android:fontFamily="@font/source_code_pro_medium"
-            android:textSize="12sp"
-            android:textColor="@color/colorText"
             android:paddingHorizontal="12dp"
-            android:paddingTop="8dp"/>
+            android:paddingTop="8dp"
+            android:text="@string/title_disclaimer"
+            android:textColor="@color/colorText"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="@id/textbox"
+            app:layout_constraintStart_toStartOf="@id/textbox"
+            app:layout_constraintEnd_toEndOf="@id/textbox"
+            tools:layout_editor_absoluteX="6dp" />
 
         <TextView
             android:id="@+id/splashDisclaimerBorders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/source_code_pro_medium"
-            android:text="@string/splash_disclaimer_borders"
-            android:textColor="@color/colorTextAddit"
             android:paddingHorizontal="12dp"
             android:paddingBottom="8dp"
-            android:textSize="12sp" />
-    </LinearLayout>
+            android:text="@string/splash_disclaimer_borders"
+            android:textColor="@color/colorTextAddit"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/splashDisclaimerTitle" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="378dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/buffer_text"
-        android:src="@drawable/map" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textbox">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="317dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/buffer_text"
+            android:src="@drawable/map"
+            />
+
+        <TextView
+            android:id = "@+id/randccontent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border_yellow"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="8dp"
+            android:textColor="@color/colorTextAccent"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/source_code_pro_medium"
+            android:text="@string/resources_credits_content"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id = "@+id/randc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resource_credits"
+            android:textColor="@color/colorText"
+            android:fontFamily="@font/source_code_pro_medium"
+            android:layout_alignBottom="@id/imageView"
+            android:padding="15dp"
+            android:textSize="12sp"
+            />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/StartButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorText"
-        android:text="@string/button_start" />
+        android:text="@string/button_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:layout_editor_absoluteX="-16dp" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

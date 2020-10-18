@@ -14,11 +14,10 @@ import android.os.Bundle
 import android.os.HandlerThread
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -51,7 +50,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
     object Nation {
         @JvmStatic var name = ""
@@ -104,9 +103,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                     GlobalScope.launch(Dispatchers.IO) {
                         val region = docRef.get().await()
                         if (region.getString("Acknowledgements") != "") {
-                            mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                "Acknowledgements"
-                            )
+                            if(region.getString("Acknowledgements") != null) {
+                                mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                    "Acknowledgements"
+                                )
+                            }
+                            //no else here as the second if is a catch for slow-updating from firebase.
+                            //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
                         } else {
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
@@ -163,14 +166,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
             }
         })
 
-        //allow user to hide tooltip
+        //determine if user has seen tooltip before, show if untrue
         val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        val check : Boolean = (this.application as DoAHAApplication).checkStatefulToolTip(
+            getSharedPreferences(getString(R.string.toolTip_used), Context.MODE_PRIVATE)
+        )
+        if (check){
+            toolTip.background.alpha = 180
+            toolTip.visibility = View.VISIBLE
+
+        }
+        //default visibility is gone in xml, no else needed
+
+        //allow user to hide tooltip
         toolTip.setOnClickListener {
             if(toolTip.visibility == View.VISIBLE) {
                 toolTip.visibility = View.GONE
             }
         }
+
+        //tooltip button toggle
+        val ttButton : Button = findViewById(R.id.ttButton)
+        ttButton.setOnClickListener{
+            if(toolTip.visibility == View.VISIBLE) {
+                toolTip.visibility = View.GONE
+            }
+            else{
+                toolTip.visibility = View.VISIBLE
+                toolTip.background.alpha = 180
+            }
+        }
     }
+
+
 
     public override fun onPause() {
         super.onPause()
@@ -185,6 +213,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
     override fun onMapReady(googleMap: GoogleMap) {
         // sets map variable
         mMap = googleMap
+        mMap.setOnMapLoadedCallback(this)
         // applies custom map style json
         try {
             val success = mMap.setMapStyle(
@@ -454,5 +483,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+    }
+
+    override fun onMapLoaded() {
+        // Set map bounds to australia and show aus map
+        val australiaBounds = LatLngBounds(
+            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
     }
 }

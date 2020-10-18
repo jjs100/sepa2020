@@ -88,6 +88,7 @@ class ListFragment : Fragment() {
                             infoAvailability = false
                         }
                     }
+                    tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
                     if (!welcomeAvailability && !ackAvailability && !infoAvailability) {
                         tempOut.add(Nation("", "No data available for this region"))
                     }
