@@ -13,4 +13,10 @@
         <item>18sp</item>
         <item>24sp</item>
     </array>
+    <array name="auto_size_tTip">
+        <item>8sp</item>
+        <item>10sp</item>
+        <item>12sp</item>
+        <item>16sp</item>
+    </array>
 </resources>
