@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <com.doaha.ExpandableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/expand_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -32,21 +29,35 @@
     <LinearLayout
         android:id="@+id/subItemLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="240dp"
         android:layout_below="@id/titleLayout"
         android:background="@color/colorExpandableBox"
         android:orientation="horizontal"
         android:padding="10dp"
         android:visibility="visible">
-        <TextView
-            android:id="@+id/subItem"
-            android:layout_width="match_parent"
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/source_code_pro"
-            android:padding="5dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:layout_gravity="center"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="5dp" />
 
 
     </LinearLayout>
+
 </com.doaha.ExpandableLayout>
