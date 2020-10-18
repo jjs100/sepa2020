@@ -39,7 +39,6 @@ class AdminLogin : AppCompatActivity(){
                 .build(),
             RC_SIGN_IN
         )
-        println("TEST3")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
