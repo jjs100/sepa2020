@@ -9,15 +9,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.content.SharedPreferences
-import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -41,7 +41,10 @@ import com.google.maps.android.PolyUtil
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
@@ -113,18 +116,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
                     GlobalScope.launch(Dispatchers.Main) {
                         //delay(1000L)
-                        val region = docRef.get().await()
-                        if (region.getString("Acknowledgements") != "") {
-                            if(region.getString("Acknowledgements") != null) {
-                                mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                    "Acknowledgements"
-                                )
+                        if (isNetworkConnected()) {
+                            val region = docRef.get().await()
+                            if (region.getString("Acknowledgements") != "") {
+                                if(region.getString("Acknowledgements") != null) {
+                                    mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                        "Acknowledgements"
+                                    )
+                                }
+                                //no else here as the second if is a catch for slow-updating from firebase.
+                                //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
+                            } else {
+                                mapAckTextView.text = getString(R.string.ack_unavailable)
                             }
-                            //no else here as the second if is a catch for slow-updating from firebase.
-                            //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
                         } else {
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
+
                     }
 
                     //if header is clicked, acknowledgement TextView appears/disappears
@@ -523,5 +531,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm: ConnectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected()
     }
 }
