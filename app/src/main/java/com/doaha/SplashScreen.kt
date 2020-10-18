@@ -59,7 +59,6 @@ class SplashScreen : AppCompatActivity() {
             when (action) {
                 MotionEvent.ACTION_DOWN -> actionValue++
             }
-            Log.d("Action Value: ", "$actionValue")
             if (actionValue == 20) {
                 actionValue = 0
                 startActivity(Intent(this, AdminLogin::class.java))
