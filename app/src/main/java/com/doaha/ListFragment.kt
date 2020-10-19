@@ -37,7 +37,7 @@ class ListFragment : Fragment() {
             val name = MapsActivity.Nation.name
             val nationData = getDocuments(name)
             nation_name.text = name
-            //Gets data for list adaptor
+            //Gets data for list adapter
             adapter = ListAdapter(nationData)
             this.setHasFixedSize(true)
         }
