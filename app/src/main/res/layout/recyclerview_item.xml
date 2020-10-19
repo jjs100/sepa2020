@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="53dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/toprecycler2">
 
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:fontFamily="@font/convergence"
-            android:gravity="start"
+            android:gravity="start|center_vertical"
             android:padding="15dp"
             android:textColor="@color/colorText"
             android:textSize="20sp" />
