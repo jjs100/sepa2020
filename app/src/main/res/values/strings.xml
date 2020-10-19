@@ -6,7 +6,7 @@
     <string name="title_disclaimer">Disclaimer:</string>
     <string name="splash_disclaimer_deceased">"Aboriginal and Torres Strait Islander viewers are advised that this application may contain names and images of people who have since passed away."</string>
     <string name="splash_disclaimer_borders">Borders are not indicative of exact regions due to their transient nature, and are not suitable for native title and other land claims. Names and regions per \'Aboriginal Australia Wall Map\', D R Horton, Aboriginal Studies Press, AIATSIS, 1996. For more specific regional information, please contact the relevant land councils.</string>
-    <string name="tool_tip">Tap a region for more information!</string>
+    <string name="tool_tip">Tap a region \nfor more \ninformation!</string>
     <string name="button_start">Start!</string>
     <string name="buffer_text">…</string>
     <string name="ack_unavailable">Acknowledgements Unavailable</string>

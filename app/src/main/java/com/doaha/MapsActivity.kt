@@ -18,6 +18,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -96,6 +97,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
                 val camPos = mMap.cameraPosition.target
                 val mapHeaderTextView: TextView = findViewById(R.id.textViewMapHeader)
+                val mapHeaderRel: RelativeLayout = findViewById(R.id.mapHeaderRel)
                 val checkedCamPos = currentRegion(camPos, layer)
                 if (checkedCamPos != null) {
                     mapHeaderTextView.text = checkedCamPos
@@ -119,7 +121,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
                             mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
                     }
-                    mapHeaderTextView.setOnClickListener {
+                    mapHeaderRel.setOnClickListener {
                         if (mapAckTextView.visibility == View.GONE) {
                             mapAckTextView.visibility = View.VISIBLE
                         } else {
@@ -172,7 +174,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         })
 
         //determine if user has seen tooltip before, show if untrue
-        val toolTip : LinearLayout = findViewById(R.id.toolTip)
+        val toolTip : ConstraintLayout = findViewById(R.id.toolTip)
         val check : Boolean = (this.application as DoAHAApplication).checkStatefulToolTip(
             getSharedPreferences(getString(R.string.toolTip_used), Context.MODE_PRIVATE)
         )

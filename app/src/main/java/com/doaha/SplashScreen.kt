@@ -7,9 +7,10 @@ import android.content.Intent
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM
+import androidx.core.widget.TextViewCompat.setAutoSizeTextTypeWithDefaults
 
 
 class SplashScreen : AppCompatActivity() {

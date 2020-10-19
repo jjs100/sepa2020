@@ -6,21 +6,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorPrimaryDark"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
 
     <TextView
         android:id="@+id/splashMessage"
-        android:layout_width="391dp"
-        android:layout_height="82dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:background="@drawable/rounded_border"
         android:fontFamily="@font/source_code_pro_medium"
         android:text="@string/splash_disclaimer_deceased"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorText"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +32,7 @@
         android:id="@+id/textbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_margin="8dp"
         android:background="@drawable/rounded_border"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,56 +66,65 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/splashDisclaimerTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/splashDisclaimerTitle"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relSplashImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textbox">
+        app:layout_constraintTop_toBottomOf="@id/textbox"
+        app:layout_constraintBottom_toTopOf="@id/randc">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="317dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:contentDescription="@string/buffer_text"
-            android:src="@drawable/map"
+            android:src="@drawable/potential_logo_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:scaleType="centerInside"
             />
 
         <TextView
             android:id = "@+id/randccontent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/rounded_border_yellow"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="8dp"
             android:textColor="@color/colorTextAccent"
             android:paddingHorizontal="12dp"
             android:paddingVertical="8dp"
-            android:textSize="12sp"
+            android:layout_marginVertical="8dp"
             android:fontFamily="@font/source_code_pro_medium"
             android:text="@string/resources_credits_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:autoSizeTextType="uniform"
+            app:autoSizePresetSizes="@array/auto_size_text_sizes"
             android:visibility="gone"
             />
 
-        <TextView
-            android:id = "@+id/randc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/resource_credits"
-            android:textColor="@color/colorText"
-            android:fontFamily="@font/source_code_pro_medium"
-            android:layout_alignBottom="@id/imageView"
-            android:padding="15dp"
-            android:textSize="12sp"
-            />
-    </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id = "@+id/randc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/resource_credits"
+        android:textColor="@color/colorText"
+        android:fontFamily="@font/source_code_pro_medium"
+        android:padding="15dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/StartButton"
+        />
 
     <Button
         android:id="@+id/StartButton"
@@ -120,7 +133,6 @@
         android:background="@color/colorText"
         android:text="@string/button_start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:layout_editor_absoluteX="-16dp" />
+        tools:layout_editor_absoluteX="-16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
