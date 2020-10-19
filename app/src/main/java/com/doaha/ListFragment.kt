@@ -89,7 +89,7 @@ class ListFragment : Fragment() {
                             infoAvailability = false
                         }
                     }
-                    val imageText = document.getString("Image")
+                    val imageText = document.getString("img1")
                     if (imageText != null) {
                         tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
                         imageAvailability = true
