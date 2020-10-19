@@ -67,13 +67,13 @@ class GeoJSONClassGenerator {
         ): JSONObject {
             var jsonObject: JSONObject = JSONObject()
             if (" ".single() != letter) {
-                if (nationName == "Marramaninjsji") {
-                    jsonObject.put("type", "Polygon")
-                    jsonObject.put(
-                        "coordinates",
-                        createJSONCoordinatesObject(centerPoint, letter, letterPosition)
-                    )
-                }
+
+                jsonObject.put("type", "Polygon")
+                jsonObject.put(
+                    "coordinates",
+                    createJSONCoordinatesObject(centerPoint, letter, letterPosition)
+                )
+
             }
             return jsonObject
         }
@@ -94,6 +94,9 @@ class GeoJSONClassGenerator {
             val aCharacter: Character = when (letter) {
                 "-".single() -> {
                     CharDash(centerPoint, letterPosition)
+                }
+                "'".single() -> {
+                    CharTalkingMark(centerPoint, letterPosition)
                 }
                 "a".single() -> {
                     LetterA(centerPoint, letterPosition)
@@ -125,11 +128,23 @@ class GeoJSONClassGenerator {
                 "G".single() -> {
                     LetterG(centerPoint, letterPosition)
                 }
+                "h".single() -> {
+                    LetterH(centerPoint, letterPosition)
+                }
+                "H".single() -> {
+                    LetterH(centerPoint, letterPosition)
+                }
                 "i".single() -> {
                     LetterI(centerPoint, letterPosition)
                 }
                 "I".single() -> {
                     LetterI(centerPoint, letterPosition)
+                }
+                "j".single() -> {
+                    LetterJ(centerPoint, letterPosition)
+                }
+                "J".single() -> {
+                    LetterJ(centerPoint, letterPosition)
                 }
                 "k".single() -> {
                     LetterK(centerPoint, letterPosition)

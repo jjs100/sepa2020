@@ -246,8 +246,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         }
 
         // Create nation name polygon layer
-        val layer2 = GeoJsonLayer(mMap, GeoJSONClassGenerator.create(layer!!))
-        layer2.addLayerToMap()
+        if ((this.application as DoAHAApplication).getIsNationLabelEnabled(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE))) {
+            GeoJsonLayer(mMap, GeoJSONClassGenerator.create(layer!!)).addLayerToMap()
+        }
 
         //start a handler thread for looper
         HandlerThread("Location").start()
@@ -286,10 +287,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         }
         // sends user to nation information page
 	    layer!!.setOnFeatureClickListener {
-            val intent = Intent(this, MainListActivity::class.java)
-            val locName = it.getProperty("name")
-            Nation.name = locName
-            startActivity(intent)
+            //Check if user has selected nation name overlay, if so ignore
+            if(it != null) {
+                val locName = it.getProperty("name")
+                Nation.name = locName
+                startActivity(Intent(this, MainListActivity::class.java))
+            }
         }
     }
 

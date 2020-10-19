@@ -5,9 +5,9 @@ import org.json.JSONArray
 
 abstract class Character(centerPoint: LatLng, offset: Int) {
     //Each character is a longLine in length and 2*longLine in height
-    private val spacing: Double = 0.06
-    val shortLine: Double = 0.02
-    val longLine: Double = 0.04
+    private val spacing: Double = 0.024
+    val shortLine: Double = 0.008
+    val longLine: Double = 0.016
     var jsonArrayParent: JSONArray = JSONArray()
     var jsonArrayChild: JSONArray = JSONArray()
     var jsonArrayChild2: JSONArray = JSONArray()
