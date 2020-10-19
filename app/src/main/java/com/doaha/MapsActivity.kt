@@ -56,7 +56,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, GoogleMap.OnMyLocationButtonClickListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     //data storage to pass name without intents
     object Nation {
         @JvmStatic var name = ""
@@ -222,7 +222,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
     override fun onMapReady(googleMap: GoogleMap) {
         // sets map variable
         mMap = googleMap
-        mMap.setOnMapLoadedCallback(this)
         // applies custom map style json
         try {
             val success = mMap.setMapStyle(
@@ -499,14 +498,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
-    }
-
-    override fun onMapLoaded() {
-        // Set map bounds to australia and show aus map
-        val australiaBounds = LatLngBounds(
-            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
-        )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
     }
 
     private fun showLocationPrompt() {
