@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.content.SharedPreferences
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -26,6 +25,7 @@ import androidx.core.content.ContextCompat
 import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
 import com.doaha.model.enum.MapStyle
+import com.doaha.model.generator.GeoJSONClassGenerator
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.common.api.Status
@@ -42,6 +42,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.PolyUtil
+import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
@@ -243,6 +244,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             //Enable gesture zoom controls
             this.isZoomGesturesEnabled = true
         }
+
+        // Create nation name polygon layer
+        if ((this.application as DoAHAApplication).getIsNationLabelEnabled(getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE))) {
+            GeoJsonLayer(mMap, GeoJSONClassGenerator.create(layer!!)).addLayerToMap()
+        }
+
         //start a handler thread for looper
         HandlerThread("Location").start()
 	    mLocationRequest = LocationRequest()
@@ -280,10 +287,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
         }
         // sends user to nation information page
 	    layer!!.setOnFeatureClickListener {
-            val intent = Intent(this, MainListActivity::class.java)
-            val locName = it.getProperty("name")
-            Nation.name = locName
-            startActivity(intent)
+            //Check if user has selected nation name overlay, if so ignore
+            if(it != null) {
+                val locName = it.getProperty("name")
+                Nation.name = locName
+                startActivity(Intent(this, MainListActivity::class.java))
+            }
         }
     }
 
@@ -469,7 +478,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
             Toast.makeText(this@MapsActivity, "Your current location hasn't loaded just yet, please try again in a moment", Toast.LENGTH_SHORT).show()
             return true
         }
-
         //Set custom zoom distance for current location button
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLastLocation!!.latitude, mLastLocation!!.longitude),
             8F

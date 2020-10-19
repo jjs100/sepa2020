@@ -31,10 +31,25 @@ class AdminPage : AppCompatActivity() {
         //Create Radio Group
         loadRadioGroupConfig(findViewById(R.id.mapStyleSelection))
 
+        //Create Nation Label Button Switch
+        loadNationLabelButtonConfig(findViewById(R.id.nationLabelToggle))
+
         //Creating variable for floating button to add new documents
         val buttonRecycler = findViewById<Button>(R.id.docButton)
         buttonRecycler.setOnClickListener {
             startActivity(Intent(this, AdminRecycler::class.java))
+        }
+    }
+
+    private fun loadNationLabelButtonConfig(nationLabelButton: Switch) {
+        nationLabelButton.isChecked =
+            (this.application as DoAHAApplication).getIsNationLabelEnabled(getSharedPreferences())
+
+        nationLabelButton.setOnClickListener {
+            (this.application as DoAHAApplication).setIsNationLabelEnabled(
+                getSharedPreferences(),
+                !(this.application as DoAHAApplication).getIsNationLabelEnabled(getSharedPreferences())
+            )
         }
     }
 
