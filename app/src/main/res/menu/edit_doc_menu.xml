@@ -7,6 +7,11 @@
         android:title="@string/button_delete"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/images"
+        android:icon="@drawable/ic_baseline_image_24"
+        android:title="@string/images"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/saveDoc"
         android:icon="@drawable/ic_save"
         android:title="@string/button_save"

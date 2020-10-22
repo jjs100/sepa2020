@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".AdminImageActivity">
+
+
+        <ImageView
+            android:id="@+id/img1View"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="75dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/image_1" />
+
+        <ImageView
+            android:id="@+id/img2View"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img1View"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/image_2" />
+
+        <ImageView
+            android:id="@+id/img3View"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img2View"
+            tools:srcCompat="@tools:sample/avatars"
+            android:contentDescription="@string/image_3"/>
+
+    <TextView
+        android:id="@+id/img1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="75dp"
+        android:textSize="13sp"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/colorText"
+        app:layout_constraintStart_toEndOf="@+id/img1View"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/img2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="175dp"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/colorText"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/img2View"
+        app:layout_constraintTop_toBottomOf="@+id/img1Text" />
+
+    <TextView
+        android:id="@+id/img3Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="175dp"
+        android:fontFamily="@font/convergence"
+        android:textColor="@color/colorText"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/img3View"
+        app:layout_constraintTop_toBottomOf="@+id/img2Text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

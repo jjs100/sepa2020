@@ -20,7 +20,7 @@
             android:layout_alignParentStart="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="ID: "
+            android:text="@string/id"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorText" />
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textID"
             android:layout_alignParentStart="true"
-            android:text="Welcome: "
+            android:text="@string/welcome"
             android:textColor="@color/colorText" />
 
         <TextView
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textWelcome"
             android:layout_alignParentStart="true"
-            android:text="Acknowledgements: "
+            android:text="@string/acknowledgements"
             android:textColor="@color/colorText" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textAck"
             android:layout_alignParentStart="true"
-            android:text="Information: "
+            android:text="@string/information"
             android:textColor="@color/colorText" />
 
         <TextView

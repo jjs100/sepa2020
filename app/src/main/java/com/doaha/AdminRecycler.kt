@@ -76,15 +76,13 @@ class AdminRecycler : AppCompatActivity(),DocAdapter.OnNoteItemClickListener {
         val intent = Intent(this, EditDocActivity::class.java)
 
         //uses the intent for the EditDocActivity to attach the text displayed in the cardview so it can be viewed/edited in the next activity
-        val docID : String? = documentSnapshot.getString("itemID")
-        val docWelcome : String? = documentSnapshot.getString("Welcome")
-        val docAck : String? = documentSnapshot.getString("Acknowledgements")
-        val docInfo : String? = documentSnapshot.getString("Info")
-
-        intent.putExtra("ID", docID)
-        intent.putExtra("WELCOME", docWelcome)
-        intent.putExtra("ACK", docAck)
-        intent.putExtra("INFO", docInfo)
+        intent.putExtra("ID", documentSnapshot.getString("itemID"))
+        intent.putExtra("WELCOME", documentSnapshot.getString("Welcome"))
+        intent.putExtra("ACK", documentSnapshot.getString("Acknowledgements"))
+        intent.putExtra("INFO", documentSnapshot.getString("Info"))
+        intent.putExtra("IMG1",  documentSnapshot.getString("img1"))
+        intent.putExtra("IMG2", documentSnapshot.getString("img2"))
+        intent.putExtra("IMG3", documentSnapshot.getString("img3"))
 
         //starts activity with intent and the documents information
         startActivity(intent)
@@ -96,7 +94,6 @@ class AdminRecycler : AppCompatActivity(),DocAdapter.OnNoteItemClickListener {
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
                         Log.d("TAG","${document.getString("itemID")} => ${document.data}")
-
                         nationID.add(document.getString("itemID").toString())
                     }
                 }

@@ -1,6 +1,7 @@
 package com.doaha
 
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -39,18 +40,27 @@ class EditDocActivity : AppCompatActivity() {
                 finish()
                 true
             }
+            R.id.images -> {
+                val i = Intent(this, AdminImageActivity::class.java)
+                i.putExtra("IMG1", intent.getStringExtra("IMG1"))
+                i.putExtra("IMG2", intent.getStringExtra("IMG2"))
+                i.putExtra("IMG3", intent.getStringExtra("IMG3"))
+                i.putExtra("ID", intent.getStringExtra("ID"))
+                startActivity(i)
+                true
+            }
             R.id.deleteDoc -> {
                 val builder = AlertDialog.Builder(this)
                 builder.setMessage("Are you sure you want to delete this document?")
                     .setPositiveButton("Yes") { dialog, id ->
-                        colRef.document(intent.getStringExtra("ID")).delete()
+                        colRef.document(intent.getStringExtra("ID")!!.toString()).delete()
                         Toast.makeText(this, "Document Deleted", Toast.LENGTH_SHORT).show()
                         finish()
                     }
-                    .setNegativeButton("No",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            dialog.dismiss()
-                        })
+                    .setNegativeButton("No"
+                    ) { dialog, id ->
+                        dialog.dismiss()
+                    }
                 // Create the AlertDialog object and return it
                 val dialog = builder.create()
                 dialog.show()
@@ -75,13 +85,12 @@ class EditDocActivity : AppCompatActivity() {
             "Info" to info
         )
 
-        //document reference to database which is used to overwrite document to Firestore using hashmap of data
-
+        //document reference to database which is used to overwrite document to Firestore using HashMap of data
         colRef.document(id).set(newDoc)
 
         //simple check that if the itemID was changed, it creates a new document using the new ID whilst deleting the old document with the old ID
         if (id!=intent.getStringExtra("ID")){
-            colRef.document(intent.getStringExtra("ID")).delete()
+            colRef.document(intent.getStringExtra("ID")!!.toString()).delete()
             Toast.makeText(this, "Document Overwritten", Toast.LENGTH_SHORT).show()
         } else{
             Toast.makeText(this, "Document edited", Toast.LENGTH_SHORT).show()

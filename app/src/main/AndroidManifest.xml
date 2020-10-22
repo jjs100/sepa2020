@@ -19,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -48,18 +49,25 @@
             android:name=".AdminSearchResult"
             android:parentActivityName=".AdminRecycler" />
         <activity
-        android:name=".EditDocActivity"
-            android:theme="@style/AdminTheme"
-        android:parentActivityName=".AdminRecycler" />
+            android:name=".EditDocActivity"
+            android:parentActivityName=".AdminRecycler"
+            android:theme="@style/AdminTheme" />
         <activity
             android:name=".NewDocActivity"
+            android:parentActivityName=".AdminRecycler"
+            android:theme="@style/AdminTheme" />
+        <activity
+            android:name=".AdminModifyImageActivity"
             android:theme="@style/AdminTheme"
-            android:parentActivityName=".AdminRecycler" />
+            android:parentActivityName=".AdminImageActivity" />
+        <activity
+            android:name=".UploadImageActivity"
+            android:parentActivityName=".AdminImageActivity" />
+        <activity android:name=".AdminImageActivity" />
         <activity android:name=".MapsActivity" />
         <activity android:name=".MainListActivity" />
         <activity android:name=".AdminLogin" />
-        <activity
-            android:name=".AdminPage"/>
+        <activity android:name=".AdminPage" />
     </application>
 
 </manifest>
