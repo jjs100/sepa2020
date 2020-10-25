@@ -118,7 +118,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                         if (isNetworkConnected(this@MapsActivity)) {
                             val region = docRef.get().await()
                             if (region.getString("Acknowledgements") != "") {
-                                if(region.getString("Acknowledgements") != null) {
+                                if (region.getString("Acknowledgements") != null) {
                                     mapAckTextView.text = "Acknowledgments: " + region.getString(
                                         "Acknowledgements"
                                     )
@@ -127,8 +127,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                                 //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
                             } else {
                                 mapAckTextView.text = getString(R.string.ack_unavailable)
+                            }
                         }
-
                     }
                     mapHeaderRel.setOnClickListener {
                         if (mapAckTextView.visibility == View.GONE) {
@@ -509,7 +509,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 
-    override fun onMapLoaded() {
+    fun onMapLoaded() {
         // Set map bounds to australia and show aus map
         val australiaBounds = LatLngBounds(
             LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
