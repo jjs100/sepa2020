@@ -14,13 +14,6 @@
         android:text="@string/title_notification_toggle"
         tools:checked="false" />
 
-    <Button
-        android:id="@+id/docButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/button_edit_db" />
-
     <Switch
         android:id="@+id/xmlLiveImportToggle"
         android:layout_width="match_parent"
@@ -30,7 +23,7 @@
     <RadioGroup
         android:id="@+id/mapStyleSelection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="109dp">
 
         <RadioButton
             android:id="@+id/standard"
@@ -50,5 +43,18 @@
             android:layout_height="wrap_content"
             android:text="@string/silver_style_poi" />
     </RadioGroup>
+
+    <Switch
+        android:id="@+id/nationLabelToggle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nation Label Toggle" />
+
+    <Button
+        android:id="@+id/docButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/button_edit_db" />
 
 </LinearLayout>

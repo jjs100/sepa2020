@@ -6,7 +6,7 @@
     <string name="title_disclaimer">Disclaimer:</string>
     <string name="splash_disclaimer_deceased">"Aboriginal and Torres Strait Islander viewers are advised that this application may contain names and images of people who have since passed away."</string>
     <string name="splash_disclaimer_borders">Borders are not indicative of exact regions due to their transient nature, and are not suitable for native title and other land claims. Names and regions per \'Aboriginal Australia Wall Map\', D R Horton, Aboriginal Studies Press, AIATSIS, 1996. For more specific regional information, please contact the relevant land councils.</string>
-    <string name="tool_tip">Tap a region for more information!</string>
+    <string name="tool_tip">Tap a region \nfor more \ninformation!</string>
     <string name="button_start">Start!</string>
     <string name="buffer_text">…</string>
     <string name="ack_unavailable">Acknowledgements Unavailable</string>
@@ -19,6 +19,7 @@
 
     <string name="preference_file_key">com.doaha.application.aPreferenceFile</string>
     <string name="notification_key">notificationsEnabled</string>
+    <string name="isNationLabelEnabled">isNationLabelEnabled</string>
     <string name="theRegionUserWasPreviouslyIn_key">theRegionUserWasPreviouslyIn</string>
     <string name="XmlImportType">XmlImportType</string>
     <string name="mapStyle">mapStyle</string>
@@ -38,5 +39,9 @@
     <string name="edit_nation_information">Nation Information:</string>
     <string name="toolTip_used">unused</string>
     <string name="resource_credits">Resources &amp; Credits</string>
-    <string name="resources_credits_content">Resources and credits: \n\nData - This applications\'s regional data -as cited above - has been sourced primarily from the Australian Institute for Aboriginal and Torres Strait Islander Studies(AIATSIS)(https://collection.aiatsis.gov.au/), as well as information available from Registered Aboriginal Parties online. \n\n Processes - The processes surrounding acknowledgments and sensitivities in this application have been influenced by AIATSIS(website above), Aboriginal Victoria(https://www.aboriginalvictoria.vic.gov.au/), and the United Nations declaration on the rights of indigenous peoples (https://www.un.org/development/desa/indigenouspeoples/declaration-on-the-rights-of-indigenous-peoples.html) \n\n Special Thanks from the developers go to Dr. Muneera Bano, Graham Farrell, Tom Molyneux, and Craig Molyneux, for their guidance and expertise.</string>
+    <string name="resources_credits_content">Resources and credits: \n\nData - This applications\'s regional data -as cited above - has been sourced primarily from the Australian Institute for Aboriginal and Torres Strait Islander Studies(AIATSIS)(https://collection.aiatsis.gov.au/), as well as information available from Registered Aboriginal Parties online. \n\n Processes - The processes surrounding acknowledgments and sensitivities in this application have been influenced by AIATSIS(website above), Aboriginal Victoria(https://www.aboriginalvictoria.vic.gov.au/), and the United Nations declaration on the rights of indigenous peoples (https://www.un.org/development/desa/indigenouspeoples/declaration-on-the-rights-of-indigenous-peoples.html) \n\n Special Thanks from the developers go to Dr. Muneera Bano, Graham Farrell, Tom Molyneux, and Craig Molyneux, Heather Fuhrer, for their guidance and expertise.</string>
+    <string name="searchHint">Search…</string>
+    <string name="search">Search</string>
+    <string name="add_document">Add Document</string>
+    <string name="go_back">Go Back</string>
 </resources>

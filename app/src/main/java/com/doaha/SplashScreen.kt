@@ -7,9 +7,10 @@ import android.content.Intent
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM
+import androidx.core.widget.TextViewCompat.setAutoSizeTextTypeWithDefaults
 
 
 class SplashScreen : AppCompatActivity() {
@@ -59,7 +60,6 @@ class SplashScreen : AppCompatActivity() {
             when (action) {
                 MotionEvent.ACTION_DOWN -> actionValue++
             }
-            Log.d("Action Value: ", "$actionValue")
             if (actionValue == 20) {
                 actionValue = 0
                 startActivity(Intent(this, AdminLogin::class.java))

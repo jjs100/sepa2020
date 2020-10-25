@@ -74,10 +74,9 @@ class ListAdapter(private var list: List<Nation>) : RecyclerView.Adapter<Recycle
                     }
                 }
             })
-            if (position != 0) {
-                itemView.expand_layout.setExpand(expandedPositionSet.contains(position))
+            if (position == 0) {
+                setCellExpanded(this)
             }
-            //setCellExpanded()
         }
     }
 

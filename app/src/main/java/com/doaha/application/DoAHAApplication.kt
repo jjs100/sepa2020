@@ -12,6 +12,7 @@ class DoAHAApplication : Application() {
     private var theRegionUserWasPreviouslyIn: String = ""
     private var xmlImportType: MapSource = MapSource.LOCAL
     private var mapStyle: MapStyle? = null
+    private var isNationLabelEnabled: Boolean = false
 
     fun getIsNotificationEnabled(sharedPref: SharedPreferences): Boolean {
         //Get saved value, and set to isNotificationEnabled if not found
@@ -105,5 +106,15 @@ class DoAHAApplication : Application() {
         } else{
             false
         }
+    }
+
+    fun setIsNationLabelEnabled(sharedPref: SharedPreferences, value: Boolean) {
+        saveStringValue(sharedPref, value.toString(), R.string.isNationLabelEnabled)
+        this.isNationLabelEnabled = value
+    }
+
+    fun getIsNationLabelEnabled(sharedPref: SharedPreferences): Boolean {
+        return getStringValue(sharedPref, R.string.isNationLabelEnabled).toBoolean()
+            ?: isNationLabelEnabled
     }
 }

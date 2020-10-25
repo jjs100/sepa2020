@@ -34,10 +34,10 @@ class ListFragment : Fragment() {
             list_recycler_view.addItemDecoration(divider)
             layoutManager = LinearLayoutManager(activity)
             //get name from maps activity
-            val name = MapsActivity.nation.name
+            val name = MapsActivity.Nation.name
             val nationData = getDocuments(name)
             nation_name.text = name
-            //Gets data for list adaptor
+            //Gets data for list adapter
             adapter = ListAdapter(nationData)
             this.setHasFixedSize(true)
         }
@@ -61,6 +61,7 @@ class ListFragment : Fragment() {
                     var welcomeAvailability = false
                     var ackAvailability = false
                     var infoAvailability = false
+                    var imageAvailability = false
                     val welcomeText = document.getString("Welcome")
                     if (welcomeText != null) {
                         if (!welcomeText.isEmpty()) {
@@ -88,8 +89,15 @@ class ListFragment : Fragment() {
                             infoAvailability = false
                         }
                     }
-                    tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
-                    if (!welcomeAvailability && !ackAvailability && !infoAvailability) {
+                    val imageText = document.getString("img1")
+                    if (imageText != null) {
+                        tempOut.add(Nation("Images", document.getString("img1"), document.getString("img2") , document.getString("img3"), 1))
+                        imageAvailability = true
+                    } else {
+                        imageAvailability = false
+                    }
+
+                    if (!welcomeAvailability && !ackAvailability && !infoAvailability && !imageAvailability) {
                         tempOut.add(Nation("", "No data available for this region"))
                     }
                     //Refreshes recycler view
