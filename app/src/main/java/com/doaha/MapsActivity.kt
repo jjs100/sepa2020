@@ -10,11 +10,14 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.location.Location
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.os.HandlerThread
 import android.util.Log
 import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
@@ -47,7 +50,10 @@ import com.google.maps.android.data.geojson.GeoJsonLayer
 import com.google.maps.android.data.kml.KmlContainer
 import com.google.maps.android.data.kml.KmlLayer
 import com.google.maps.android.data.kml.KmlPolygon
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
@@ -107,19 +113,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
                         "zones"
                     ).document(checkedCamPos)
 
-                    GlobalScope.launch(Dispatchers.IO) {
-                        val region = docRef.get().await()
-                        if (region.getString("Acknowledgements") != "") {
-                            if(region.getString("Acknowledgements") != null) {
-                                mapAckTextView.text = "Acknowledgments: " + region.getString(
-                                    "Acknowledgements"
-                                )
-                            }
-                            //no else here as the second if is a catch for slow-updating from firebase.
-                            //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
-                        } else {
-                            mapAckTextView.text = getString(R.string.ack_unavailable)
+                    GlobalScope.launch(Dispatchers.Main) {
+                        //delay(1000L)
+                        if (isNetworkConnected(this@MapsActivity)) {
+                            val region = docRef.get().await()
+                            if (region.getString("Acknowledgements") != "") {
+                                if(region.getString("Acknowledgements") != null) {
+                                    mapAckTextView.text = "Acknowledgments: " + region.getString(
+                                        "Acknowledgements"
+                                    )
+                                }
+                                //no else here as the second if is a catch for slow-updating from firebase.
+                                //-> Show's previous region ack until next is available(unless next doesn't exist, in which case, see below else)
+                            } else {
+                                mapAckTextView.text = getString(R.string.ack_unavailable)
                         }
+
                     }
                     mapHeaderRel.setOnClickListener {
                         if (mapAckTextView.visibility == View.GONE) {
@@ -500,6 +509,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLoca
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
     }
 
+    override fun onMapLoaded() {
+        // Set map bounds to australia and show aus map
+        val australiaBounds = LatLngBounds(
+            LatLng(-47.1, 110.4), LatLng(-8.6, 156.4)
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(australiaBounds, 0))
+    }
+
+
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                    Log.i("Internet","NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                }
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                    Log.i("Internet","NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                }
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                    Log.i("Internet","NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
+    }
+      
     private fun showLocationPrompt() {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
