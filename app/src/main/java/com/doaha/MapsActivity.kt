@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.location.Location
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
@@ -120,7 +121,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
 
                     GlobalScope.launch(Dispatchers.Main) {
                         //delay(1000L)
-                        if (isNetworkConnected()) {
+                        if (isNetworkConnected(this@MapsActivity)) {
                             val region = docRef.get().await()
                             if (region.getString("Acknowledgements") != "") {
                                 if(region.getString("Acknowledgements") != null) {
@@ -540,9 +541,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLoa
     }
 
 
-    private fun isNetworkConnected(): Boolean {
-        val cm: ConnectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected()
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                    Log.i("Internet","NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                }
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                    Log.i("Internet","NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                }
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                    Log.i("Internet","NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
       
     private fun showLocationPrompt() {
