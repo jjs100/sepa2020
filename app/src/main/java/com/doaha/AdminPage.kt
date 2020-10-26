@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Switch
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.doaha.application.DoAHAApplication
 import com.doaha.model.enum.MapSource
@@ -39,6 +40,11 @@ class AdminPage : AppCompatActivity() {
         buttonRecycler.setOnClickListener {
             startActivity(Intent(this, AdminRecycler::class.java))
         }
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        startActivity(Intent(this, SplashScreen::class.java))
     }
 
     private fun loadNationLabelButtonConfig(nationLabelButton: Switch) {
