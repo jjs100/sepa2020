@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
@@ -22,6 +23,7 @@ class AdminModifyImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_modify_image)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         val docID = intent.getStringExtra("ID")!!.toString()
         val imageField = intent.getStringExtra("Image Field")!!.toString()
         db.document(docID).get()
@@ -57,7 +59,7 @@ class AdminModifyImageActivity : AppCompatActivity() {
                     .setPositiveButton("Yes") { dialog, id ->
                         val docID = intent.getStringExtra("ID")!!.toString()
                         val imageField = intent.getStringExtra("Image Field")!!.toString()
-                        db.document(docID).update(imageField,"" )
+                        db.document(docID).update(imageField, FieldValue.delete())
                         val storagePath = "ZONEIMAGES/$docID/$imageField.png"
                         val storageRef = FirebaseStorage.getInstance().reference.child(storagePath)
                         storageRef.delete()

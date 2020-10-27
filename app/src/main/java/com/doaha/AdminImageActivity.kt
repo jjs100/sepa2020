@@ -3,6 +3,7 @@ package com.doaha
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_admin_image.*
@@ -11,8 +12,11 @@ class AdminImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_image)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         //displays images if they are available in database using intent from the last activity
+
+
         when (intent.getStringExtra("IMG1")){
             null, "" -> {
                 modifyImage(img1Text, "img1", false)

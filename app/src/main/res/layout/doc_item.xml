@@ -69,19 +69,53 @@
             android:textColor="#FFFFFF" />
 
         <TextView
-            android:id="@+id/textInfoTitle"
+            android:id="@+id/textHistoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textAck"
             android:layout_alignParentStart="true"
-            android:text="@string/information"
+            android:text="@string/History"
             android:textColor="@color/colorText" />
 
         <TextView
-            android:id="@+id/textInfo"
+            android:id="@+id/textHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textInfoTitle"
+            android:layout_below="@id/textHistoryTitle"
+            android:layout_alignParentStart="true"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textEldersTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/textHistory"
+            android:textColor="@color/colorText"
+            android:text="@string/elders" />
+
+        <TextView
+            android:id="@+id/textElders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textEldersTitle"
+            android:layout_alignParentStart="true"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textRAPTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/textElders"
+            android:textColor="@color/colorText"
+            android:text="@string/registered_aboriginal_party" />
+
+        <TextView
+            android:id="@+id/textRAP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textRAPTitle"
             android:layout_alignParentStart="true"
             android:textColor="#FFFFFF" />
 

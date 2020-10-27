@@ -18,6 +18,7 @@ class UploadImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_image)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         chooseButton.setOnClickListener{
             chooseImage()

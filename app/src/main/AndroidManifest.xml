@@ -44,7 +44,7 @@
         </activity>
         <activity
             android:name=".AdminRecycler"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"/>
         <activity
             android:name=".AdminSearchResult"
             android:parentActivityName=".AdminRecycler" />
@@ -62,8 +62,10 @@
             android:parentActivityName=".AdminImageActivity" />
         <activity
             android:name=".UploadImageActivity"
-            android:parentActivityName=".AdminImageActivity" />
-        <activity android:name=".AdminImageActivity" />
+            android:parentActivityName=".AdminImageActivity"
+            android:theme="@style/AdminTheme"/>
+        <activity android:name=".AdminImageActivity"
+            android:theme="@style/AdminTheme"/>
         <activity android:name=".MapsActivity" />
         <activity android:name=".MainListActivity" />
         <activity android:name=".AdminLogin" />

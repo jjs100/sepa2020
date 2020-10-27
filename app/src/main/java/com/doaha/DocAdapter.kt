@@ -18,8 +18,9 @@ class DocAdapter(options: FirestoreRecyclerOptions<AdminDocs?>, var clickListene
         holder.viewID.text = model.itemID
         holder.viewWelcome.text = model.Welcome
         holder.viewAck.text = model.Acknowledgements
-        holder.viewInfo.text = model.Info
-
+        holder.viewHistory.text = model.History
+        holder.viewRAP.text = model.RAP
+        holder.viewElders.text = model.Elders
 
         //creates variable of the document snapshot which allows firestore data to be accessed in different activities
         val docSnap : DocumentSnapshot = snapshots.getSnapshot(position)
@@ -42,7 +43,9 @@ class DocAdapter(options: FirestoreRecyclerOptions<AdminDocs?>, var clickListene
         var viewID: TextView = itemView.findViewById(R.id.textID)
         var viewWelcome: TextView = itemView.findViewById(R.id.textWelcome)
         var viewAck: TextView = itemView.findViewById(R.id.textAck)
-        var viewInfo: TextView = itemView.findViewById(R.id.textInfo)
+        var viewHistory: TextView = itemView.findViewById(R.id.textHistory)
+        var viewRAP: TextView = itemView.findViewById(R.id.textRAP)
+        var viewElders: TextView = itemView.findViewById(R.id.textElders)
 
         //needed for ClickListener functionality for Editing Documents
         fun initialize(item: AdminDocs, action:OnNoteItemClickListener, documentSnapshot: DocumentSnapshot){

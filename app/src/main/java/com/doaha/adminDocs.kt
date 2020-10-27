@@ -2,7 +2,9 @@ package com.doaha
 
 class AdminDocs{
     var Acknowledgements: String = ""
-    var Info: String = ""
+    var History: String = ""
     var Welcome: String = ""
     var itemID: String = ""
+    var Elders: String = ""
+    var RAP: String = ""
 }

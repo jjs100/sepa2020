@@ -4,25 +4,33 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_edit_doc.*
+import kotlinx.android.synthetic.main.activity_new_doc.*
 
 class EditDocActivity : AppCompatActivity() {
-    val colRef = FirebaseFirestore.getInstance().collection("zones")
+    private val colRef = FirebaseFirestore.getInstance().collection("zones")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_doc)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
 
-        //assigns EditText fields in the activity to the Firestore data stored in the Intent
-       editID.setText(intent.getStringExtra("ID"))
-       editWelcome.setText(intent.getStringExtra("WELCOME"))
-       editAck.setText(intent.getStringExtra("ACK"))
-       editInfo.setText(intent.getStringExtra("INFO"))
+        //gets parcelable object containing data and fills activity with firestore data
+        val docDetails = intent.getParcelableExtra<DocData>("Document")
+        docDetails.let{
+            editID.setText(intent.getStringExtra("ID"))
+            editWelcome.setText(it?.Welcome)
+            editAck.setText(it?.Ack)
+            editElders.setText(it?.Elders)
+            editHistory.setText(it?.History)
+            editRAP.setText(it?.RAP)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -42,10 +50,10 @@ class EditDocActivity : AppCompatActivity() {
             }
             R.id.images -> {
                 val i = Intent(this, AdminImageActivity::class.java)
-                i.putExtra("IMG1", intent.getStringExtra("IMG1"))
-                i.putExtra("IMG2", intent.getStringExtra("IMG2"))
-                i.putExtra("IMG3", intent.getStringExtra("IMG3"))
-                i.putExtra("ID", intent.getStringExtra("ID"))
+                    i.putExtra("IMG1", intent.getStringExtra("IMG1"))
+                    i.putExtra("IMG2", intent.getStringExtra("IMG2"))
+                    i.putExtra("IMG3", intent.getStringExtra("IMG3"))
+                    i.putExtra("ID", intent.getStringExtra("ID") )
                 startActivity(i)
                 true
             }
@@ -75,14 +83,18 @@ class EditDocActivity : AppCompatActivity() {
         val id = editID.text.toString()
         val welcome = editWelcome.text.toString()
         val ack = editAck.text.toString()
-        val info = editInfo.text.toString()
+        val history = editHistory.text.toString()
+        val rap = editRAP.text.toString()
+        val elders = editElders.text.toString()
 
         //values are then stored to HashMap
         val newDoc = hashMapOf(
             "itemID" to id,
             "Welcome" to welcome,
             "Acknowledgements" to ack,
-            "Info" to info
+                "History" to history,
+                "RAP" to rap,
+                "Elders" to elders
         )
 
         //document reference to database which is used to overwrite document to Firestore using HashMap of data

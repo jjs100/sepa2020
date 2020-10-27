@@ -60,4 +60,11 @@
     <string name="choose_image">Choose Image</string>
     <string name="upload_image">Upload Image</string>
     <string name="chosen_image">Chosen Image</string>
+    <string name="History">History:</string>
+    <string name="elders">Elders:</string>
+    <string name="nation_history">Nation History:</string>
+    <string name="history">History</string>
+    <string name="elders_">Elders</string>
+    <string name="registered_aboriginal_party">Registered Aboriginal Party:</string>
+    <string name="registered_aboriginal_party_">Registered Aboriginal Party</string>
 </resources>
