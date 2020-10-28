@@ -16,6 +16,7 @@ class NewDocActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_doc)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
 
@@ -44,20 +45,24 @@ class NewDocActivity : AppCompatActivity() {
         val id = newID.text.toString()
         val welcome = newWelcome.text.toString()
         val ack = newAck.text.toString()
-        val info = newInfo.text.toString()
+        val history = newHistory.text.toString()
+        val rap = newRAP.text.toString()
+        val elders = newElders.text.toString()
 
         //assigns values to hashmap of data
         val newDoc = hashMapOf(
             "itemID" to id,
             "Welcome" to welcome,
             "Acknowledgements" to ack,
-            "Info" to info
+            "History" to history,
+                "RAP" to rap,
+                "Elders" to elders
         )
 
 
         //creates document reference to database and uses hashmap of values to create new document
         val colRef = FirebaseFirestore.getInstance().collection("zones")
-        colRef.document("$id").set(newDoc)
+        colRef.document(id).set(newDoc)
         Toast.makeText(this, "Document Added", Toast.LENGTH_SHORT).show()
     }
 }

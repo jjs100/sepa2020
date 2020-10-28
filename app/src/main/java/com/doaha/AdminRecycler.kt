@@ -16,6 +16,9 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_admin_recycler.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AdminRecycler : AppCompatActivity(),DocAdapter.OnNoteItemClickListener {
     private val db = FirebaseFirestore.getInstance()
@@ -76,30 +79,28 @@ class AdminRecycler : AppCompatActivity(),DocAdapter.OnNoteItemClickListener {
         val intent = Intent(this, EditDocActivity::class.java)
 
         //uses the intent for the EditDocActivity to attach the text displayed in the cardview so it can be viewed/edited in the next activity
-        val docID : String? = documentSnapshot.getString("itemID")
-        val docWelcome : String? = documentSnapshot.getString("Welcome")
-        val docAck : String? = documentSnapshot.getString("Acknowledgements")
-        val docInfo : String? = documentSnapshot.getString("Info")
+        intent.putExtra("ID",  documentSnapshot.getString("itemID"))
+        intent.putExtra("IMG1",  documentSnapshot.getString("img1"))
+        intent.putExtra("IMG2", documentSnapshot.getString("img2"))
+        intent.putExtra("IMG3", documentSnapshot.getString("img3"))
 
-        intent.putExtra("ID", docID)
-        intent.putExtra("WELCOME", docWelcome)
-        intent.putExtra("ACK", docAck)
-        intent.putExtra("INFO", docInfo)
-
+        intent.putExtra("Document", DocData("${documentSnapshot.getString("Acknowledgements")}", "${documentSnapshot.getString("Welcome")}", "${documentSnapshot.getString("History")}",
+                "${documentSnapshot.getString("RAP")}", "${documentSnapshot.getString("Elders")}"))
         //starts activity with intent and the documents information
         startActivity(intent)
     }
 
-    private fun setUpAuto(){
-        notebookRef.whereNotEqualTo("itemID", "")
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        Log.d("TAG","${document.getString("itemID")} => ${document.data}")
-
-                        nationID.add(document.getString("itemID").toString())
+    private fun setUpAuto() {
+        GlobalScope.launch(Dispatchers.IO) {
+            notebookRef.whereNotEqualTo("itemID", "")
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            Log.d("TAG", "${document.getString("itemID")} => ${document.data}")
+                            nationID.add(document.getString("itemID").toString())
+                        }
                     }
-                }
+        }
     }
 
     override fun onStart() {

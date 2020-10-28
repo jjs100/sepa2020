@@ -60,7 +60,9 @@ class ListFragment : Fragment() {
                     //Puts data from database into NationData list and name section
                     var welcomeAvailability = false
                     var ackAvailability = false
-                    var infoAvailability = false
+                    var historyAvailability = false
+                    var eldersAvailability = false
+                    var rapAvailability = false
                     var imageAvailability = false
                     val welcomeText = document.getString("Welcome")
                     if (welcomeText != null) {
@@ -80,13 +82,31 @@ class ListFragment : Fragment() {
                             ackAvailability = false
                         }
                     }
-                    val infoText = document.getString("Info")
-                    if (infoText != null) {
-                        if (!infoText.isEmpty()) {
-                            tempOut.add(Nation("Information", document.getString("Info")))
-                            infoAvailability = true
+                    val historyText = document.getString("History")
+                    if (historyText != null) {
+                        if (!historyText.isEmpty()) {
+                            tempOut.add(Nation("History", document.getString("History")))
+                            historyAvailability = true
                         } else {
-                            infoAvailability = false
+                            historyAvailability = false
+                        }
+                    }
+                    val eldersText = document.getString("Elders")
+                    if (eldersText != null) {
+                        if (!eldersText.isEmpty()) {
+                            tempOut.add(Nation("Elders", document.getString("Elders")))
+                            eldersAvailability = true
+                        } else {
+                            eldersAvailability = false
+                        }
+                    }
+                    val rapText = document.getString("RAP")
+                    if (rapText != null) {
+                        if (!rapText.isEmpty()) {
+                            tempOut.add(Nation("Registered Aboriginal Parties", document.getString("RAP")))
+                            rapAvailability = true
+                        } else {
+                            rapAvailability = false
                         }
                     }
                     val imageText = document.getString("img1")
@@ -97,7 +117,7 @@ class ListFragment : Fragment() {
                         imageAvailability = false
                     }
 
-                    if (!welcomeAvailability && !ackAvailability && !infoAvailability && !imageAvailability) {
+                    if (!welcomeAvailability && !ackAvailability && !historyAvailability && !imageAvailability  && !eldersAvailability && !rapAvailability) {
                         tempOut.add(Nation("", "No data available for this region"))
                     }
                     //Refreshes recycler view

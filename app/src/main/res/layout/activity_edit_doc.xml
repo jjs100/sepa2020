@@ -15,7 +15,7 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/idTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_id"
@@ -36,7 +36,7 @@
                 app:backgroundTint="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/welcomeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_welcome_message"
@@ -57,7 +57,7 @@
                 app:backgroundTint="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/ackTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_acknowledgments"
@@ -78,10 +78,10 @@
                 app:backgroundTint="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/historyTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/edit_nation_information"
+                android:text="@string/nation_history"
                 android:fontFamily="@font/convergence"
                 android:gravity="start"
                 android:padding="15dp"
@@ -89,10 +89,52 @@
                 android:textSize="15sp"/>
 
             <EditText
-                android:id="@+id/editInfo"
+                android:id="@+id/editHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/info_hint"
+                android:hint="@string/history"
+                android:inputType="textMultiLine"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8C8266"
+                app:backgroundTint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/eldersTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/elders"
+                android:fontFamily="@font/convergence"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:id="@+id/editElders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/elders_"
+                android:inputType="textMultiLine"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8C8266"
+                app:backgroundTint="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/rapTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/registered_aboriginal_party"
+                android:fontFamily="@font/convergence"
+                android:gravity="start"
+                android:padding="15dp"
+                android:textColor="@color/colorText"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:id="@+id/editRAP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registered_aboriginal_party_"
                 android:inputType="textMultiLine"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#8C8266"

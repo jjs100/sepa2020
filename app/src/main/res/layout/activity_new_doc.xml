@@ -43,10 +43,30 @@
                 app:backgroundTint="@color/colorAccent"/>
 
             <EditText
-                android:id="@+id/newInfo"
+                android:id="@+id/newHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/info_hint"
+                android:hint="@string/history"
+                android:inputType="textMultiLine"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8C8266"
+                app:backgroundTint="@color/colorAccent"/>
+
+            <EditText
+                android:id="@+id/newElders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/elders_"
+                android:inputType="textMultiLine"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8C8266"
+                app:backgroundTint="@color/colorAccent"/>
+
+            <EditText
+                android:id="@+id/newRAP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/registered_aboriginal_party_"
                 android:inputType="textMultiLine"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#8C8266"

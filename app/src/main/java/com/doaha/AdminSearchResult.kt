@@ -50,16 +50,13 @@ class AdminSearchResult : AppCompatActivity(),DocAdapter.OnNoteItemClickListener
         val intent = Intent(this, EditDocActivity::class.java)
 
         //uses the intent for the EditDocActivity to attach the text displayed in the cardview so it can be viewed/edited in the next activity
-        val docID : String? = documentSnapshot.getString("itemID")
-        val docWelcome : String? = documentSnapshot.getString("Welcome")
-        val docAck : String? = documentSnapshot.getString("Acknowledgements")
-        val docInfo : String? = documentSnapshot.getString("Info")
+        intent.putExtra("ID",  documentSnapshot.getString("itemID"))
+        intent.putExtra("IMG1",  documentSnapshot.getString("img1"))
+        intent.putExtra("IMG2", documentSnapshot.getString("img2"))
+        intent.putExtra("IMG3", documentSnapshot.getString("img3"))
 
-        intent.putExtra("ID", docID)
-        intent.putExtra("WELCOME", docWelcome)
-        intent.putExtra("ACK", docAck)
-        intent.putExtra("INFO", docInfo)
-
+        intent.putExtra("Document", DocData( "${documentSnapshot.getString("Acknowledgements")}", "${documentSnapshot.getString("Welcome")}", "${documentSnapshot.getString("History")}",
+                "${documentSnapshot.getString("RAP")}", "${documentSnapshot.getString("Elders")}"))
         //starts activity with intent and the documents information
         startActivity(intent)
     }
